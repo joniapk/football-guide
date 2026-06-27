@@ -2,46 +2,84 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Football Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Football TV Guide</title>
 
 <style>
-body {
+html, body {
   margin:0;
-  font-family: Arial;
-  background:#0f1115;
+  padding:0;
+  background:#0b0d12;
   color:#fff;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
 }
 
+/* HEADER */
 .header {
-  background:#1a1d23;
-  padding:14px;
+  background:#11151c;
+  color:#fff;
+  padding:18px;
   text-align:center;
-  font-weight:bold;
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:1px;
 }
 
-.wrap { max-width:900px; margin:auto; padding:10px; }
-
-.match {
-  background:#1a1d23;
-  margin:10px 0;
+/* SCROLL CONTAINER */
+.wrap {
+  max-width:1000px;
+  margin:auto;
   padding:12px;
-  border-left:4px solid #ff3b3b;
-  border-radius:6px;
+
+  height: calc(100vh - 70px);
+  overflow: hidden;
+  position: relative;
 }
 
-.league { color:#9aa4b2; font-size:12px; }
-.teams { font-size:16px; font-weight:bold; }
-.time { font-size:12px; color:#c1c7d0; }
+/* MATCH CARD */
+.match {
+  background:#151a22;
+  margin:14px 0;
+  padding:18px;
+  border-left:6px solid #ff3b3b;
+  border-radius:10px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.5);
+}
 
-.error { padding:10px; color:#ff8080; }
+/* LEAGUE */
+.league {
+  font-size:16px;
+  color:#9aa4b2;
+  margin-bottom:6px;
+}
+
+/* TEAMS */
+.teams {
+  font-size:26px;
+  font-weight:800;
+  color:#ffffff;
+  margin-bottom:6px;
+  line-height:1.2;
+}
+
+/* TIME */
+.time {
+  font-size:16px;
+  color:#c1c7d0;
+}
+
 </style>
 
 </head>
 
 <body>
 
-<div class="header">⚽ LIVE FOOTBALL GUIDE</div>
-<div class="wrap" id="games">Loading...</div>
+<div class="header">⚽ GLOBAL FOOTBALL TV GUIDE</div>
+
+<div class="wrap" id="wrap">
+  <div id="games">Loading matches...</div>
+</div>
 
 <script>
 
@@ -56,14 +94,14 @@ async function loadGames() {
       let res = await fetch("https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id=" + id);
       let data = await res.json();
 
-      if (data && data.events && data.events.length > 0) {
+      if (data && data.events) {
         found = true;
 
         data.events.forEach(ev => {
           html += `
             <div class="match">
-              <div class="league">${ev.strLeague}</div>
-              <div class="teams">${ev.strEvent}</div>
+              <div class="league">${ev.strLeague || ""}</div>
+              <div class="teams">${ev.strEvent || ""}</div>
               <div class="time">⏰ ${ev.dateEvent || ""} ${ev.strTime || ""}</div>
             </div>
           `;
@@ -72,15 +110,30 @@ async function loadGames() {
     } catch (e) {}
   }
 
-  if (!found) {
-    html = `<div class="error">No live data available right now (API blocked or empty response)</div>`;
-  }
-
   document.getElementById("games").innerHTML = html;
 }
 
 loadGames();
 setInterval(loadGames, 60000);
+
+/* =========================
+   AUTO SCROLL (TV STYLE)
+========================= */
+
+let scrollPos = 0;
+
+function autoScroll() {
+  const wrap = document.getElementById("wrap");
+  scrollPos += 1; // speed
+
+  wrap.scrollTop = scrollPos;
+
+  if (scrollPos >= wrap.scrollHeight - wrap.clientHeight) {
+    scrollPos = 0;
+  }
+}
+
+setInterval(autoScroll, 40);
 
 </script>
 
