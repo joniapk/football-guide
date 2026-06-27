@@ -3,73 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Football TV Guide PRO</title>
+<title>Football Guide PRO</title>
 
 <style>
-html, body {
+body{
   margin:0;
-  padding:0;
   background:#0a0c10;
-  color:#fff;
-  font-family: Arial, sans-serif;
-  overflow:hidden;
+  color:white;
+  font-family:Arial;
 }
 
-/* HEADER */
-.header {
-  background:#121722;
-  padding:18px;
+.header{
+  background:#11151c;
+  padding:16px;
   text-align:center;
-  font-size:22px;
-  font-weight:800;
-  letter-spacing:1px;
-  border-bottom:1px solid #222a3a;
+  font-size:20px;
+  font-weight:900;
+  border-bottom:1px solid #1f2a3a;
 }
 
-/* WRAP (scroll area) */
-.wrap {
-  height: calc(100vh - 70px);
-  overflow:hidden;
-  padding:12px;
-  max-width:1000px;
+.wrap{
+  max-width:900px;
   margin:auto;
+  padding:10px;
 }
 
-/* MATCH CARD */
-.match {
+.match{
   background:#151a22;
-  margin:12px 0;
-  padding:18px;
-  border-left:6px solid #ff3b3b;
-  border-radius:10px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.5);
+  margin:10px 0;
+  padding:15px;
+  border-left:5px solid #ff3b3b;
+  border-radius:8px;
 }
 
-/* LEAGUE */
-.league {
-  font-size:14px;
+/* TEAMS ROW */
+.row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.team{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  width:40%;
+}
+
+.team img{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+}
+
+.center{
+  width:20%;
+  text-align:center;
+  font-weight:bold;
+}
+
+.league{
+  font-size:12px;
   color:#9aa4b2;
   margin-bottom:6px;
 }
 
-/* TEAMS (BIG TV STYLE) */
-.teams {
-  font-size:28px;
-  font-weight:900;
-  line-height:1.2;
-  margin-bottom:6px;
-}
-
-/* TIME */
-.time {
-  font-size:16px;
+.time{
+  font-size:13px;
   color:#c1c7d0;
+  margin-top:6px;
 }
 
-.loading {
-  text-align:center;
-  color:#888;
-  padding:20px;
+.live{
+  color:red;
+  font-weight:bold;
 }
 </style>
 
@@ -77,106 +85,94 @@ html, body {
 
 <body>
 
-<div class="header">⚽ FUTBOLLI SOT NE PLAY SHQIP</div>
+<div class="header">⚽ FOOTBALL GUIDE (LOGO VERSION)</div>
 
-<div class="wrap" id="wrap">
-  <div id="games" class="loading">Loading matches...</div>
-</div>
+<div class="wrap" id="games">Loading...</div>
 
 <script>
 
-const leagues = [4328,4335,4332,4331,4334];
+/* 🇪🇺 EUROPE + 🇦🇱 ALBANIA */
+const leagues = [
+  4328, // Premier League
+  4335, // La Liga
+  4332, // Serie A
+  4331, // Bundesliga
+  4334, // Ligue 1
+  4337, // Eredivisie
+  4338, // Portugal
+  4340, // Turkey
+  4341, // Scotland
+  4304  // 🇦🇱 Kategoria Superiore
+];
 
-async function loadGames() {
-  let html = "";
-  let found = false;
+let all=[];
 
-  for (let id of leagues) {
-    try {
-      let res = await fetch("https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id=" + id);
-      let data = await res.json();
+/* LIVE CHECK */
+function isLive(ev){
+  let now=new Date();
+  let t=new Date(ev.dateEvent+"T"+ev.strTime+":00");
+  let diff=(now-t)/60000;
+  return diff>0 && diff<120;
+}
 
-      if (data && data.events) {
-        found = true;
+/* LOAD DATA */
+async function load(){
+  all=[];
 
-        data.events.forEach(ev => {
-          html += `
-            <div class="match">
-              <div class="league">${ev.strLeague || ""}</div>
-              <div class="teams">${ev.strEvent || ""}</div>
-              <div class="time">⏰ ${ev.dateEvent || ""} ${ev.strTime || ""}</div>
-            </div>
-          `;
-        });
-      }
-    } catch (e) {}
+  for(let id of leagues){
+    try{
+      let r=await fetch("https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id="+id);
+      let d=await r.json();
+      if(d.events) all.push(...d.events);
+    }catch(e){}
   }
+
+  render();
+}
+
+/* RENDER */
+function render(){
 
   document.getElementById("games").innerHTML =
-    found ? html : `<div class="loading">No matches available right now</div>`;
+  all.map(ev=>{
+
+    let live = isLive(ev) ? "<span class='live'> 🔴 LIVE</span>" : "";
+
+    return `
+      <div class="match">
+
+        <div class="league">${ev.strLeague || ""}</div>
+
+        <div class="row">
+
+          <div class="team">
+            <img src="${ev.strHomeTeamBadge || ''}" 
+                 onerror="this.src='https://via.placeholder.com/28'">
+            <div>${ev.strHomeTeam || ""}</div>
+          </div>
+
+          <div class="center">VS</div>
+
+          <div class="team" style="justify-content:flex-end;">
+            <div>${ev.strAwayTeam || ""}</div>
+            <img src="${ev.strAwayTeamBadge || ''}" 
+                 onerror="this.src='https://via.placeholder.com/28'">
+          </div>
+
+        </div>
+
+        <div class="time">
+          ⏰ ${ev.dateEvent || ""} ${ev.strTime || ""}
+          ${live}
+        </div>
+
+      </div>
+    `;
+  }).join("");
 }
 
-loadGames();
-setInterval(loadGames, 60000);
-
-/* =========================
-   SMOOTH AUTO SCROLL (TV STYLE)
-========================= */
-
-let pos = 0;
-
-function autoScroll() {
-  const wrap = document.getElementById("wrap");
-
-  pos += 0.6; // smooth speed
-
-  wrap.scrollTop = pos;
-
-  if (pos >= wrap.scrollHeight - wrap.clientHeight) {
-    pos = 0;
-  }
-}
-
-setInterval(autoScroll, 40);
-
-</script>
-
-</body>
-</html>            <div class="match">
-              <div class="league">${ev.strLeague || ""}</div>
-              <div class="teams">${ev.strEvent || ""}</div>
-              <div class="time">⏰ ${ev.dateEvent || ""} ${ev.strTime || ""}</div>
-            </div>
-          `;
-        });
-      }
-    } catch (e) {}
-  }
-
-  document.getElementById("games").innerHTML = html;
-}
-
-loadGames();
-setInterval(loadGames, 60000);
-
-/* =========================
-   AUTO SCROLL (TV STYLE)
-========================= */
-
-let scrollPos = 0;
-
-function autoScroll() {
-  const wrap = document.getElementById("wrap");
-  scrollPos += 1; // speed
-
-  wrap.scrollTop = scrollPos;
-
-  if (scrollPos >= wrap.scrollHeight - wrap.clientHeight) {
-    scrollPos = 0;
-  }
-}
-
-setInterval(autoScroll, 40);
+load();
+setInterval(load,60000);
 
 </script>
 
