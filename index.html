@@ -22,10 +22,15 @@ body{
   border-bottom:1px solid #1f2a3a;
 }
 
+/* SCROLL AREA */
 .wrap{
   max-width:900px;
   margin:auto;
   padding:10px;
+
+  height: calc(100vh - 70px);
+  overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 .match{
@@ -34,13 +39,17 @@ body{
   padding:15px;
   border-left:5px solid #ff3b3b;
   border-radius:8px;
+  transition:0.2s;
 }
 
-/* TEAMS ROW */
+.match:hover{
+  transform:scale(1.01);
+}
+
 .row{
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
   gap:10px;
 }
 
@@ -74,11 +83,6 @@ body{
   color:#c1c7d0;
   margin-top:6px;
 }
-
-.live{
-  color:red;
-  font-weight:bold;
-}
 </style>
 
 </head>
@@ -91,8 +95,9 @@ body{
 
 <script>
 
-/* 🇪🇺 EUROPE + 🇦🇱 ALBANIA */
+/* 🇦🇱 FIRST + EUROPE */
 const leagues = [
+  4304, // 🇦🇱 Kategoria Superiore FIRST
   4328, // Premier League
   4335, // La Liga
   4332, // Serie A
@@ -101,29 +106,35 @@ const leagues = [
   4337, // Eredivisie
   4338, // Portugal
   4340, // Turkey
-  4341, // Scotland
-  4304  // 🇦🇱 Kategoria Superiore
+  4341  // Scotland
 ];
 
 let all=[];
 
-/* LIVE CHECK */
-function isLive(ev){
-  let now=new Date();
-  let t=new Date(ev.dateEvent+"T"+ev.strTime+":00");
-  let diff=(now-t)/60000;
-  return diff>0 && diff<120;
+/* AUTO TIME */
+function formatLocalTime(date, time){
+  if(!date || !time) return "";
+  let utcDate = new Date(date + "T" + time + ":00Z");
+  return utcDate.toLocaleString([], {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
 }
 
-/* LOAD DATA */
+/* LOAD */
 async function load(){
+
   all=[];
 
   for(let id of leagues){
     try{
-      let r=await fetch("https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id="+id);
-      let d=await r.json();
-      if(d.events) all.push(...d.events);
+      let r = await fetch("https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id="+id);
+      let d = await r.json();
+
+      if(d && d.events && Array.isArray(d.events)){
+        all.push(...d.events);
+      }
+
     }catch(e){}
   }
 
@@ -133,44 +144,54 @@ async function load(){
 /* RENDER */
 function render(){
 
+  if(all.length === 0){
+    document.getElementById("games").innerHTML =
+      "⚠️ No matches available";
+    return;
+  }
+
   document.getElementById("games").innerHTML =
-  all.map(ev=>{
+  all.map(ev=>`
+    <div class="match">
 
-    let live = isLive(ev) ? "<span class='live'> 🔴 LIVE</span>" : "";
+      <div class="league">${ev.strLeague || ""}</div>
 
-    return `
-      <div class="match">
+      <div class="row">
 
-        <div class="league">${ev.strLeague || ""}</div>
-
-        <div class="row">
-
-          <div class="team">
-            <img src="${ev.strHomeTeamBadge || ''}" 
-                 onerror="this.src='https://via.placeholder.com/28'">
-            <div>${ev.strHomeTeam || ""}</div>
-          </div>
-
-          <div class="center">VS</div>
-
-          <div class="team" style="justify-content:flex-end;">
-            <div>${ev.strAwayTeam || ""}</div>
-            <img src="${ev.strAwayTeamBadge || ''}" 
-                 onerror="this.src='https://via.placeholder.com/28'">
-          </div>
-
+        <div class="team">
+          <img src="${ev.strHomeTeamBadge || 'https://via.placeholder.com/28'}">
+          <div>${ev.strHomeTeam || ""}</div>
         </div>
 
-        <div class="time">
-          ⏰ ${ev.dateEvent || ""} ${ev.strTime || ""}
-          ${live}
+        <div class="center">VS</div>
+
+        <div class="team" style="justify-content:flex-end;">
+          <div>${ev.strAwayTeam || ""}</div>
+          <img src="${ev.strAwayTeamBadge || 'https://via.placeholder.com/28'}">
         </div>
 
       </div>
-    `;
-  }).join("");
+
+      <div class="time">
+        ⏰ ${formatLocalTime(ev.dateEvent, ev.strTime)}
+      </div>
+
+    </div>
+  `).join("");
 }
 
+/* AUTO SCROLL */
+setInterval(() => {
+  let el = document.querySelector(".wrap");
+
+  el.scrollBy({ top: 120, behavior: "smooth" });
+
+  if(el.scrollTop + el.clientHeight >= el.scrollHeight){
+    el.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}, 4000);
+
+/* INIT */
 load();
 setInterval(load,60000);
 
