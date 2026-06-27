@@ -1,7 +1,88 @@
-
+<!DOCTYPE html>
 <html>
+<head>
+<meta charset="UTF-8">
+<title>Football Guide</title>
+
+<style>
+body {
+  margin:0;
+  font-family: Arial;
+  background:#0f1115;
+  color:#fff;
+}
+
+.header {
+  background:#1a1d23;
+  padding:14px;
+  text-align:center;
+  font-weight:bold;
+}
+
+.wrap { max-width:900px; margin:auto; padding:10px; }
+
+.match {
+  background:#1a1d23;
+  margin:10px 0;
+  padding:12px;
+  border-left:4px solid #ff3b3b;
+  border-radius:6px;
+}
+
+.league { color:#9aa4b2; font-size:12px; }
+.teams { font-size:16px; font-weight:bold; }
+.time { font-size:12px; color:#c1c7d0; }
+
+.error { padding:10px; color:#ff8080; }
+</style>
+
+</head>
+
 <body>
-<h1>⚽ Football Guide</h1>
-<p>Welcome to global football schedule</p>
+
+<div class="header">⚽ LIVE FOOTBALL GUIDE</div>
+<div class="wrap" id="games">Loading...</div>
+
+<script>
+
+const leagues = [4328,4335,4332,4331,4334];
+
+async function loadGames() {
+  let html = "";
+  let found = false;
+
+  for (let id of leagues) {
+    try {
+      let res = await fetch("https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id=" + id);
+      let data = await res.json();
+
+      if (data && data.events && data.events.length > 0) {
+        found = true;
+
+        data.events.forEach(ev => {
+          html += `
+            <div class="match">
+              <div class="league">${ev.strLeague}</div>
+              <div class="teams">${ev.strEvent}</div>
+              <div class="time">⏰ ${ev.dateEvent || ""} ${ev.strTime || ""}</div>
+            </div>
+          `;
+        });
+      }
+    } catch (e) {}
+  }
+
+  if (!found) {
+    html = `<div class="error">No live data available right now (API blocked or empty response)</div>`;
+  }
+
+  document.getElementById("games").innerHTML = html;
+}
+
+loadGames();
+setInterval(loadGames, 60000);
+
+</script>
+
 </body>
 </html>
