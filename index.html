@@ -27,17 +27,12 @@ overflow:hidden;
 .header{
 
 height:70px;
-
 background:#10151d;
-
 display:flex;
-
 align-items:center;
-
 justify-content:center;
 
 font-size:26px;
-
 font-weight:900;
 
 border-bottom:2px solid #00ff99;
@@ -53,22 +48,19 @@ color:#00ff99;
 .wrap{
 
 height:calc(100vh - 70px);
-
 padding:20px;
 
 overflow-y:auto;
 
-scroll-behavior:smooth;
-
 }
 
 
-
-/* MATCH */
+/* MATCH CARD */
 
 .match{
 
-background:linear-gradient(135deg,#151b25,#0e131b);
+background:
+linear-gradient(135deg,#151b25,#0e131b);
 
 margin-bottom:15px;
 
@@ -86,23 +78,11 @@ box-shadow:0 5px 20px #000;
 
 
 
-/* FOCUS TV */
-
 .match:hover{
 
 transform:scale(1.03);
 
 border-color:#00ff99;
-
-}
-
-
-
-.tv-focus{
-
-transform:scale(1.04);
-
-border:2px solid #00ff99;
 
 }
 
@@ -138,6 +118,7 @@ justify-content:space-between;
 
 /* TEAM */
 
+
 .team{
 
 display:flex;
@@ -153,7 +134,6 @@ font-size:22px;
 font-weight:bold;
 
 }
-
 
 
 .team img{
@@ -175,6 +155,7 @@ padding:3px;
 
 
 /* CENTER */
+
 
 .center{
 
@@ -216,7 +197,7 @@ font-weight:bold;
 
 
 
-/* SCROLL */
+/* TV SCROLL BAR */
 
 ::-webkit-scrollbar{
 
@@ -224,17 +205,16 @@ width:6px;
 
 }
 
-
 ::-webkit-scrollbar-thumb{
 
 background:#00ff99;
-
 border-radius:10px;
 
 }
 
 
 </style>
+
 
 </head>
 
@@ -285,28 +265,20 @@ let all=[];
 function formatTime(date,time){
 
 if(!date || !time)
-
 return "--:--";
 
 
-let d=new Date(
-
-date+"T"+time+":00Z"
-
-);
+let d=new Date(date+"T"+time+":00Z");
 
 
 return d.toLocaleTimeString([],{
 
 hour:"2-digit",
-
 minute:"2-digit"
 
 });
 
-
 }
-
 
 
 
@@ -342,7 +314,6 @@ all.push(...d.events);
 }catch(e){}
 
 
-
 }
 
 
@@ -353,12 +324,10 @@ render();
 
 
 
-
 function render(){
 
 
 let box=document.getElementById("games");
-
 
 
 if(all.length===0){
@@ -371,7 +340,7 @@ return;
 
 
 
-box.innerHTML=all.map(ev=>`
+box.innerHTML=all.map(ev=>
 
 
 <div class="match">
@@ -388,15 +357,11 @@ box.innerHTML=all.map(ev=>`
 <div class="row">
 
 
-
 <div class="team">
-
 
 <img src="${ev.strHomeTeamBadge || 'https://via.placeholder.com/45'}">
 
-
 ${ev.strHomeTeam || ""}
-
 
 </div>
 
@@ -444,7 +409,7 @@ ${ev.strAwayTeam || ""}
 </div>
 
 
-`).join("");
+).join("");
 
 
 
@@ -453,74 +418,37 @@ ${ev.strAwayTeam || ""}
 
 
 
-/* ===========================
-   AUTO SCROLL PA NDALIM
-=========================== */
+// AUTO SCROLL TV
 
-
-let scrollSpeed = 0.45;
-
-
-function smoothAutoScroll(){
+setInterval(()=>{
 
 
 let el=document.querySelector(".wrap");
 
 
-el.scrollTop += scrollSpeed;
+el.scrollBy({
 
+top:180,
 
-
-if(el.scrollTop + el.clientHeight >= el.scrollHeight){
-
-el.scrollTop=0;
-
-}
-
-
-
-requestAnimationFrame(smoothAutoScroll);
-
-
-}
-
-
-
-smoothAutoScroll();
-
-
-
-
-
-/* NDALON KUR PREK TELEKOMANDEN */
-
-let paused=false;
-
-
-
-document.addEventListener("keydown",e=>{
-
-
-if(e.key==="Enter" || e.key==="ArrowUp" || e.key==="ArrowDown"){
-
-paused=true;
-
-
-setTimeout(()=>{
-
-paused=false;
-
-},5000);
-
-
-}
-
-
+behavior:"smooth"
 
 });
 
 
+if(el.scrollTop+el.clientHeight>=el.scrollHeight){
 
+el.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+}
+
+
+},5000);
 
 
 
@@ -535,5 +463,4 @@ setInterval(load,60000);
 
 
 </body>
-
 </html>
