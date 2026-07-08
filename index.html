@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Football Guide PRO</title>
+<title>Football Guide PRO TV</title>
 
 <style>
 
@@ -14,26 +14,20 @@ box-sizing:border-box;
 }
 
 body{
-
 margin:0;
-background:#05080d;
+background:#070a0f;
 color:white;
 font-family:Arial,Helvetica,sans-serif;
 overflow:hidden;
-
 }
 
-
-/* HEADER */
 
 .header{
 
 height:70px;
 
 display:flex;
-
 align-items:center;
-
 justify-content:center;
 
 background:#10151d;
@@ -46,14 +40,9 @@ font-weight:900;
 
 border-bottom:2px solid #00ff99;
 
-letter-spacing:1px;
-
 }
 
 
-
-
-/* LIST */
 
 .wrap{
 
@@ -63,55 +52,30 @@ padding:20px;
 
 overflow-y:auto;
 
+overflow-x:hidden;
+
 }
 
 
 
 .match{
 
-background:linear-gradient(135deg,#151b25,#0b1018);
-
-padding:20px;
+background:linear-gradient(135deg,#151b25,#0e131b);
 
 margin-bottom:15px;
+
+padding:20px;
 
 border-radius:18px;
 
 border:1px solid #263242;
 
-box-shadow:0 8px 25px #000;
+box-shadow:0 5px 20px #000;
 
-transition:.25s;
-
-opacity:0;
-
-animation:show .5s forwards;
+transition:.3s;
 
 }
 
-
-
-@keyframes show{
-
-from{
-
-opacity:0;
-transform:translateY(20px);
-
-}
-
-to{
-
-opacity:1;
-transform:translateY(0);
-
-}
-
-}
-
-
-
-/* TV FOCUS */
 
 
 .tv-focus{
@@ -120,8 +84,6 @@ border:3px solid #00ff99;
 
 transform:scale(1.04);
 
-box-shadow:0 0 25px #00ff99;
-
 }
 
 
@@ -129,17 +91,14 @@ box-shadow:0 0 25px #00ff99;
 
 .league{
 
-color:#9aa7b8;
+color:#8d99aa;
 
 font-size:14px;
 
-margin-bottom:15px;
+margin-bottom:12px;
 
 }
 
-
-
-/* ROW */
 
 
 .row{
@@ -151,7 +110,6 @@ align-items:center;
 justify-content:space-between;
 
 }
-
 
 
 
@@ -175,20 +133,19 @@ font-weight:bold;
 
 .team img{
 
-width:48px;
+width:45px;
 
-height:48px;
+height:45px;
 
 border-radius:50%;
 
 background:white;
 
-padding:4px;
+padding:3px;
 
 object-fit:contain;
 
 }
-
 
 
 
@@ -206,27 +163,7 @@ text-align:center;
 
 color:#00ff99;
 
-font-size:25px;
-
-font-weight:900;
-
-}
-
-
-
-.status{
-
-display:inline-block;
-
-margin-top:8px;
-
-background:#ff0033;
-
-padding:5px 14px;
-
-border-radius:20px;
-
-font-size:12px;
+font-size:24px;
 
 font-weight:bold;
 
@@ -234,7 +171,24 @@ font-weight:bold;
 
 
 
-/* SCROLL BAR */
+.status{
+
+background:#ff0033;
+
+display:inline-block;
+
+padding:5px 12px;
+
+border-radius:20px;
+
+font-size:12px;
+
+margin-top:8px;
+
+font-weight:bold;
+
+}
+
 
 
 ::-webkit-scrollbar{
@@ -250,7 +204,6 @@ background:#00ff99;
 border-radius:10px;
 
 }
-
 
 
 </style>
@@ -277,7 +230,6 @@ Duke ngarkuar ndeshjet...
 
 
 
-
 <script>
 
 
@@ -299,27 +251,24 @@ const leagues=[
 
 let all=[];
 
+
 let cards=[];
 
-let position=0;
+let focus=0;
 
-let paused=false;
+
+let autoScroll=true;
 
 
 
 function formatTime(date,time){
-
 
 if(!date || !time)
 
 return "--:--";
 
 
-let d=new Date(
-
-date+"T"+time+":00Z"
-
-);
+let d=new Date(date+"T"+time+":00Z");
 
 
 return d.toLocaleTimeString([],{
@@ -330,9 +279,7 @@ minute:"2-digit"
 
 });
 
-
 }
-
 
 
 
@@ -372,12 +319,10 @@ all.push(...d.events);
 }
 
 
-
 render();
 
 
 }
-
 
 
 
@@ -395,7 +340,6 @@ box.innerHTML="⚠️ Nuk ka ndeshje";
 return;
 
 }
-
 
 
 
@@ -418,31 +362,26 @@ box.innerHTML=all.map(ev=>`
 
 <div class="team">
 
-
-<img src="${ev.strHomeTeamBadge || 'https://via.placeholder.com/48'}">
-
+<img src="${ev.strHomeTeamBadge || 'https://via.placeholder.com/45'}">
 
 ${ev.strHomeTeam || ""}
-
 
 </div>
 
 
 
-
 <div class="center">
-
 
 <div class="time">
 
-${formatTime(ev.dateEvent,ev.strTime)}
+⏰ ${formatTime(ev.dateEvent,ev.strTime)}
 
 </div>
 
 
 <div class="status">
 
-NEXT MATCH
+NEXT
 
 </div>
 
@@ -451,51 +390,42 @@ NEXT MATCH
 
 
 
-
-<div class="team" style="justify-content:flex-end;">
-
+<div class="team" style="justify-content:flex-end">
 
 ${ev.strAwayTeam || ""}
 
-
-<img src="${ev.strAwayTeamBadge || 'https://via.placeholder.com/48'}">
-
-
-</div>
-
-
+<img src="${ev.strAwayTeamBadge || 'https://via.placeholder.com/45'}">
 
 </div>
 
 
 </div>
 
+
+</div>
 
 
 `).join("");
 
 
 
-initRemote();
+startRemote();
 
 
 }
 
 
 
+/* ANDROID TV REMOTE */
 
 
-/* =====================
- ANDROID TV REMOTE
-===================== */
-
-
-function initRemote(){
+function startRemote(){
 
 
 cards=[...document.querySelectorAll(".match")];
 
-position=0;
+
+focus=0;
 
 
 if(cards[0])
@@ -507,11 +437,10 @@ cards[0].classList.add("tv-focus");
 
 
 
-
 document.addEventListener("keydown",e=>{
 
 
-paused=true;
+autoScroll=false;
 
 
 cards.forEach(c=>c.classList.remove("tv-focus"));
@@ -520,36 +449,32 @@ cards.forEach(c=>c.classList.remove("tv-focus"));
 
 if(e.key==="ArrowDown")
 
-position++;
-
+focus++;
 
 
 if(e.key==="ArrowUp")
 
-position--;
+focus--;
+
+
+if(focus<0)
+
+focus=cards.length-1;
+
+
+if(focus>=cards.length)
+
+focus=0;
 
 
 
-if(position<0)
-
-position=cards.length-1;
+if(cards[focus]){
 
 
-
-if(position>=cards.length)
-
-position=0;
+cards[focus].classList.add("tv-focus");
 
 
-
-
-if(cards[position]){
-
-
-cards[position].classList.add("tv-focus");
-
-
-cards[position].scrollIntoView({
+cards[focus].scrollIntoView({
 
 behavior:"smooth",
 
@@ -564,9 +489,9 @@ block:"center"
 
 setTimeout(()=>{
 
-paused=false;
+autoScroll=true;
 
-},4000);
+},5000);
 
 
 
@@ -576,41 +501,43 @@ paused=false;
 
 
 
-/* =====================
- AUTO SCROLL
-===================== */
+/* ANDROID TV AUTO SCROLL */
 
 
-function autoScroll(){
+function autoScrollTV(){
 
 
 let box=document.querySelector(".wrap");
 
 
-if(!paused){
-
-box.scrollTop+=0.35;
-
-}
+if(autoScroll){
 
 
+box.scrollTop += 1;
 
-if(box.scrollTop+box.clientHeight>=box.scrollHeight){
+
+
+if(box.scrollTop + box.clientHeight >= box.scrollHeight){
+
 
 box.scrollTop=0;
 
-}
-
-
-
-requestAnimationFrame(autoScroll);
-
 
 }
 
 
+}
 
-autoScroll();
+
+
+setTimeout(autoScrollTV,40);
+
+
+
+}
+
+
+autoScrollTV();
 
 
 
@@ -627,4 +554,5 @@ setInterval(load,60000);
 
 
 </body>
+
 </html>
