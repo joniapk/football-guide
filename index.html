@@ -1,288 +1,347 @@
 <!DOCTYPE html>
-<html>
+<html lang="sq">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Football Guide PRO</title>
+<title>Football Guide PRO TV</title>
 
 <style>
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+ font-family:Arial, sans-serif;
+}
+
 body{
-  margin:0;
-  background:#0a0c10;
-  color:white;
-  font-family:Arial;
+ background:#050505;
+ color:white;
+ overflow:hidden;
 }
 
-.header{
-  background:#11151c;
-  padding:16px;
-  text-align:center;
-  font-size:20px;
-  font-weight:900;
-  border-bottom:1px solid #1f2a3a;
+.app{
+ display:flex;
+ height:100vh;
 }
 
-/* SCROLL AREA */
-.wrap{
-  max-width:900px;
-  margin:auto;
-  padding:10px;
-
-  height: calc(100vh - 70px);
-  overflow-y: auto;
-  scroll-behavior: smooth;
+/* MENU */
+.sidebar{
+ width:260px;
+ background:#0d0d0d;
+ padding:30px;
+ border-right:1px solid #222;
 }
 
-.match{
-  background:#151a22;
-  margin:10px 0;
-  padding:15px;
-  border-left:5px solid #ff3b3b;
-  border-radius:8px;
-  transition:0.2s;
+.logo{
+ font-size:28px;
+ font-weight:bold;
+ color:#00ff88;
+ margin-bottom:40px;
 }
 
-.match:hover{
-  transform:scale(1.01);
+.menu div{
+ padding:18px;
+ margin-bottom:10px;
+ border-radius:12px;
+ font-size:20px;
 }
 
-.row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
+.menu .active,
+.menu div:hover{
+ background:#00ff88;
+ color:black;
+}
+
+
+/* CONTENT */
+.content{
+ flex:1;
+ padding:35px;
+}
+
+.hero{
+ height:230px;
+ border-radius:25px;
+ padding:40px;
+ background:
+ linear-gradient(90deg,#000,transparent),
+ url("https://images.unsplash.com/photo-1579952363873-27f3bade9f55");
+ background-size:cover;
+}
+
+.hero h1{
+ font-size:45px;
+}
+
+.live{
+ margin-top:30px;
+}
+
+.title{
+ font-size:28px;
+ margin-bottom:20px;
+ color:#00ff88;
+}
+
+
+.cards{
+ display:flex;
+ gap:20px;
+}
+
+
+.card{
+ width:260px;
+ background:#151515;
+ border-radius:20px;
+ padding:20px;
+ border:2px solid transparent;
+}
+
+.card:hover{
+ border-color:#00ff88;
+ transform:scale(1.05);
 }
 
 .team{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  width:40%;
+ display:flex;
+ justify-content:space-between;
+ font-size:22px;
+ margin:15px 0;
 }
 
-.team img{
-  width:28px;
-  height:28px;
-  border-radius:50%;
+.score{
+ text-align:center;
+ font-size:35px;
+ font-weight:bold;
 }
 
-/* ORA NË QENDËR */
-.center{
-  width:20%;
-  text-align:center;
-  font-weight:bold;
-  color:#00ff9d;
-  font-size:14px;
+.livebadge{
+ color:red;
+ font-weight:bold;
 }
 
-.league{
-  font-size:12px;
-  color:#9aa4b2;
-  margin-bottom:6px;
+
+/* CHANNELS */
+
+.channels{
+ display:flex;
+ gap:15px;
 }
 
-.time{
-  font-size:13px;
-  color:#c1c7d0;
-  margin-top:6px;
+.channel{
+ background:#181818;
+ padding:20px;
+ border-radius:15px;
+ width:150px;
+ text-align:center;
+ font-size:18px;
+}
+
+
+/* TV FOCUS */
+
+.focus{
+ outline:4px solid #00ff88;
+ transform:scale(1.08);
 }
 </style>
 
 </head>
 
+
 <body>
 
-<div class="header">⚽ FUTBOLLI SOT NË PLAY SHQIP</div>
 
-<div class="wrap" id="games">Loading...</div>
+<div class="app">
+
+
+<div class="sidebar">
+
+<div class="logo">
+⚽ FOOTBALL PRO
+</div>
+
+
+<div class="menu">
+
+<div class="active">🏠 Home</div>
+<div>🔴 Live</div>
+<div>📺 Channels</div>
+<div>🏆 Leagues</div>
+<div>⭐ Favorites</div>
+<div>⚙ Settings</div>
+
+</div>
+
+</div>
+
+
+
+<div class="content">
+
+
+<div class="hero">
+
+<h1>
+LIVE FOOTBALL TV
+</h1>
+
+<p>
+Watch your favorite matches in HD
+</p>
+
+</div>
+
+
+
+<div class="live">
+
+<div class="title">
+🔴 LIVE NOW
+</div>
+
+
+<div class="cards">
+
+
+<div class="card focus">
+
+<div class="livebadge">
+● LIVE 78'
+</div>
+
+<div class="team">
+Real Madrid
+⚽
+Barcelona
+</div>
+
+<div class="score">
+2 - 1
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="livebadge">
+● LIVE
+</div>
+
+<div class="team">
+Arsenal
+⚽
+Chelsea
+</div>
+
+<div class="score">
+1 - 0
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="livebadge">
+UPCOMING
+</div>
+
+<div class="team">
+Milan
+⚽
+Inter
+</div>
+
+<div class="score">
+20:45
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+<div class="live">
+
+<div class="title">
+📺 SPORT CHANNELS
+</div>
+
+
+<div class="channels">
+
+<div class="channel">
+SPORT HD
+</div>
+
+<div class="channel">
+FOOTBALL 1
+</div>
+
+<div class="channel">
+UCL LIVE
+</div>
+
+<div class="channel">
+PREMIUM
+</div>
+
+
+</div>
+
+</div>
+
+
+
+</div>
+
+</div>
+
 
 <script>
 
-/* 🇦🇱 FIRST + EUROPE */
-const leagues = [
-  4304,
-  4328,
-  4335,
-  4332,
-  4331,
-  4334,
-  4337,
-  4338,
-  4340,
-  4341
-];
+// Android TV remote navigation basic
 
-let all=[];
+let items=document.querySelectorAll(".card,.channel,.menu div");
 
-/* AUTO TIME */
-function formatLocalTime(date, time){
+let index=0;
 
-  if(!date || !time) return "--:--";
+document.addEventListener("keydown",e=>{
 
-  let utcDate =
-    new Date(date + "T" + time + ":00Z");
+items.forEach(x=>x.classList.remove("focus"));
 
-  return utcDate.toLocaleTimeString([],{
-    hour:"2-digit",
-    minute:"2-digit"
-  });
-
+if(e.key==="ArrowRight"){
+ index++;
 }
 
-/* LOAD */
-async function load(){
-
-  all=[];
-
-  for(let id of leagues){
-
-    try{
-
-      let r =
-      await fetch(
-      "https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id="+id
-      );
-
-      let d = await r.json();
-
-      if(
-        d &&
-        d.events &&
-        Array.isArray(d.events)
-      ){
-        all.push(...d.events);
-      }
-
-    }catch(e){}
-
-  }
-
-  render();
-
+if(e.key==="ArrowLeft"){
+ index--;
 }
 
-/* RENDER */
-function render(){
+if(index<0) index=items.length-1;
+if(index>=items.length) index=0;
 
-if(all.length===0){
+items[index].classList.add("focus");
 
-document.getElementById(
-"games"
-).innerHTML=
-"⚠️ No matches available";
 
-return;
-
+if(e.key==="Enter"){
+ alert("Hapet: "+items[index].innerText);
 }
 
-document.getElementById(
-"games"
-).innerHTML=
-
-all.map(ev=>`
-
-<div class="match">
-
-<div class="league">
-
-${ev.strLeague || ""}
-
-</div>
-
-<div class="row">
-
-<div class="team">
-
-<img src="${
-ev.strHomeTeamBadge ||
-"https://via.placeholder.com/28"
-}">
-
-<div>
-
-${ev.strHomeTeam || ""}
-
-</div>
-
-</div>
-
-<!-- ORA NË MES -->
-
-<div class="center">
-
-⏰
-${formatLocalTime(
-ev.dateEvent,
-ev.strTime
-)}
-
-</div>
-
-<div
-class="team"
-style="justify-content:flex-end;"
->
-
-<div>
-
-${ev.strAwayTeam || ""}
-
-</div>
-
-<img src="${
-ev.strAwayTeamBadge ||
-"https://via.placeholder.com/28"
-}">
-
-</div>
-
-</div>
-
-</div>
-
-`).join("");
-
-}
-
-/* AUTO SCROLL */
-
-setInterval(()=>{
-
-let el=
-document.querySelector(
-".wrap"
-);
-
-el.scrollBy({
-top:120,
-behavior:"smooth"
 });
-
-if(
-el.scrollTop+
-el.clientHeight>=
-el.scrollHeight
-){
-
-el.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-}
-
-},4000);
-
-/* INIT */
-
-load();
-
-setInterval(
-load,
-60000
-);
 
 </script>
+
 
 </body>
 </html>
