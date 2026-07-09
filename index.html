@@ -10,7 +10,14 @@
 .league{color:#95a6bb;font-size:14px;margin-bottom:10px}.row{display:flex;align-items:center;justify-content:space-between}
 .team{width:38%;display:flex;align-items:center;gap:10px;font-size:21px;font-weight:bold}.team img{width:50px;height:50px;border-radius:50%;background:#fff;padding:3px}
 .center{text-align:center}.time{font-size:18px;color:#00ff99;font-weight:bold}.status{display:inline-block;margin-top:8px;background:#ff1744;padding:6px 14px;border-radius:20px;font-size:12px}
-</style></head><body>
+
+.tv{
+color:#ffd700;
+font-size:14px;
+margin-top:8px;
+font-weight:bold;
+}
+ </style></head><body>
 <div class="header">⚽ FUTBOLLI SOT NË PLAY SHQIP</div>
 <div class="wrap" id="games">Duke ngarkuar...</div>
 <script>
@@ -25,7 +32,14 @@ const leagues=[
 4338, // Primeira Liga
 4340, // Scottish Premiership
 4341  // Turkish Super Lig
-];
+];const tvGuide = {
+"Premier League":"SuperSport",
+"Serie A":"SuperSport",
+"La Liga":"SuperSport",
+"Bundesliga":"DAZN",
+"Ligue 1":"beIN Sports",
+"UEFA Champions League":"SuperSport"
+};
 let cards=[],focus=0,auto=true,timer;
 const wrap=document.querySelector('.wrap');
 const fmt=(d,t)=>d&&t?new Date(d+"T"+t+"Z").toLocaleTimeString("sq-AL",{hour:"2-digit",minute:"2-digit",hour12:false}):"--:--";
@@ -46,7 +60,7 @@ all.sort((a,b)=>{
 });
 games.innerHTML=all.length?all.map(ev=>`<div class="match"><div class="league">🏆 ${ev.strLeague||""}</div><div class="row"><div class="team"><img src="${ev.strHomeTeamBadge||'https://via.placeholder.com/50'}">${ev.strHomeTeam||""}</div><div class="center">
 <div class="time">${ev.dateEvent}<br>${fmt(ev.dateEvent,ev.strTime)}</div>
-<div class="status">NEXT</div>
+<div class="status">SË SHPEJTI</div>
 </div><div class="team" style="justify-content:flex-end">${ev.strAwayTeam||""}<img src="${ev.strAwayTeamBadge||'https://via.placeholder.com/50'}"></div></div></div>`).join(""):"Nuk ka ndeshje";
 cards=[...document.querySelectorAll(".match")];focus=0;if(cards[0])cards[0].classList.add("tv-focus");
 }
