@@ -18,7 +18,7 @@ margin-top:8px;
 font-weight:bold;
 }
  </style></head><body>
-<div class="header">⚽ PLAY SHQIP FUTBOLL GUIDE  </div>
+<div class="header">⚽ PLAY SHQIP FUTBOLL GUIDE </div>
 <div class="wrap" id="games">Duke ngarkuar...</div>
 <script>
 const leagues=[
@@ -43,6 +43,14 @@ const leagues=[
 let cards=[],focus=0,auto=true,timer;
 const wrap=document.querySelector('.wrap');
 const fmt=(d,t)=>d&&t?new Date(d+"T"+t+"Z").toLocaleTimeString("sq-AL",{hour:"2-digit",minute:"2-digit",hour12:false}):"--:--";
+const fmtDate=(d)=>{
+if(!d) return "";
+return new Date(d).toLocaleDateString("sq-AL",{
+day:"2-digit",
+month:"long",
+year:"numeric"
+});
+};
 async function load(){
 let all=[];
 await Promise.all(leagues.map(async id=>{
@@ -59,7 +67,7 @@ all.sort((a,b)=>{
     return (a.dateEvent + a.strTime).localeCompare(b.dateEvent + b.strTime);
 });
 games.innerHTML=all.length?all.map(ev=>`<div class="match"><div class="league">🏆 ${ev.strLeague||""}</div><div class="row"><div class="team"><img src="${ev.strHomeTeamBadge||'https://via.placeholder.com/50'}">${ev.strHomeTeam||""}</div><div class="center">
-<div class="time">${ev.dateEvent}<br>${fmt(ev.dateEvent,ev.strTime)}</div>
+<div class="time">📅 ${fmtDate(ev.dateEvent)}<br>⏰ ${fmt(ev.dateEvent,ev.strTime)}</div>
 <div class="status">SË SHPEJTI</div>
 </div><div class="team" style="justify-content:flex-end">${ev.strAwayTeam||""}<img src="${ev.strAwayTeamBadge||'https://via.placeholder.com/50'}"></div></div></div>`).join(""):"Nuk ka ndeshje";
 cards=[...document.querySelectorAll(".match")];focus=0;if(cards[0])cards[0].classList.add("tv-focus");
