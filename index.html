@@ -44,7 +44,10 @@ all.sort((a,b)=>{
 
     return (a.dateEvent + a.strTime).localeCompare(b.dateEvent + b.strTime);
 });
-games.innerHTML=all.length?all.map(ev=>`<div class="match"><div class="league">🏆 ${ev.strLeague||""}</div><div class="row"><div class="team"><img src="${ev.strHomeTeamBadge||'https://via.placeholder.com/50'}">${ev.strHomeTeam||""}</div><div class="center"><div class="time">${fmt(ev.dateEvent,ev.strTime)}</div><div class="status">NEXT</div></div><div class="team" style="justify-content:flex-end">${ev.strAwayTeam||""}<img src="${ev.strAwayTeamBadge||'https://via.placeholder.com/50'}"></div></div></div>`).join(""):"Nuk ka ndeshje";
+games.innerHTML=all.length?all.map(ev=>`<div class="match"><div class="league">🏆 ${ev.strLeague||""}</div><div class="row"><div class="team"><img src="${ev.strHomeTeamBadge||'https://via.placeholder.com/50'}">${ev.strHomeTeam||""}</div><div class="center">
+<div class="time">${ev.dateEvent}<br>${fmt(ev.dateEvent,ev.strTime)}</div>
+<div class="status">NEXT</div>
+</div><div class="team" style="justify-content:flex-end">${ev.strAwayTeam||""}<img src="${ev.strAwayTeamBadge||'https://via.placeholder.com/50'}"></div></div></div>`).join(""):"Nuk ka ndeshje";
 cards=[...document.querySelectorAll(".match")];focus=0;if(cards[0])cards[0].classList.add("tv-focus");
 }
 function pause(){auto=false;clearTimeout(timer);timer=setTimeout(()=>auto=true,7000);}
