@@ -14,7 +14,18 @@
 <div class="header">⚽ FUTBOLLI SOT NË PLAY SHQIP</div>
 <div class="wrap" id="games">Duke ngarkuar...</div>
 <script>
-const leagues=[4304,4328,4335,4332,4331,4334,4337,4338,4340,4341];
+const leagues=[
+4328, // Premier League
+4332, // Serie A
+4335, // La Liga
+4331, // Bundesliga
+4334, // Ligue 1
+4304, // Champions League
+4337, // Eredivisie
+4338, // Primeira Liga
+4340, // Scottish Premiership
+4341  // Turkish Super Lig
+];
 let cards=[],focus=0,auto=true,timer;
 const wrap=document.querySelector('.wrap');
 const fmt=(d,t)=>d&&t?new Date(d+"T"+t+"Z").toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}):"--:--";
@@ -23,7 +34,16 @@ let all=[];
 await Promise.all(leagues.map(async id=>{
 try{const r=await fetch("https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id="+id);const j=await r.json();if(j.events)all.push(...j.events);}catch(e){}
 }));
-all.sort((a,b)=>(a.dateEvent+a.strTime).localeCompare(b.dateEvent+b.strTime));
+all.sort((a,b)=>{
+    const la = leagues.indexOf(a.idLeague*1);
+    const lb = leagues.indexOf(b.idLeague*1);
+
+    if(la !== lb){
+        return la - lb;
+    }
+
+    return (a.dateEvent + a.strTime).localeCompare(b.dateEvent + b.strTime);
+});
 games.innerHTML=all.length?all.map(ev=>`<div class="match"><div class="league">🏆 ${ev.strLeague||""}</div><div class="row"><div class="team"><img src="${ev.strHomeTeamBadge||'https://via.placeholder.com/50'}">${ev.strHomeTeam||""}</div><div class="center"><div class="time">${fmt(ev.dateEvent,ev.strTime)}</div><div class="status">NEXT</div></div><div class="team" style="justify-content:flex-end">${ev.strAwayTeam||""}<img src="${ev.strAwayTeamBadge||'https://via.placeholder.com/50'}"></div></div></div>`).join(""):"Nuk ka ndeshje";
 cards=[...document.querySelectorAll(".match")];focus=0;if(cards[0])cards[0].classList.add("tv-focus");
 }
