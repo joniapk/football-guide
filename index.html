@@ -28,7 +28,7 @@ const leagues=[
 ];
 let cards=[],focus=0,auto=true,timer;
 const wrap=document.querySelector('.wrap');
-const fmt=(d,t)=>d&&t?new Date(d+"T"+t+"Z").toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}):"--:--";
+const fmt=(d,t)=>d&&t?new Date(d+"T"+t+"Z").toLocaleTimeString("sq-AL",{hour:"2-digit",minute:"2-digit",hour12:false}):"--:--";
 async function load(){
 let all=[];
 await Promise.all(leagues.map(async id=>{
