@@ -7,45 +7,12 @@
 .wrap{height:calc(100vh - 70px);overflow:auto;padding:18px}
 .date-header{background:#00ff99;color:#000;padding:10px;border-radius:12px;margin:18px 0 10px;font-weight:bold;text-align:center}
 .match{background:linear-gradient(145deg,#18212c,#0d131b);border:1px solid #263242;border-radius:20px;padding:18px;margin-bottom:16px;transition:.25s;box-shadow:0 6px 18px rgba(0,0,0,.5)}
-.tv-focus{
-transform:none;
-border:1px solid #263242;
-border-left:6px solid #00ff99;
-background:linear-gradient(145deg,#1b2632,#111821);
-box-shadow:0 0 12px rgba(0,255,153,.25);
-}
+.tv-focus{border:2px solid #00ff99;transform:scale(1.03);box-shadow:0 0 18px rgba(0,255,153,.5)}
 .league{color:#95a6bb;font-size:14px;margin-bottom:10px}
 .row{display:flex;align-items:center;justify-content:space-between}
-.team{
-width:34%;
-display:flex;
-align-items:center;
-gap:10px;
-font-size:21px;
-font-weight:bold;
-}
+.team{width:38%;display:flex;align-items:center;gap:10px;font-size:21px;font-weight:bold}
 .team img{width:50px;height:50px;border-radius:50%;background:#fff;padding:3px}
-.center{
-text-align:center;
-padding:12px;
-border-radius:14px;
-transition:.3s;
-}
-
-.time{
-font-size:18px;
-color:#00ff99;
-font-weight:bold;
-}
-
-.status{
-display:inline-block;
-margin-top:8px;
-background:#ff1744;
-padding:6px 14px;
-border-radius:20px;
-font-size:12px;
-}
+.center{text-align:center}.time{font-size:18px;color:#00ff99;font-weight:bold}.status{display:inline-block;margin-top:8px;background:#ff1744;padding:6px 14px;border-radius:20px;font-size:12px}
 .logo{display:flex;align-items:center;gap:10px;font-weight:900}.logo span{font-size:28px;color:#00ff99}.logo small{font-size:12px;color:#fff;display:block}
 </style></head><body>
 <div class="header"><div class="logo">⚽<span>PLAY SHQIP</span><small>FUTBOLL GUIDE</small></div></div>
@@ -65,34 +32,14 @@ all.sort((a,b)=>(a.dateEvent+a.strTime).localeCompare(b.dateEvent+b.strTime));
 let last="";
 let out="";
 all.forEach(ev=>{
-if (ev.dateEvent !== last) {
-    last = ev.dateEvent;
-    out += `<div class="date-header">📅 ${fmtDate(ev.dateEvent)}</div>`;
-}
-
-out += `<div class="match">
-<div class="league">🏆 ${ev.strLeague || ""}</div>
-<div class="row">
-<div class="team">
-<img src="${ev.strHomeTeamBadge || 'https://via.placeholder.com/50'}">
-${ev.strHomeTeam || ""}
-</div>
-
-<div class="center">
-<div class="time">⏰ ${fmt(ev.dateEvent, ev.strTime)}</div>
-<div class="status">SË SHPEJTI</div>
-</div>
-
-<div class="team" style="justify-content:flex-end">
-${ev.strAwayTeam || ""}
-<img src="${ev.strAwayTeamBadge || 'https://via.placeholder.com/50'}">
-</div>
-</div>
-</div>`;
+ if(ev.dateEvent!==last){
+   last=ev.dateEvent;
+   out+=`<div class="date-header">📅 ${fmtDate(ev.dateEvent)}</div>`;
+ }
  out+=`<div class="match"><div class="league">🏆 ${ev.strLeague||""}</div><div class="row"><div class="team"><img src="${ev.strHomeTeamBadge||'https://via.placeholder.com/50'}">${ev.strHomeTeam||""}</div><div class="center"><div class="time">⏰ ${fmt(ev.dateEvent,ev.strTime)}</div><div class="status">SË SHPEJTI</div></div><div class="team" style="justify-content:flex-end">${ev.strAwayTeam||""}<img src="${ev.strAwayTeamBadge||'https://via.placeholder.com/50'}"></div></div></div>`;
 });
 games.innerHTML=out||"Nuk ka ndeshje";
-cards=[...document.querySelectorAll(".center")];focus=0;if(cards[0])cards[0].classList.add("tv-focus");
+cards=[...document.querySelectorAll(".match")];focus=0;if(cards[0])cards[0].classList.add("tv-focus");
 }
 
 function pause(){auto=false;clearTimeout(timer);timer=setTimeout(()=>auto=true,7000);}
@@ -105,17 +52,13 @@ if(e.key==="ArrowUp")focus=(focus-1+cards.length)%cards.length;
 cards[focus].classList.add("tv-focus");
 cards[focus].scrollIntoView({behavior:"smooth",block:"center"});
 });
-setInterval(() => {
-    if (!auto) return;
-
-    if (wrap.scrollTop + wrap.clientHeight >= wrap.scrollHeight) {
-        setTimeout(() => {
-            wrap.scrollTop = 0;
-        }, 3000);
-    } else {
-        wrap.scrollTop += 2;
-    }
-}, 30);
+(function loop(){
+if(auto&&wrap.scrollHeight>wrap.clientHeight){
+wrap.scrollTop += 0.4;
+if(wrap.scrollTop>=wrap.scrollHeight-wrap.clientHeight)setTimeout(()=>{wrap.scrollTop=0;},3000);
+}
+requestAnimationFrame(loop);
+})();
 
 load();setInterval(load,60000);
 </script></body></html>
