@@ -2,279 +2,349 @@
 <html lang="sq">
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>Play Shqip</title>
 
 <style>
 
+*{
+box-sizing:border-box;
+}
+
 body{
 margin:0;
-background:#050505;
-color:white;
-font-family:Arial,sans-serif;
+background:#070a0f;
+color:#fff;
+font-family:Arial,Helvetica,sans-serif;
 overflow:hidden;
 }
 
 
 .header{
-
-height:60px;
-background:#111;
+height:70px;
+background:#10151d;
+border-bottom:2px solid #ff1744;
 display:flex;
 align-items:center;
 justify-content:center;
-gap:12px;
-font-size:28px;
-font-weight:bold;
-
+color:#ff1744;
 }
 
 
-.my-logo{
+.logo{
+display:flex;
+align-items:center;
+gap:12px;
+font-weight:900;
+}
 
+
+.play-logo{
 width:45px;
 height:45px;
-border-radius:50%;
 object-fit:contain;
-
+border-radius:50%;
 }
 
 
-
-.scrollbox{
-
-height:calc(100vh - 60px);
-overflow:hidden;
-
-}
-
-
-
-.container{
-
-width:94%;
-margin:auto;
-
-}
-
-
-
-.card{
-
-background:#161616;
-margin:18px 0;
-padding:22px;
-border-radius:15px;
-border:1px solid #333;
-
-}
-
-
-
-.league{
-
-text-align:center;
+.logo span{
 font-size:28px;
-font-weight:bold;
-color:#ffcc00;
-margin-bottom:15px;
+color:#ff1744;
+}
 
+
+.logo small{
+display:block;
+font-size:12px;
+color:white;
+}
+
+
+
+.wrap{
+height:calc(100vh - 70px);
+overflow:auto;
+padding:18px;
 }
 
 
 
 .match{
+background:linear-gradient(145deg,#18212c,#0d131b);
+border:1px solid #263242;
+border-radius:20px;
+padding:18px;
+margin-bottom:16px;
+box-shadow:0 6px 18px rgba(0,0,0,.5);
+}
 
+
+
+.tv-focus{
+border:2px solid #ff1744;
+transform:scale(1.03);
+box-shadow:0 0 18px rgba(255,23,68,.5);
+}
+
+
+
+.league{
+color:#95a6bb;
+font-size:14px;
+margin-bottom:10px;
+}
+
+
+
+.row{
 display:flex;
 align-items:center;
 justify-content:space-between;
-
 }
 
 
 
 .team{
-
-width:35%;
+width:38%;
 display:flex;
 align-items:center;
-gap:15px;
-font-size:28px;
+gap:10px;
+font-size:21px;
 font-weight:bold;
-
 }
 
 
 
-.team.right{
-
-justify-content:flex-end;
-text-align:right;
-
+.team img{
+width:50px;
+height:50px;
+border-radius:50%;
+background:#fff;
+padding:3px;
 }
 
 
 
-.logo{
-
-width:70px;
-height:70px;
-object-fit:contain;
-
+.center{
+text-align:center;
 }
 
 
 
 .time{
-
-width:20%;
-text-align:center;
-font-size:32px;
+font-size:18px;
+color:#00ff99;
 font-weight:bold;
-
 }
+
+
+
+.status{
+display:inline-block;
+margin-top:8px;
+background:#ff1744;
+padding:6px 14px;
+border-radius:20px;
+font-size:12px;
+}
+
 
 
 </style>
 
 </head>
 
-
 <body>
 
 
 <div class="header">
 
-<img class="my-logo" src="https://i.ibb.co/yFqp6q5M/Picsart-26-01-16-13-29-42-063.png">
+<div class="logo">
+
+<img class="play-logo"
+src="https://i.ibb.co/Kpd6bW8X/logo-256.png">
+
+
+<div>
 
 <span>
-Play Shqip
+PLAY SHQIP
 </span>
 
-</div>
 
+<small>
+FUTBOLL GUIDE
+</small>
 
-
-<div class="scrollbox" id="scrollbox">
-
-<div class="container" id="matches">
-
-</div>
 
 </div>
 
+</div>
+
+</div>
+<div class="wrap" id="games">
+Duke ngarkuar...
+</div>
 
 
 
 <script>
 
 
-async function loadMatches(){
+const leagues=[
+4328,
+4332,
+4335,
+4331,
+4334,
+4304,
+4337,
+4338,
+4340,
+4341
+];
 
+
+let cards=[];
+let focus=0;
+let auto=true;
+
+
+const wrap=document.querySelector(".wrap");
+
+
+
+const fmt=(d,t)=>
+
+d&&t ?
+
+new Date(d+"T"+t+"Z")
+.toLocaleTimeString("sq-AL",
+{
+hour:"2-digit",
+minute:"2-digit",
+hour12:false
+})
+
+:"--:--";
+
+
+
+const fmtDate=d=>
+
+d ?
+
+new Date(d)
+.toLocaleDateString("sq-AL",
+{
+day:"2-digit",
+month:"long",
+year:"numeric"
+})
+
+:"";
+
+
+
+
+
+async function load(){
+
+
+let all=[];
+
+
+
+await Promise.all(
+
+leagues.map(async id=>{
 
 try{
 
-
-let date =
-new Date().toISOString().slice(0,10);
-
-
-
-let url =
-"https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d="
-+date+"&s=Soccer";
+let r=await fetch(
+"https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id="+id
+);
 
 
-
-let res =
-await fetch(url);
+let j=await r.json();
 
 
+if(j.events)
+all.push(...j.events);
 
-let data =
-await res.json();
+
+}catch(e){}
+
+})
+
+);
 
 
 
-let box =
-document.getElementById("matches");
+all.sort((a,b)=>
 
-box.innerHTML="";
+(a.dateEvent+a.strTime)
+.localeCompare(
+b.dateEvent+b.strTime
+)
 
-
-
-if(!data.events){
-
-box.innerHTML="<h2>Nuk ka ndeshje sot</h2>";
-
-return;
-
-}
+);
 
 
 
-data.events.forEach(game=>{
+games.innerHTML = all.length ?
 
-
-box.innerHTML += `
-
-
-<div class="card">
-
-
-<div class="league">
-
-${game.strLeague || "Liga"}
-
-</div>
-
+all.map(ev=>`
 
 
 <div class="match">
 
 
+<div class="league">
+
+🏆 ${ev.strLeague||""}
+
+</div>
+
+
+
+<div class="row">
+
+
 <div class="team">
 
 
-<img class="logo"
-src="${game.strHomeTeamBadge || ''}">
+<img src="${ev.strHomeTeamBadge||'https://via.placeholder.com/50'}">
 
 
-<span>
-${game.strHomeTeam}
-</span>
+${ev.strHomeTeam||""}
 
 
 </div>
 
+
+
+
+<div class="center">
 
 
 <div class="time">
 
-${game.strTime ? game.strTime.substring(0,5) : "--:--"}
+📅 ${fmtDate(ev.dateEvent)}
+
+<br>
+
+⏰ ${fmt(ev.dateEvent,ev.strTime)}
 
 </div>
 
 
 
+<div class="status">
 
-<div class="team right">
-
-
-<span>
-${game.strAwayTeam}
-</span>
-
-
-<img class="logo"
-src="${game.strAwayTeamBadge || ''}">
-
-
-</div>
-
-
+SË SHPEJTI
 
 </div>
 
@@ -282,69 +352,61 @@ src="${game.strAwayTeamBadge || ''}">
 </div>
 
 
-`;
 
-});
+
+<div class="team" style="justify-content:flex-end">
+
+
+${ev.strAwayTeam||""}
+
+
+<img src="${ev.strAwayTeamBadge||'https://via.placeholder.com/50'}">
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+`).join("")
+
+
+:
+
+"Nuk ka ndeshje";
+
+
+
+cards=[...document.querySelectorAll(".match")];
+
+focus=0;
+
+
+
+if(cards[0])
+cards[0].classList.add("tv-focus");
 
 
 }
 
 
-catch(e){
-
-document.getElementById("matches").innerHTML =
-"Gabim interneti";
-
-}
-
-
-}
 
 
 
+function pause(){
 
-
-/* AUTO SCROLL */
-
-let pos=0;
-let speed=1;
-let running=true;
-
-
-
-function autoScroll(){
-
-
-let box=document.getElementById("scrollbox");
-
-
-if(running){
-
-pos += speed;
-
-box.scrollTop=pos;
-
-
-
-if(pos >= box.scrollHeight-box.clientHeight){
-
+auto=false;
 
 setTimeout(()=>{
 
-pos=0;
-box.scrollTop=0;
+auto=true;
 
-},3000);
-
-
-}
-
-
-}
-
-
-requestAnimationFrame(autoScroll);
-
+},7000);
 
 }
 
@@ -352,19 +414,27 @@ requestAnimationFrame(autoScroll);
 
 
 
-/* TELEKOMANDA */
-
-document.addEventListener("keydown",function(e){
+document.addEventListener("keydown",e=>{
 
 
-let box=document.getElementById("scrollbox");
+if(!cards.length)return;
+
+
+pause();
+
+
+
+cards.forEach(c=>
+
+c.classList.remove("tv-focus")
+
+);
 
 
 
 if(e.key==="ArrowDown"){
 
-running=false;
-box.scrollTop += 150;
+focus=(focus+1)%cards.length;
 
 }
 
@@ -372,19 +442,23 @@ box.scrollTop += 150;
 
 if(e.key==="ArrowUp"){
 
-running=false;
-box.scrollTop -= 150;
+focus=(focus-1+cards.length)%cards.length;
 
 }
 
 
 
-if(e.key==="Enter"){
+cards[focus].classList.add("tv-focus");
 
-running=!running;
 
-}
 
+cards[focus].scrollIntoView({
+
+behavior:"smooth",
+
+block:"center"
+
+});
 
 
 });
@@ -392,22 +466,41 @@ running=!running;
 
 
 
-loadMatches();
 
 
-setTimeout(()=>{
-
-autoScroll();
-
-},4000);
+(function loop(){
 
 
+if(auto && wrap.scrollHeight>wrap.clientHeight){
 
-setInterval(()=>{
 
-loadMatches();
+wrap.scrollTop++;
 
-},300000);
+
+
+if(wrap.scrollTop>=wrap.scrollHeight-wrap.clientHeight)
+
+wrap.scrollTop=0;
+
+
+}
+
+
+
+requestAnimationFrame(loop);
+
+
+})();
+
+
+
+
+
+
+load();
+
+
+setInterval(load,60000);
 
 
 
