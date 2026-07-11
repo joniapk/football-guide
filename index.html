@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="sq">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,39 +10,55 @@
 <style>
 
 *{
-    box-sizing:border-box;
+box-sizing:border-box;
 }
 
 body{
-    margin:0;
-    background:#000;
-    color:white;
-    font-family:Arial,sans-serif;
-    overflow:hidden;
+
+margin:0;
+background:#000;
+color:white;
+font-family:Arial,sans-serif;
+overflow:hidden;
+
 }
 
+
 .header{
-    height:90px;
-    text-align:center;
-    font-size:45px;
-    font-weight:bold;
-    padding:20px;
-    background:#111;
+
+height:90px;
+background:#111;
+text-align:center;
+font-size:45px;
+font-weight:bold;
+padding:20px;
+
 }
+
+
+#status{
+
+text-align:center;
+font-size:25px;
+padding:10px;
+
+}
+
 
 
 .scrollbox{
 
-    height:calc(100vh - 90px);
-    overflow:hidden;
+height:calc(100vh - 100px);
+overflow:hidden;
 
 }
 
 
+
 .container{
 
-    width:90%;
-    margin:auto;
+width:98%;
+margin:auto;
 
 }
 
@@ -49,11 +66,12 @@ body{
 
 .card{
 
-    background:#151515;
-    margin:25px 0;
-    padding:25px;
-    border-radius:20px;
-    text-align:center;
+width:100%;
+background:#151515;
+margin:25px 0;
+padding:35px;
+border-radius:25px;
+text-align:center;
 
 }
 
@@ -61,9 +79,10 @@ body{
 
 .league{
 
-    font-size:32px;
-    color:#ffcc00;
-    font-weight:bold;
+font-size:36px;
+font-weight:bold;
+color:#ffcc00;
+margin-bottom:20px;
 
 }
 
@@ -71,8 +90,8 @@ body{
 
 .time{
 
-    font-size:30px;
-    margin:15px;
+font-size:32px;
+margin-bottom:25px;
 
 }
 
@@ -80,10 +99,10 @@ body{
 
 .teams{
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:50px;
+display:flex;
+justify-content:space-around;
+align-items:center;
+width:100%;
 
 }
 
@@ -91,9 +110,10 @@ body{
 
 .team{
 
-    width:250px;
-    font-size:28px;
-    font-weight:bold;
+width:35%;
+font-size:32px;
+font-weight:bold;
+text-align:center;
 
 }
 
@@ -101,9 +121,10 @@ body{
 
 .logo{
 
-    width:100px;
-    height:100px;
-    object-fit:contain;
+width:130px;
+height:130px;
+object-fit:contain;
+margin-bottom:15px;
 
 }
 
@@ -111,19 +132,12 @@ body{
 
 .vs{
 
-    font-size:40px;
-    color:#ffcc00;
-    font-weight:bold;
+font-size:45px;
+font-weight:bold;
+color:#ff3333;
 
 }
 
-
-
-#status{
-
-    text-align:center;
-    font-size:25px;
-}
 
 
 </style>
@@ -135,13 +149,19 @@ body{
 
 
 <div class="header">
-⚽ PLAY SHQIP
+
+⚽ SPORT TV
+
 </div>
+
 
 
 <div id="status">
+
 Duke ngarkuar...
+
 </div>
+
 
 
 <div class="scrollbox" id="scrollbox">
@@ -163,24 +183,24 @@ async function loadMatches(){
 try{
 
 
-let date =
+let today =
 new Date().toISOString().slice(0,10);
 
 
 
 let url =
 "https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d="
-+date+"&s=Soccer";
++today+"&s=Soccer";
 
 
 
-let res =
+let response =
 await fetch(url);
 
 
 
 let data =
-await res.json();
+await response.json();
 
 
 
@@ -193,16 +213,18 @@ box.innerHTML="";
 
 if(!data.events){
 
+
 box.innerHTML =
 "<h2>Nuk ka ndeshje sot</h2>";
 
 return;
 
+
 }
 
 
 
-data.events.forEach(m=>{
+data.events.forEach(game=>{
 
 
 box.innerHTML += `
@@ -213,7 +235,7 @@ box.innerHTML += `
 
 <div class="league">
 
-${m.strLeague || "Liga"}
+${game.strLeague || "Liga"}
 
 </div>
 
@@ -221,7 +243,7 @@ ${m.strLeague || "Liga"}
 
 <div class="time">
 
-${m.strTime ? m.strTime.substring(0,5):"--:--"}
+${game.strTime ? game.strTime.substring(0,5) : "--:--"}
 
 </div>
 
@@ -233,11 +255,13 @@ ${m.strTime ? m.strTime.substring(0,5):"--:--"}
 
 <div class="team">
 
-<img class="logo" src="${m.strHomeTeamBadge || ''}">
+<img class="logo"
+src="${game.strHomeTeamBadge || ''}">
 
 <br>
 
-${m.strHomeTeam}
+${game.strHomeTeam}
+
 
 </div>
 
@@ -252,13 +276,16 @@ VS
 
 
 
+
 <div class="team">
 
-<img class="logo" src="${m.strAwayTeamBadge || ''}">
+<img class="logo"
+src="${game.strAwayTeamBadge || ''}">
 
 <br>
 
-${m.strAwayTeam}
+${game.strAwayTeam}
+
 
 </div>
 
@@ -281,7 +308,7 @@ document.getElementById("status").innerHTML="";
 }
 
 
-catch(e){
+catch(error){
 
 document.getElementById("status").innerHTML=
 "Gabim interneti";
@@ -295,43 +322,34 @@ document.getElementById("status").innerHTML=
 
 
 
-/* AUTO SCROLL PER ANDROID TV */
+/* AUTO SCROLL ANDROID TV */
 
+let pos=0;
 
-let pos = 0;
-
-let speed = 3;
-
-
-
-function startScroll(){
-
-
-let box =
-document.getElementById("scrollbox");
+let speed=1;
 
 
 
-function move(){
+function autoScroll(){
+
+
+let box=document.getElementById("scrollbox");
 
 
 pos += speed;
 
 
-box.scrollTop = pos;
+box.scrollTop=pos;
 
 
 
-if(pos >= box.scrollHeight - box.clientHeight){
+if(pos >= box.scrollHeight-box.clientHeight){
 
 
 setTimeout(()=>{
 
-
-pos = 0;
-
-box.scrollTop = 0;
-
+pos=0;
+box.scrollTop=0;
 
 },3000);
 
@@ -340,14 +358,7 @@ box.scrollTop = 0;
 
 
 
-requestAnimationFrame(move);
-
-
-}
-
-
-
-move();
+requestAnimationFrame(autoScroll);
 
 
 }
@@ -357,10 +368,9 @@ move();
 loadMatches();
 
 
-
 setTimeout(()=>{
 
-startScroll();
+autoScroll();
 
 },5000);
 
@@ -378,4 +388,5 @@ loadMatches();
 
 
 </body>
+
 </html>
