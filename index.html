@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="sq">
+
 <head>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Play Shqip</title>
+<title>Play Shqip - Futboll Ditor</title>
 
 <style>
 
@@ -15,11 +16,12 @@ box-sizing:border-box;
 
 body{
 margin:0;
-background:#000000;
+background:#070a0f;
 color:#fff;
 font-family:Arial,Helvetica,sans-serif;
 overflow:hidden;
 }
+
 
 .header{
 height:70px;
@@ -28,8 +30,9 @@ border-bottom:2px solid #e10600;
 display:flex;
 align-items:center;
 justify-content:center;
-color:#e10600;
 }
+
+
 
 .logo{
 display:flex;
@@ -38,6 +41,8 @@ gap:12px;
 font-weight:900;
 }
 
+
+
 .play-logo{
 width:45px;
 height:45px;
@@ -45,10 +50,14 @@ object-fit:contain;
 border-radius:50%;
 }
 
+
+
 .logo span{
 font-size:28px;
 color:#e10600;
 }
+
+
 
 .logo small{
 display:block;
@@ -56,11 +65,15 @@ font-size:12px;
 color:white;
 }
 
+
+
 .wrap{
 height:calc(100vh - 70px);
 overflow:auto;
 padding:18px;
 }
+
+
 
 .match{
 background:linear-gradient(145deg,#1a0808,#0d0303);
@@ -71,11 +84,15 @@ margin-bottom:16px;
 box-shadow:0 6px 18px rgba(0,0,0,.7);
 }
 
+
+
 .tv-focus{
 border:2px solid #e10600;
 transform:scale(1.03);
 box-shadow:0 0 18px rgba(225,6,0,.6);
 }
+
+
 
 .league{
 color:#c9979b;
@@ -83,11 +100,15 @@ font-size:14px;
 margin-bottom:10px;
 }
 
+
+
 .row{
 display:flex;
 align-items:center;
 justify-content:space-between;
 }
+
+
 
 .team{
 width:38%;
@@ -98,6 +119,8 @@ font-size:21px;
 font-weight:bold;
 }
 
+
+
 .team img{
 width:50px;
 height:50px;
@@ -106,15 +129,21 @@ background:#fff;
 padding:3px;
 }
 
+
+
 .center{
 text-align:center;
 }
+
+
 
 .time{
 font-size:18px;
 color:#e10600;
 font-weight:bold;
 }
+
+
 
 .status{
 display:inline-block;
@@ -127,11 +156,13 @@ font-size:12px;
 border:1px solid #e10600;
 }
 
+
 </style>
 
 </head>
 
 <body>
+
 
 <div class="header">
 
@@ -139,6 +170,7 @@ border:1px solid #e10600;
 
 <img class="play-logo"
 src="https://i.ibb.co/Kpd6bW8X/logo-256.png">
+
 
 <div>
 
@@ -150,30 +182,58 @@ PLAY SHQIP
 FUTBOLL GUIDE
 </small>
 
-</div>
 
 </div>
 
 </div>
+
+</div>
+
 
 <div class="wrap" id="games">
+
 Duke ngarkuar...
+
 </div>
+
 <script>
 
+
 const leagues=[
+
 4429, // FIFA World Cup
+5518, // World Cup Qualifiers
+
+4304, // Champions League
+4480, // Europa League
+4481, // Conference League
+
 4328, // Premier League
 4332, // Serie A
 4335, // La Liga
 4331, // Bundesliga
 4334, // Ligue 1
-4304, // Champions League
+
 4337, // Eredivisie
 4338, // Primeira Liga
+
 4340, // Scottish Premiership
-4341  // Turkish Super Lig
+4341, // Turkish Super Lig
+
+4339, // Belgium
+4346, // Austria
+4350, // Switzerland
+4347, // Denmark
+4348, // Norway
+4349, // Sweden
+
+4351, // Brazil Serie A
+4352, // Argentina
+
+4907 // Albania Superliga
+
 ];
+
 
 
 let cards=[];
@@ -181,33 +241,41 @@ let focus=0;
 let auto=true;
 
 
+
 const wrap=document.querySelector(".wrap");
 
 
 
-const fmt=(d,t)=>
+const fmt=(d,t)=>{
 
-d&&t ?
+if(!d || !t) return "--:--";
 
-new Date(d+"T"+t+"Z")
-.toLocaleTimeString("sq-AL",
+
+return new Date(d+"T"+t+"Z")
+.toLocaleTimeString(
+"sq-AL",
 {
 hour:"2-digit",
 minute:"2-digit",
 hour12:false
-})
+}
+);
 
-:"--:--";
+};
+
 
 
 
 const fmtDate=d=>{
 
-if(!d) return "";
+if(!d)return "";
+
 
 let date=new Date(d);
 
+
 let months=[
+
 "Janar",
 "Shkurt",
 "Mars",
@@ -220,11 +288,18 @@ let months=[
 "Tetor",
 "Nëntor",
 "Dhjetor"
+
 ];
 
-return date.getDate().toString().padStart(2,"0")
-+" "+months[date.getMonth()]
-+" "+date.getFullYear();
+
+return date.getDate()
+.toString()
+.padStart(2,"0")
++" "
++months[date.getMonth()]
++" "
++date.getFullYear();
+
 
 };
 
@@ -234,61 +309,133 @@ return date.getDate().toString().padStart(2,"0")
 
 async function load(){
 
+
+const now=new Date();
+
+
+const today=
+
+now.getFullYear()
++"-"
++String(now.getMonth()+1).padStart(2,"0")
++"-"
++String(now.getDate()).padStart(2,"0");
+
+
+
 let all=[];
+
 
 
 await Promise.all(
 
-leagues.map(async id=>{
+
+leagues.map(async(id)=>{
+
 
 try{
 
-let r=await fetch(
+
+const r=await fetch(
+
 "https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id="+id
+
 );
 
 
-let j=await r.json();
+
+const j=await r.json();
+
 
 
 if(j.events){
 
-all.push(...j.events);
+
+j.events.forEach(ev=>{
+
+
+if(ev.dateEvent===today){
+
+
+all.push(ev);
+
 
 }
 
 
-}catch(e){}
+
+});
+
+
+}
+
+
+
+}catch(e){
+
+
+console.log("Gabim liga",id);
+
+
+}
+
+
 
 })
 
+
+);
+
+
+
+// Rendit sipas orës
+
+all.sort((a,b)=>{
+
+
+const da=new Date(
+
+`${a.dateEvent}T${a.strTime||"00:00:00"}Z`
+
 );
 
 
 
-all.sort((a,b)=>
+const db=new Date(
 
-(a.dateEvent+a.strTime)
-.localeCompare(
-b.dateEvent+b.strTime
-)
+`${b.dateEvent}T${b.strTime||"00:00:00"}Z`
 
 );
+
+
+
+return da-db;
+
+
+});
+
+
+
 
 
 
 games.innerHTML = all.length ?
 
+
 all.map(ev=>`
+
+
 
 <div class="match">
 
 
 <div class="league">
 
-🏆 ${ev.strLeague||""}
+🏆 ${ev.strLeague || "Futboll"}
 
 </div>
+
+
 
 
 
@@ -296,16 +443,21 @@ all.map(ev=>`
 
 
 
+
+
 <div class="team">
 
 
-<img src="${ev.strHomeTeamBadge||'https://via.placeholder.com/50'}">
+<img src="${ev.strHomeTeamBadge || 'https://via.placeholder.com/50'}">
 
 
-${ev.strHomeTeam||""}
+${ev.strHomeTeam || ""}
 
 
 </div>
+
+
+
 
 
 
@@ -313,46 +465,91 @@ ${ev.strHomeTeam||""}
 <div class="center">
 
 
+
+
+
 <div class="time">
+
 
 📅 ${fmtDate(ev.dateEvent)}
 
+
 <br>
+
 
 ⏰ ${fmt(ev.dateEvent,ev.strTime)}
 
+
+
+
+
 <br>
 
+
 <span style="
+
 display:block;
+
 margin-top:8px;
+
 color:white;
+
 font-size:14px;
+
 font-weight:bold;
+
 letter-spacing:1px;
+
 ">
+
 ▶ PLAY SHQIP
+
 </span>
 
+
+
+
 </div>
+
+
+
+
 
 
 
 <div class="status">
 
-SË SHPEJTI
+SOT
 
 </div>
 
 
+
+
 </div>
+
+
+
+
+
+
+
 <div class="team" style="justify-content:flex-end">
 
 
-${ev.strAwayTeam||""}
+${ev.strAwayTeam || ""}
 
 
-<img src="${ev.strAwayTeamBadge||'https://via.placeholder.com/50'}">
+
+<img src="${ev.strAwayTeamBadge || 'https://via.placeholder.com/50'}">
+
+
+</div>
+
+
+
+
+
 
 
 </div>
@@ -361,17 +558,18 @@ ${ev.strAwayTeam||""}
 
 </div>
 
-
-</div>
 
 
 `).join("")
 
 
+
 :
 
 
-"Nuk ka ndeshje futbolli";
+"Nuk ka ndeshje futbolli sot";
+
+
 
 
 
@@ -381,28 +579,38 @@ cards=[...document.querySelectorAll(".match")];
 focus=0;
 
 
+
 if(cards[0]){
+
 
 cards[0].classList.add("tv-focus");
 
-}
-
 
 }
 
+
+
+}
 
 
 function pause(){
 
+
 auto=false;
+
 
 setTimeout(()=>{
 
+
 auto=true;
+
 
 },7000);
 
+
 }
+
+
 
 
 
@@ -414,35 +622,51 @@ document.addEventListener("keydown",e=>{
 if(!cards.length)return;
 
 
+
 pause();
 
 
 
-cards.forEach(c=>
 
-c.classList.remove("tv-focus")
+cards.forEach(c=>{
 
-);
+
+c.classList.remove("tv-focus");
+
+
+});
+
+
 
 
 
 if(e.key==="ArrowDown"){
 
+
 focus=(focus+1)%cards.length;
 
+
 }
+
+
 
 
 
 if(e.key==="ArrowUp"){
 
+
 focus=(focus-1+cards.length)%cards.length;
+
 
 }
 
 
 
+
+
 cards[focus].classList.add("tv-focus");
+
+
 
 
 
@@ -462,6 +686,7 @@ block:"center"
 
 
 
+
 (function loop(){
 
 
@@ -472,9 +697,14 @@ wrap.scrollTop++;
 
 
 
-if(wrap.scrollTop>=wrap.scrollHeight-wrap.clientHeight)
+if(wrap.scrollTop>=wrap.scrollHeight-wrap.clientHeight){
+
 
 wrap.scrollTop=0;
+
+
+}
+
 
 
 }
@@ -484,14 +714,15 @@ wrap.scrollTop=0;
 requestAnimationFrame(loop);
 
 
+
 })();
 
 
 
 
 
-
 load();
+
 
 
 setInterval(load,60000);
@@ -502,4 +733,5 @@ setInterval(load,60000);
 
 
 </body>
+
 </html>
