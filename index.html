@@ -1,109 +1,569 @@
 <!DOCTYPE html>
-<html lang="sq"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Football Guide PRO TV</title>
-<style>
-*{box-sizing:border-box}body{margin:0;background:#070a0f;color:#fff;font-family:Arial,Helvetica,sans-serif;overflow:hidden}
-.header{height:70px;background:#10151d;border-bottom:2px solid #00ff99;color:#00ff99;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;text-shadow:none}
-.wrap{height:calc(100vh - 70px);overflow:auto;padding:18px}
-.match{background:linear-gradient(145deg,#18212c,#0d131b);border:1px solid #263242;border-radius:20px;padding:18px;margin-bottom:16px;transition:.25s;box-shadow:0 6px 18px rgba(0,0,0,.5)}
-.tv-focus{border:2px solid #00ff99;transform:scale(1.03);box-shadow:0 0 18px rgba(0,255,153,.5)}
-.league{color:#95a6bb;font-size:14px;margin-bottom:10px}.row{display:flex;align-items:center;justify-content:space-between}
-.team{width:38%;display:flex;align-items:center;gap:10px;font-size:21px;font-weight:bold}.team img{width:50px;height:50px;border-radius:50%;background:#fff;padding:3px}
-.center{text-align:center}.time{font-size:18px;color:#00ff99;font-weight:bold}.status{display:inline-block;margin-top:8px;background:#ff1744;padding:6px 14px;border-radius:20px;font-size:12px}
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-.tv{
-color:#ffd700;
-font-size:14px;
-margin-top:8px;
-font-weight:bold;
+<title>Football TV</title>
+
+<style>
+
+*{
+box-sizing:border-box;
 }
+
+body{
+margin:0;
+background:#05070b;
+color:white;
+font-family:Arial,sans-serif;
+overflow:hidden;
+}
+
+
+.app{
+display:flex;
+height:100vh;
+}
+
+
+/* MENU */
+
+.sidebar{
+
+width:230px;
+background:#0d121a;
+padding:25px 15px;
+border-right:1px solid #222b38;
+
+}
+
+
 .logo{
+
+font-size:28px;
+font-weight:900;
+color:#00ff99;
+margin-bottom:35px;
+
+}
+
+
+.menu{
+
+padding:14px;
+margin-bottom:10px;
+border-radius:12px;
+font-size:18px;
+color:#b9c3d0;
+
+}
+
+
+.menu.active{
+
+background:#00ff99;
+color:#000;
+font-weight:bold;
+
+}
+
+
+
+/* MAIN */
+
+.main{
+
+flex:1;
+padding:25px;
+
+}
+
+
+
+.header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+}
+
+
+.title{
+
+font-size:32px;
+font-weight:bold;
+
+}
+
+
+.clock{
+
+color:#00ff99;
+font-size:28px;
+
+}
+
+
+
+/* SECTION */
+
+h2{
+
+color:#00ff99;
+margin-top:25px;
+
+}
+
+
+
+/* CARDS */
+
+.grid{
+
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:18px;
+
+}
+
+
+.card{
+
+height:160px;
+background:#111923;
+border-radius:18px;
+padding:18px;
+
+border:2px solid transparent;
+
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+
+}
+
+
+.card.focus{
+
+border-color:#00ff99;
+transform:scale(1.05);
+box-shadow:0 0 25px #00ff9955;
+
+}
+
+
+
+.live{
+
+background:#e60000;
+padding:5px 12px;
+border-radius:20px;
+width:max-content;
+font-size:13px;
+
+}
+
+
+.teams{
+
 display:flex;
 align-items:center;
-gap:10px;
-font-weight:900;
+justify-content:center;
+gap:12px;
+
+font-size:20px;
+font-weight:bold;
+
 }
 
-.logo span{
-font-size:28px;
-color:#00ff99;
+
+.team{
+
+text-align:center;
+
 }
 
-.logo small{
-font-size:12px;
-color:#fff;
+
+.team img{
+
+width:45px;
+height:45px;
+border-radius:50%;
+background:white;
+padding:3px;
+
 display:block;
+margin:auto;
+
 }
- </style></head><body>
-<div class="header">
+
+
+.vs{
+
+color:#777;
+
+}
+
+
+.league{
+
+color:#98a5b6;
+font-size:14px;
+
+}
+
+
+.time{
+
+color:#00ff99;
+font-weight:bold;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<div class="sidebar">
+
+
 <div class="logo">
-⚽
-<span>PLAY SHQIP</span>
-<small>FUTBOLL GUIDE</small>
+⚽ FOOTBALL TV
 </div>
+
+
+<div class="menu active">
+🏠 Home
 </div>
-<div class="wrap" id="games">Duke ngarkuar...</div>
+
+
+<div class="menu">
+🔴 Live Now
+</div>
+
+
+<div class="menu">
+🏆 Champions League
+</div>
+
+
+<div class="menu">
+🇬🇧 Premier League
+</div>
+
+
+<div class="menu">
+🇪🇸 La Liga
+</div>
+
+
+<div class="menu">
+🇮🇹 Serie A
+</div>
+
+
+<div class="menu">
+🇩🇪 Bundesliga
+</div>
+
+
+</div>
+
+
+
+
+<div class="main">
+
+
+<div class="header">
+
+<div class="title">
+Football Live
+</div>
+
+
+<div class="clock" id="clock">
+00:00
+</div>
+
+</div>
+
+
+
+
+<h2>🔴 LIVE NOW</h2>
+
+
+<div class="grid">
+
+
+
+<div class="card focus">
+
+
+<div class="live">
+LIVE
+</div>
+
+
+<div class="teams">
+
+
+<div class="team">
+<img src="https://media.api-sports.io/football/teams/42.png">
+Arsenal
+</div>
+
+
+<div class="vs">
+VS
+</div>
+
+
+<div class="team">
+<img src="https://media.api-sports.io/football/teams/49.png">
+Chelsea
+</div>
+
+
+</div>
+
+
+<div class="league">
+Premier League
+</div>
+
+
+</div>
+
+
+
+
+<div class="card">
+
+
+<div class="live">
+LIVE
+</div>
+
+
+<div class="teams">
+
+
+<div class="team">
+<img src="https://media.api-sports.io/football/teams/541.png">
+Real
+</div>
+
+
+<div class="vs">
+VS
+</div>
+
+
+<div class="team">
+<img src="https://media.api-sports.io/football/teams/529.png">
+Barca
+</div>
+
+
+</div>
+
+
+<div class="league">
+La Liga
+</div>
+
+
+</div>
+
+
+
+
+<div class="card">
+
+
+<div class="time">
+20:45
+</div>
+
+
+<div class="teams">
+
+<div class="team">
+Inter
+</div>
+
+<div class="vs">
+VS
+</div>
+
+<div class="team">
+Milan
+</div>
+
+</div>
+
+
+<div class="league">
+Serie A
+</div>
+
+
+</div>
+
+
+<div class="card">
+
+
+<div class="time">
+21:00
+</div>
+
+
+<div class="teams">
+
+<div class="team">
+Bayern
+</div>
+
+<div class="vs">
+VS
+</div>
+
+<div class="team">
+Dortmund
+</div>
+
+</div>
+
+
+<div class="league">
+Bundesliga
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+<h2>📅 UPCOMING</h2>
+
+
+<div class="grid">
+
+
+<div class="card">
+
+<div class="time">
+22:00
+</div>
+
+<div class="teams">
+PSG VS Lyon
+</div>
+
+<div class="league">
+Ligue 1
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="time">
+21:30
+</div>
+
+<div class="teams">
+Porto VS Benfica
+</div>
+
+<div class="league">
+Portugal
+</div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
 <script>
-const leagues=[
-4328, // Premier League
-4332, // Serie A
-4335, // La Liga
-4331, // Bundesliga
-4334, // Ligue 1
-4304, // Champions League
-4337, // Eredivisie
-4338, // Primeira Liga
-4340, // Scottish Premiership
-4341  // Turkish Super Lig
-];const tvGuide = {
-"Premier League":"SuperSport",
-"Serie A":"SuperSport",
-"La Liga":"SuperSport",
-"Bundesliga":"DAZN",
-"Ligue 1":"beIN Sports",
-"UEFA Champions League":"SuperSport"
-};
-let cards=[],focus=0,auto=true,timer;
-const wrap=document.querySelector('.wrap');
-const fmt=(d,t)=>d&&t?new Date(d+"T"+t+"Z").toLocaleTimeString("sq-AL",{hour:"2-digit",minute:"2-digit",hour12:false}):"--:--";
-const fmtDate=(d)=>{
-if(!d) return "";
-return new Date(d).toLocaleDateString("sq-AL",{
-day:"2-digit",
-month:"long",
-year:"numeric"
-});
-};
-async function load(){
-let all=[];
-await Promise.all(leagues.map(async id=>{
-try{const r=await fetch("https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id="+id);const j=await r.json();if(j.events)all.push(...j.events);}catch(e){}
-}));
-all.sort((a,b)=>{
-    const la = leagues.indexOf(a.idLeague*1);
-    const lb = leagues.indexOf(b.idLeague*1);
 
-    if(la !== lb){
-        return la - lb;
-    }
+function clock(){
 
-    return (a.dateEvent + a.strTime).localeCompare(b.dateEvent + b.strTime);
+let d=new Date();
+
+document.getElementById("clock").innerHTML=
+d.toLocaleTimeString("sq-AL",
+{
+hour:"2-digit",
+minute:"2-digit"
 });
-games.innerHTML=all.length?all.map(ev=>`<div class="match"><div class="league">🏆 ${ev.strLeague||""}</div><div class="row"><div class="team"><img src="${ev.strHomeTeamBadge||'https://via.placeholder.com/50'}">${ev.strHomeTeam||""}</div><div class="center">
-<div class="time">📅 ${fmtDate(ev.dateEvent)}<br>⏰ ${fmt(ev.dateEvent,ev.strTime)}</div>
-<div class="status">SË SHPEJTI</div>
-</div><div class="team" style="justify-content:flex-end">${ev.strAwayTeam||""}<img src="${ev.strAwayTeamBadge||'https://via.placeholder.com/50'}"></div></div></div>`).join(""):"Nuk ka ndeshje";
-cards=[...document.querySelectorAll(".match")];focus=0;if(cards[0])cards[0].classList.add("tv-focus");
+
 }
-function pause(){auto=false;clearTimeout(timer);timer=setTimeout(()=>auto=true,7000);}
+
+setInterval(clock,1000);
+clock();
+
+
+
+let cards=document.querySelectorAll(".card");
+let pos=0;
+
+
 document.addEventListener("keydown",e=>{
-if(!cards.length)return;
-pause();cards.forEach(c=>c.classList.remove("tv-focus"));
-if(e.key==="ArrowDown")focus=(focus+1)%cards.length;
-if(e.key==="ArrowUp")focus=(focus-1+cards.length)%cards.length;
-cards[focus].classList.add("tv-focus");
-cards[focus].scrollIntoView({behavior:"smooth",block:"center"});
+
+cards[pos].classList.remove("focus");
+
+
+if(e.key==="ArrowRight")
+pos=(pos+1)%cards.length;
+
+
+if(e.key==="ArrowLeft")
+pos=(pos-1+cards.length)%cards.length;
+
+
+if(e.key==="ArrowDown")
+pos=(pos+1)%cards.length;
+
+
+if(e.key==="ArrowUp")
+pos=(pos-1+cards.length)%cards.length;
+
+
+
+cards[pos].classList.add("focus");
+
+
 });
-(function loop(){if(auto&&wrap.scrollHeight>wrap.clientHeight){wrap.scrollTop++;if(wrap.scrollTop>=wrap.scrollHeight-wrap.clientHeight)wrap.scrollTop=0;}requestAnimationFrame(loop)})();
-load();setInterval(load,60000);
-</script></body></html>
+
+
+</script>
+
+
+</body>
+</html>
