@@ -33,14 +33,12 @@ justify-content:center;
 }
 
 
-
 .logo{
 display:flex;
 align-items:center;
 gap:12px;
 font-weight:900;
 }
-
 
 
 .play-logo{
@@ -51,12 +49,10 @@ border-radius:50%;
 }
 
 
-
 .logo span{
 font-size:28px;
 color:#e10600;
 }
-
 
 
 .logo small{
@@ -66,13 +62,11 @@ color:white;
 }
 
 
-
 .wrap{
 height:calc(100vh - 70px);
 overflow:auto;
 padding:18px;
 }
-
 
 
 .match{
@@ -85,13 +79,11 @@ box-shadow:0 6px 18px rgba(0,0,0,.7);
 }
 
 
-
 .tv-focus{
 border:2px solid #e10600;
 transform:scale(1.03);
 box-shadow:0 0 18px rgba(225,6,0,.6);
 }
-
 
 
 .league{
@@ -101,13 +93,11 @@ margin-bottom:10px;
 }
 
 
-
 .row{
 display:flex;
 align-items:center;
 justify-content:space-between;
 }
-
 
 
 .team{
@@ -120,7 +110,6 @@ font-weight:bold;
 }
 
 
-
 .team img{
 width:50px;
 height:50px;
@@ -130,11 +119,9 @@ padding:3px;
 }
 
 
-
 .center{
 text-align:center;
 }
-
 
 
 .time{
@@ -142,7 +129,6 @@ font-size:18px;
 color:#e10600;
 font-weight:bold;
 }
-
 
 
 .status{
@@ -158,8 +144,8 @@ border:1px solid #e10600;
 
 
 </style>
-
 </head>
+
 
 <body>
 
@@ -178,6 +164,7 @@ src="https://i.ibb.co/Kpd6bW8X/logo-256.png">
 PLAY SHQIP
 </span>
 
+
 <small>
 FUTBOLL GUIDE
 </small>
@@ -190,47 +177,121 @@ FUTBOLL GUIDE
 </div>
 
 
+
 <div class="wrap" id="games">
 
 Duke ngarkuar...
 
 </div>
 
+
+
 <script>
 
 
 const leagues=[
 
+
+/* 🌍 KOMBËTARE + BOTËROR */
+
 4429, // FIFA World Cup
 5518, // World Cup Qualifiers
+// Nations League
+// EURO
+
+
+/* 🏆 UEFA KLUBE */
 
 4304, // Champions League
 4480, // Europa League
 4481, // Conference League
 
+
+/* 🇬🇧 ANGLI */
+
 4328, // Premier League
+
+
+/* 🇮🇹 ITALI */
+
 4332, // Serie A
+
+
+/* 🇪🇸 SPANJE */
+
 4335, // La Liga
+
+
+/* 🇩🇪 GJERMANI */
+
 4331, // Bundesliga
+
+
+/* 🇫🇷 FRANCË */
+
 4334, // Ligue 1
 
+
+/* 🇳🇱 HOLANDË */
+
 4337, // Eredivisie
+
+
+/* 🇵🇹 PORTUGALI */
+
 4338, // Primeira Liga
 
-4340, // Scottish Premiership
+
+/* 🇹🇷 TURQI */
+
 4341, // Turkish Super Lig
 
-4339, // Belgium
-4346, // Austria
-4350, // Switzerland
-4347, // Denmark
-4348, // Norway
-4349, // Sweden
+
+/* 🇧🇪 BELGJIKË */
+
+4339,
+
+
+/* 🇦🇹 AUSTRI */
+
+4346,
+
+
+/* 🇨🇭 ZVICËR */
+
+4350,
+
+
+/* 🇩🇰 DANIMARKË */
+
+4347,
+
+
+/* 🇳🇴 NORVEGJI */
+
+4348,
+
+
+/* 🇸🇪 SUEDI */
+
+4349,
+
+
+/* 🇦🇱 SHQIPËRI */
+
+4907,
+
+
+/* 🇽🇰 KOSOVË */
+
+4968,
+
+
+/* 🌎 AMERIKË E JUGUT */
 
 4351, // Brazil Serie A
-4352, // Argentina
+4352, // Argentina Serie A
 
-4907 // Albania Superliga
 
 ];
 
@@ -243,9 +304,6 @@ let auto=true;
 
 
 const wrap=document.querySelector(".wrap");
-
-
-
 const fmt=(d,t)=>{
 
 if(!d || !t) return "--:--";
@@ -299,7 +357,6 @@ return date.getDate()
 +months[date.getMonth()]
 +" "
 +date.getFullYear();
-
 
 };
 
@@ -363,7 +420,6 @@ all.push(ev);
 }
 
 
-
 });
 
 
@@ -386,9 +442,21 @@ console.log("Gabim liga",id);
 
 );
 
+// heq dublimet
+
+all=[
+
+...new Map(
+
+all.map(ev=>[ev.idEvent,ev])
+
+).values()
+
+];
 
 
-// Rendit sipas orës
+
+// rendit sipas orës
 
 all.sort((a,b)=>{
 
@@ -400,7 +468,6 @@ const da=new Date(
 );
 
 
-
 const db=new Date(
 
 `${b.dateEvent}T${b.strTime||"00:00:00"}Z`
@@ -408,12 +475,10 @@ const db=new Date(
 );
 
 
-
 return da-db;
 
 
 });
-
 
 
 
@@ -434,7 +499,6 @@ all.map(ev=>`
 🏆 ${ev.strLeague || "Futboll"}
 
 </div>
-
 
 
 
@@ -527,13 +591,6 @@ SOT
 
 
 </div>
-
-
-
-
-
-
-
 <div class="team" style="justify-content:flex-end">
 
 
@@ -591,8 +648,6 @@ cards[0].classList.add("tv-focus");
 
 
 }
-
-
 function pause(){
 
 
@@ -624,7 +679,6 @@ if(!cards.length)return;
 
 
 pause();
-
 
 
 
@@ -680,13 +734,6 @@ block:"center"
 
 
 });
-
-
-
-
-
-
-
 (function loop(){
 
 
@@ -726,12 +773,10 @@ load();
 
 
 setInterval(load,60000);
-
-
-
 </script>
 
 
 </body>
+
 
 </html>
