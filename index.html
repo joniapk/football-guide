@@ -104,6 +104,6 @@ if(e.key==="ArrowUp")focus=(focus-1+cards.length)%cards.length;
 cards[focus].classList.add("tv-focus");
 cards[focus].scrollIntoView({behavior:"smooth",block:"center"});
 });
-(function loop(){if(auto&&wrap.scrollHeight>wrap.clientHeight){wrap.scrollTop+=0.5;if(wrap.scrollTop>=wrap.scrollHeight-wrap.clientHeight)wrap.scrollTop=0;}requestAnimationFrame(loop)})();
+(function loop(){if(auto&&wrap.scrollHeight>wrap.clientHeight){wrap.scrollTop++;if(wrap.scrollTop>=wrap.scrollHeight-wrap.clientHeight)wrap.scrollTop=0;}requestAnimationFrame(loop)})();
 load();setInterval(load,60000);
 </script></body></html>
