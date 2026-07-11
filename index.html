@@ -1,109 +1,214 @@
 <!DOCTYPE html>
-<html lang="sq"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Football Guide PRO TV</title>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Play Shqip</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;background:#070a0f;color:#fff;font-family:Arial,Helvetica,sans-serif;overflow:hidden}
-.header{height:70px;background:#10151d;border-bottom:2px solid #00ff99;color:#00ff99;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;text-shadow:none}
-.wrap{height:calc(100vh - 70px);overflow:auto;padding:18px}
-.match{background:linear-gradient(145deg,#18212c,#0d131b);border:1px solid #263242;border-radius:20px;padding:18px;margin-bottom:16px;transition:.25s;box-shadow:0 6px 18px rgba(0,0,0,.5)}
-.tv-focus{border:2px solid #00ff99;transform:scale(1.03);box-shadow:0 0 18px rgba(0,255,153,.5)}
-.league{color:#95a6bb;font-size:14px;margin-bottom:10px}.row{display:flex;align-items:center;justify-content:space-between}
-.team{width:38%;display:flex;align-items:center;gap:10px;font-size:21px;font-weight:bold}.team img{width:50px;height:50px;border-radius:50%;background:#fff;padding:3px}
-.center{text-align:center}.time{font-size:18px;color:#00ff99;font-weight:bold}.status{display:inline-block;margin-top:8px;background:#ff1744;padding:6px 14px;border-radius:20px;font-size:12px}
-
-.tv{
-color:#ffd700;
-font-size:14px;
-margin-top:8px;
-font-weight:bold;
-}
-.logo{
-display:flex;
-align-items:center;
-gap:10px;
-font-weight:900;
+body {
+    margin:0;
+    background:#000;
+    color:white;
+    font-family:Arial,sans-serif;
 }
 
-.logo span{
-font-size:28px;
-color:#00ff99;
+h1 {
+    text-align:center;
+    font-size:42px;
 }
 
-.logo small{
-font-size:12px;
-color:#fff;
-display:block;
+#status {
+    text-align:center;
+    font-size:25px;
+    margin:20px;
 }
- </style></head><body>
-<div class="header">
-<div class="logo">
-⚽
-<span>PLAY SHQIP</span>
-<small>FUTBOLL GUIDE</small>
+
+table {
+    width:96%;
+    margin:auto;
+    border-collapse:collapse;
+    font-size:24px;
+}
+
+th {
+    background:#0066cc;
+    padding:15px;
+}
+
+td {
+    padding:15px;
+    text-align:center;
+    border-bottom:2px solid #333;
+}
+
+tr:nth-child(even){
+    background:#151515;
+}
+
+.logo {
+    width:70px;
+    height:70px;
+    object-fit:contain;
+}
+
+.team {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:15px;
+}
+
+.match {
+    font-size:28px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>⚽ Play Shqip</h1>
+
+<div id="status">
+Duke ngarkuar...
 </div>
-</div>
-<div class="wrap" id="games">Duke ngarkuar...</div>
+
+
+<table>
+
+<thead>
+<tr>
+<th>Ora</th>
+<th>Ndeshja</th>
+<th>Liga</th>
+</tr>
+</thead>
+
+<tbody id="matches">
+</tbody>
+
+</table>
+
+
 <script>
-const leagues=[
-4328, // Premier League
-4332, // Serie A
-4335, // La Liga
-4331, // Bundesliga
-4334, // Ligue 1
-4304, // Champions League
-4337, // Eredivisie
-4338, // Primeira Liga
-4340, // Scottish Premiership
-4341  // Turkish Super Lig
-];const tvGuide = {
-"Premier League":"SuperSport",
-"Serie A":"SuperSport",
-"La Liga":"SuperSport",
-"Bundesliga":"DAZN",
-"Ligue 1":"beIN Sports",
-"UEFA Champions League":"SuperSport"
-};
-let cards=[],focus=0,auto=true,timer;
-const wrap=document.querySelector('.wrap');
-const fmt=(d,t)=>d&&t?new Date(d+"T"+t+"Z").toLocaleTimeString("sq-AL",{hour:"2-digit",minute:"2-digit",hour12:false}):"--:--";
-const fmtDate=(d)=>{
-if(!d) return "";
-return new Date(d).toLocaleDateString("sq-AL",{
-day:"2-digit",
-month:"long",
-year:"numeric"
-});
-};
-async function load(){
-let all=[];
-await Promise.all(leagues.map(async id=>{
-try{const r=await fetch("https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id="+id);const j=await r.json();if(j.events)all.push(...j.events);}catch(e){}
-}));
-all.sort((a,b)=>{
-    const la = leagues.indexOf(a.idLeague*1);
-    const lb = leagues.indexOf(b.idLeague*1);
 
-    if(la !== lb){
-        return la - lb;
-    }
+async function loadMatches(){
 
-    return (a.dateEvent + a.strTime).localeCompare(b.dateEvent + b.strTime);
-});
-games.innerHTML=all.length?all.map(ev=>`<div class="match"><div class="league">🏆 ${ev.strLeague||""}</div><div class="row"><div class="team"><img src="${ev.strHomeTeamBadge||'https://via.placeholder.com/50'}">${ev.strHomeTeam||""}</div><div class="center">
-<div class="time">📅 ${fmtDate(ev.dateEvent)}<br>⏰ ${fmt(ev.dateEvent,ev.strTime)}</div>
-<div class="status">SË SHPEJTI</div>
-</div><div class="team" style="justify-content:flex-end">${ev.strAwayTeam||""}<img src="${ev.strAwayTeamBadge||'https://via.placeholder.com/50'}"></div></div></div>`).join(""):"Nuk ka ndeshje";
-cards=[...document.querySelectorAll(".match")];focus=0;if(cards[0])cards[0].classList.add("tv-focus");
+try{
+
+let date =
+new Date().toISOString().slice(0,10);
+
+
+let url =
+"https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d="
++date+"&s=Soccer";
+
+
+let res = await fetch(url);
+
+let data = await res.json();
+
+
+let box=document.getElementById("matches");
+
+box.innerHTML="";
+
+
+if(!data.events){
+
+document.getElementById("status").innerHTML =
+"Nuk ka ndeshje sot";
+
+return;
+
 }
-function pause(){auto=false;clearTimeout(timer);timer=setTimeout(()=>auto=true,7000);}
-document.addEventListener("keydown",e=>{
-if(!cards.length)return;
-pause();cards.forEach(c=>c.classList.remove("tv-focus"));
-if(e.key==="ArrowDown")focus=(focus+1)%cards.length;
-if(e.key==="ArrowUp")focus=(focus-1+cards.length)%cards.length;
-cards[focus].classList.add("tv-focus");
-cards[focus].scrollIntoView({behavior:"smooth",block:"center"});
+
+
+data.events.forEach(game=>{
+
+
+let homeLogo =
+game.strHomeTeamBadge ||
+"";
+
+let awayLogo =
+game.strAwayTeamBadge ||
+"";
+
+
+box.innerHTML += `
+
+<tr>
+
+<td>
+${game.strTime ? game.strTime.substring(0,5) : "-"}
+</td>
+
+
+<td>
+
+<div class="team">
+
+<div>
+<img class="logo" src="${homeLogo}">
+<br>
+${game.strHomeTeam}
+</div>
+
+
+<div class="match">
+VS
+</div>
+
+
+<div>
+<img class="logo" src="${awayLogo}">
+<br>
+${game.strAwayTeam}
+</div>
+
+</div>
+
+</td>
+
+
+<td>
+${game.strLeague || "-"}
+</td>
+
+
+</tr>
+
+`;
+
 });
-(function loop(){if(auto&&wrap.scrollHeight>wrap.clientHeight){wrap.scrollTop++;if(wrap.scrollTop>=wrap.scrollHeight-wrap.clientHeight)wrap.scrollTop=0;}requestAnimationFrame(loop)})();
-load();setInterval(load,60000);
-</script></body></html>
+
+
+document.getElementById("status").innerHTML =
+"U përditësua";
+
+}
+
+catch(e){
+
+document.getElementById("status").innerHTML =
+"Gabim gjatë lidhjes";
+
+}
+
+}
+
+
+loadMatches();
+
+setInterval(loadMatches,300000);
+
+</script>
+
+
+</body>
+</html>
