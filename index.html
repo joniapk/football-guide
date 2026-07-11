@@ -150,14 +150,11 @@ border-radius:20px;
 font-size:12px;
 }
 
-
-
 </style>
 
 </head>
 
 <body>
-
 
 <div class="header">
 
@@ -166,46 +163,26 @@ font-size:12px;
 <img class="play-logo"
 src="https://i.ibb.co/Kpd6bW8X/logo-256.png">
 
-
 <div>
 
 <span>
 PLAY SHQIP
 </span>
 
-
 <small>
 FUTBOLL GUIDE
 </small>
 
-
 </div>
 
 </div>
 
 </div>
+
 <div class="wrap" id="games">
 Duke ngarkuar...
 </div>
-
-
-
 <script>
-
-
-const leagues=[
-4328,
-4332,
-4335,
-4331,
-4334,
-4304,
-4337,
-4338,
-4340,
-4341
-];
-
 
 let cards=[];
 let focus=0;
@@ -252,52 +229,50 @@ year:"numeric"
 
 async function load(){
 
+const today = new Date().toISOString().split("T")[0];
 
 let all=[];
 
 
-
-await Promise.all(
-
-leagues.map(async id=>{
-
 try{
 
-let r=await fetch(
-"https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id="+id
+const r = await fetch(
+"https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d="+today+"&s=Soccer"
 );
 
 
-let j=await r.json();
+const j = await r.json();
 
 
-if(j.events)
-all.push(...j.events);
+if(j.events){
+all=j.events;
+}
 
 
-}catch(e){}
+}catch(e){
 
-})
+console.log(e);
 
-);
+}
 
 
 
-all.sort((a,b)=>
+all.sort((a,b)=>{
 
-(a.dateEvent+a.strTime)
-.localeCompare(
-b.dateEvent+b.strTime
-)
+const da = new Date(`${a.dateEvent}T${a.strTime||"00:00:00"}Z`);
 
-);
+const db = new Date(`${b.dateEvent}T${b.strTime||"00:00:00"}Z`);
+
+return da-db;
+
+});
 
 
 
 games.innerHTML = all.length ?
 
-all.map(ev=>`
 
+all.map(ev=>`
 
 <div class="match">
 
@@ -311,6 +286,7 @@ all.map(ev=>`
 
 
 <div class="row">
+
 
 
 <div class="team">
@@ -344,7 +320,7 @@ ${ev.strHomeTeam||""}
 
 <div class="status">
 
-SË SHPEJTI
+SOT
 
 </div>
 
@@ -378,26 +354,25 @@ ${ev.strAwayTeam||""}
 
 :
 
-"Nuk ka ndeshje";
+
+"Nuk ka ndeshje futbolli sot";
 
 
 
 cards=[...document.querySelectorAll(".match")];
 
+
 focus=0;
 
 
+if(cards[0]){
 
-if(cards[0])
 cards[0].classList.add("tv-focus");
-
 
 }
 
 
-
-
-
+}
 function pause(){
 
 auto=false;
