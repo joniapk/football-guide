@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="sq">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Football TV</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Football TV Guide</title>
 
 <style>
 
-*{box-sizing:border-box}
+*{
+box-sizing:border-box;
+}
 
 body{
 margin:0;
 background:#05070b;
 color:white;
-font-family:Arial,sans-serif;
+font-family:Arial, sans-serif;
 overflow:hidden;
 }
 
@@ -28,84 +31,109 @@ height:100vh;
 /* MENU */
 
 .sidebar{
-width:260px;
-background:#0c1118;
-padding:25px 15px;
+
+width:270px;
+background:#0d131c;
+padding:20px;
+
 }
 
 
 .logo{
+
 font-size:28px;
-font-weight:900;
+font-weight:bold;
 color:#00ff99;
-margin-bottom:35px;
+margin-bottom:30px;
+
 }
 
 
 .menu{
+
 padding:15px;
 margin-bottom:10px;
 border-radius:12px;
 font-size:20px;
-color:#aeb8c5;
+color:#aaa;
+
 }
 
 
-.menu.focus-menu{
+.menu.focus{
+
 background:#00ff99;
 color:#000;
-transform:scale(1.05);
-font-weight:bold;
+
 }
 
 
 
-/* MAIN */
+/* CONTENT */
 
-.main{
+.content{
+
 flex:1;
 padding:25px;
+
 }
 
 
 .header{
+
 display:flex;
 justify-content:space-between;
 align-items:center;
+
 }
 
 
 .title{
-font-size:34px;
+
+font-size:32px;
 font-weight:bold;
+
 }
 
 
 .clock{
+
 font-size:28px;
 color:#00ff99;
+
 }
 
 
 
-h2{
-color:#00ff99;
+#status{
+
+color:#aaa;
+font-size:18px;
+
 }
 
 
-.grid{
+
+/* MATCH LIST */
+
+
+.matches{
+
 display:grid;
-grid-template-columns:repeat(4,1fr);
+grid-template-columns:repeat(3,1fr);
 gap:18px;
+margin-top:20px;
+
 }
 
 
-.card{
 
-height:170px;
+.match{
+
 background:#111923;
 border-radius:18px;
-padding:18px;
+padding:20px;
+height:190px;
 
 border:2px solid transparent;
 
@@ -116,62 +144,66 @@ justify-content:space-between;
 }
 
 
-.card.focus{
+
+.match.focus{
 
 border-color:#00ff99;
-transform:scale(1.06);
-box-shadow:0 0 25px #00ff9955;
+transform:scale(1.05);
 
 }
 
 
-.live{
 
-background:#e60000;
-padding:6px 12px;
-border-radius:20px;
-width:max-content;
+.time{
+
+color:#00ff99;
+font-size:22px;
+font-weight:bold;
 
 }
+
 
 
 .teams{
 
-display:flex;
-justify-content:center;
-align-items:center;
-gap:15px;
-
+text-align:center;
 font-size:21px;
 font-weight:bold;
 
 }
 
 
+
+.logo-team{
+
+width:45px;
+height:45px;
+background:white;
+border-radius:50%;
+vertical-align:middle;
+padding:3px;
+
+}
+
+
+
 .league{
 
-color:#9aa7b8;
+color:#9aa8b8;
+font-size:15px;
 
 }
 
 
-.time{
-
-color:#00ff99;
-font-size:20px;
-}
 
 
+/* PLAYER */
 
-/* PLAYER PAGE */
-
-
-.player-page{
+.player{
 
 display:none;
 
 position:fixed;
-
 top:0;
 left:0;
 
@@ -180,31 +212,20 @@ height:100vh;
 
 background:#05070b;
 
-z-index:20;
+z-index:99;
 
 }
 
 
 
-.player-header{
+.player h1{
 
-height:75px;
-
-background:#0c1118;
-
-border-bottom:2px solid #00ff99;
-
-display:flex;
-
-align-items:center;
-
-padding-left:30px;
-
-font-size:28px;
-
-font-weight:bold;
-
+background:#0d131c;
 color:#00ff99;
+
+padding:25px;
+
+margin:0;
 
 }
 
@@ -212,17 +233,15 @@ color:#00ff99;
 
 .player-box{
 
-height:75%;
+height:80%;
 
 display:flex;
-
 flex-direction:column;
 
+justify-content:center;
 align-items:center;
 
-justify-content:center;
-
-font-size:35px;
+font-size:30px;
 
 }
 
@@ -233,33 +252,17 @@ font-size:35px;
 width:100px;
 height:100px;
 
-background:#00ff99;
-
-color:#000;
-
 border-radius:50%;
 
-display:flex;
+background:#00ff99;
 
+color:black;
+
+display:flex;
+justify-content:center;
 align-items:center;
 
-justify-content:center;
-
 font-size:45px;
-
-margin-bottom:30px;
-
-}
-
-
-
-.back{
-
-text-align:center;
-
-font-size:22px;
-
-color:#aaa;
 
 }
 
@@ -270,7 +273,6 @@ color:#aaa;
 
 
 <body>
-
 
 
 <div class="app">
@@ -284,106 +286,65 @@ color:#aaa;
 </div>
 
 
-<div class="menu focus-menu">
-🏠 Home
+<div class="menu focus" data-league="all">
+🏠 Të gjitha
 </div>
 
-<div class="menu">
-🔴 Live
-</div>
 
-<div class="menu">
-🏆 Champions League
-</div>
-
-<div class="menu">
+<div class="menu" data-league="Premier League">
 🇬🇧 Premier League
 </div>
 
-<div class="menu">
+
+<div class="menu" data-league="La Liga">
 🇪🇸 La Liga
 </div>
 
-<div class="menu">
+
+<div class="menu" data-league="Serie A">
 🇮🇹 Serie A
 </div>
 
 
+<div class="menu" data-league="Bundesliga">
+🇩🇪 Bundesliga
+</div>
+
+
+<div class="menu" data-league="UEFA Champions League">
+🏆 Champions League
+</div>
+
+
 </div>
 
 
 
-<div class="main">
+
+<div class="content">
 
 
 <div class="header">
 
 <div class="title">
-Football Live
+Ndeshjet Sot
 </div>
+
 
 <div class="clock" id="clock">
 00:00
 </div>
 
-</div>
-
-
-<h2>🔴 LIVE MATCHES</h2>
-
-
-<div class="grid">
-
-
-<div class="card">
-
-<div class="live">
-LIVE
-</div>
-
-<div class="teams">
-Arsenal VS Chelsea
-</div>
-
-<div class="league">
-Premier League
-</div>
 
 </div>
 
 
-
-<div class="card">
-
-<div class="time">
-20:45
-</div>
-
-<div class="teams">
-Real Madrid VS Barcelona
-</div>
-
-<div class="league">
-La Liga
-</div>
-
-</div>
+<p id="status">
+Duke kërkuar ndeshjet...
+</p>
 
 
-
-<div class="card">
-
-<div class="time">
-21:00
-</div>
-
-<div class="teams">
-Inter VS Milan
-</div>
-
-<div class="league">
-Serie A
-</div>
+<div class="matches" id="matches">
 
 </div>
 
@@ -393,30 +354,24 @@ Serie A
 
 </div>
 
-</div>
 
 
 
+<div class="player" id="player">
 
-<!-- PLAYER -->
-
-<div class="player-page" id="playerPage">
-
-
-<div class="player-header">
-⚽ FOOTBALL TV PLAYER
-</div>
+<h1>
+⚽ Football Player
+</h1>
 
 
 <div class="player-box">
-
 
 <div class="play">
 ▶
 </div>
 
 
-<div id="matchName">
+<div id="playerName">
 Ndeshja
 </div>
 
@@ -424,171 +379,541 @@ Ndeshja
 </div>
 
 
-<div class="back">
-BACK për kthim
 </div>
-
-
-</div>
-
-
-
-
-
 <script>
 
+let allMatches = [];
 
-function clock(){
+let currentLeague = "all";
+
+let cards = [];
+
+
+
+function getDate(){
+
+let d = new Date();
+
+return d.getFullYear()+"-"+
+String(d.getMonth()+1).padStart(2,"0")+"-"+
+String(d.getDate()).padStart(2,"0");
+
+}
+
+
+
+// NGARKO NDESHJET
+
+async function loadMatches(){
+
+
+document.getElementById("status").innerHTML =
+"Duke ngarkuar ndeshjet...";
+
+
+
+let date=getDate();
+
+
+
+try{
+
+
+let response = await fetch(
+
+"https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d="
++date+
+"&s=Soccer"
+
+);
+
+
+
+let data = await response.json();
+
+
+
+allMatches = data.events || [];
+
+
+
+renderMatches(currentLeague);
+
+
+
+document.getElementById("status").innerHTML =
+"U gjetën "+allMatches.length+" ndeshje";
+
+
+
+}
+
+catch(error){
+
+
+console.log(error);
+
+
+document.getElementById("status").innerHTML =
+"Gabim lidhjeje";
+
+
+}
+
+
+
+}
+
+
+
+
+
+// SHFAQ NDESHJET
+
+
+function renderMatches(league){
+
+
+
+let box=document.getElementById("matches");
+
+
+
+let list=allMatches;
+
+
+
+if(league!="all"){
+
+
+list=allMatches.filter(game=>
+
+
+game.strLeague==league
+
+
+);
+
+
+}
+
+
+
+
+if(list.length==0){
+
+
+box.innerHTML=
+
+"<h2>Nuk ka ndeshje për këtë ligë</h2>";
+
+
+cards=[];
+
+return;
+
+
+}
+
+
+
+
+
+box.innerHTML=list.map(game=>`
+
+
+<div class="match">
+
+
+<div class="time">
+
+${game.strTime ?
+game.strTime.substring(0,5)
+:"--:--"}
+
+</div>
+
+
+
+<div class="teams">
+
+
+${game.strHomeTeam}
+
+<br>
+
+<span style="color:#777">
+VS
+</span>
+
+<br>
+
+
+${game.strAwayTeam}
+
+
+
+</div>
+
+
+
+
+<div class="league">
+
+🏆 ${game.strLeague}
+
+</div>
+
+
+</div>
+
+
+`).join("");
+
+
+
+cards=document.querySelectorAll(".match");
+
+}
+
+
+
+
+
+// KLIK LIGAT
+
+
+document.querySelectorAll(".menu")
+.forEach(item=>{
+
+
+item.addEventListener("click",()=>{
+
+
+document.querySelectorAll(".menu")
+.forEach(x=>x.classList.remove("focus"));
+
+
+
+item.classList.add("focus");
+
+
+
+currentLeague=item.dataset.league;
+
+
+
+renderMatches(currentLeague);
+
+
+
+});
+
+
+});
+
+
+
+
+
+
+// ORA
+
+
+function updateClock(){
+
 
 let d=new Date();
 
+
 document.getElementById("clock").innerHTML=
+
 d.toLocaleTimeString("sq-AL",
 {
 hour:"2-digit",
 minute:"2-digit"
 });
 
-}
-
-setInterval(clock,1000);
-clock();
-
-
-
-let menu=document.querySelectorAll(".menu");
-
-let cards=document.querySelectorAll(".card");
-
-
-let menuPos=0;
-let cardPos=0;
-
-let mode="menu";
-
-
-
-function menuUpdate(){
-
-menu.forEach(x=>x.classList.remove("focus-menu"));
-
-menu[menuPos].classList.add("focus-menu");
 
 }
 
 
+setInterval(updateClock,1000);
 
-function cardUpdate(){
+updateClock();
 
-cards.forEach(x=>x.classList.remove("focus"));
 
-cards[cardPos].classList.add("focus");
+
+
+
+// START
+
+
+loadMatches();
+
+
+// AUTO UPDATE 10 MINUTA
+
+setInterval(loadMatches,600000);
+
+
+
+let menuItems = document.querySelectorAll(".menu");
+
+let menuIndex = 0;
+
+let matchIndex = 0;
+
+let tvMode = "menu";
+
+
+
+function updateMenuFocus(){
+
+menuItems.forEach(x=>{
+x.classList.remove("focus");
+});
+
+
+menuItems[menuIndex].classList.add("focus");
 
 }
 
 
 
 
-document.addEventListener("keydown",e=>{
+function updateMatchFocus(){
 
 
-if(mode==="menu"){
+cards.forEach(x=>{
+x.classList.remove("focus");
+});
 
 
-if(e.key==="ArrowDown"){
+if(cards[matchIndex]){
 
-menuPos++;
+cards[matchIndex].classList.add("focus");
 
-if(menuPos>=menu.length)
-menuPos=0;
+cards[matchIndex].scrollIntoView({
 
-menuUpdate();
+behavior:"smooth",
 
-}
+block:"center"
 
-
-if(e.key==="ArrowUp"){
-
-menuPos--;
-
-if(menuPos<0)
-menuPos=menu.length-1;
-
-menuUpdate();
-
-}
-
-
-if(e.key==="ArrowRight"){
-
-mode="cards";
-
-cardUpdate();
+});
 
 }
 
 
 }
+
+
+
+
+// TELEKOMANDA ANDROID TV
+
+
+document.addEventListener("keydown",function(e){
+
+
+
+// MENU
+
+
+if(tvMode=="menu"){
+
+
+
+if(e.key=="ArrowDown"){
+
+
+menuIndex++;
+
+
+if(menuIndex>=menuItems.length)
+
+menuIndex=0;
+
+
+updateMenuFocus();
+
+
+}
+
+
+
+if(e.key=="ArrowUp"){
+
+
+menuIndex--;
+
+
+if(menuIndex<0)
+
+menuIndex=menuItems.length-1;
+
+
+updateMenuFocus();
+
+
+}
+
+
+
+
+if(e.key=="ArrowRight"){
+
+
+tvMode="matches";
+
+
+matchIndex=0;
+
+updateMatchFocus();
+
+
+}
+
+
+
+if(e.key=="Enter"){
+
+
+currentLeague=
+
+menuItems[menuIndex].dataset.league;
+
+
+renderMatches(currentLeague);
+
+
+tvMode="matches";
+
+
+}
+
+
+
+
+}
+
+
+
+
+
+// NDESHJET
 
 
 
 else{
 
 
-if(e.key==="ArrowRight" || e.key==="ArrowDown"){
-
-cardPos++;
-
-if(cardPos>=cards.length)
-cardPos=0;
-
-cardUpdate();
-
-}
+if(e.key=="ArrowDown" ||
+e.key=="ArrowRight"){
 
 
-
-if(e.key==="ArrowLeft"){
-
-mode="menu";
-
-menuUpdate();
-
-}
+matchIndex++;
 
 
+if(matchIndex>=cards.length)
 
-if(e.key==="Enter"){
-
-
-document.getElementById("playerPage").style.display="block";
+matchIndex=0;
 
 
-document.getElementById("matchName").innerHTML=
-cards[cardPos].innerText;
+updateMatchFocus();
 
 
 }
 
 
 
+
+
+if(e.key=="ArrowUp" ||
+e.key=="ArrowLeft"){
+
+
+matchIndex--;
+
+
+if(matchIndex<0)
+
+matchIndex=cards.length-1;
+
+
+updateMatchFocus();
+
+
 }
 
 
 
-if(e.key==="Escape" || e.key==="Backspace"){
 
 
-document.getElementById("playerPage").style.display="none";
+if(e.key=="ArrowLeft"){
+
+
+tvMode="menu";
+
+updateMenuFocus();
+
 
 }
+
+
+
+
+
+if(e.key=="Enter"){
+
+
+openPlayer();
+
+
+}
+
+
+}
+
 
 
 });
 
 
+
+
+
+
+// PLAYER
+
+
+function openPlayer(){
+
+
+if(!cards[matchIndex])
+
+return;
+
+
+
+let text=cards[matchIndex].innerText;
+
+
+
+document.getElementById("playerName").innerHTML=
+text;
+
+
+
+document.getElementById("player").style.display="block";
+
+
+}
+
+
+
+
+// BACK TELEKOMANDA
 </script>
-
-
 </body>
 </html>
