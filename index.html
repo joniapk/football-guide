@@ -9,46 +9,30 @@
 
 <style>
 
-*{
-box-sizing:border-box;
-}
-
 body{
-
 margin:0;
-background:#000;
+background:#050505;
 color:white;
 font-family:Arial,sans-serif;
 overflow:hidden;
-
 }
 
 
 .header{
 
-height:90px;
+height:75px;
 background:#111;
 text-align:center;
-font-size:45px;
+font-size:38px;
 font-weight:bold;
-padding:20px;
+padding:15px;
 
 }
-
-
-#status{
-
-text-align:center;
-font-size:25px;
-padding:10px;
-
-}
-
 
 
 .scrollbox{
 
-height:calc(100vh - 100px);
+height:calc(100vh - 75px);
 overflow:hidden;
 
 }
@@ -57,7 +41,7 @@ overflow:hidden;
 
 .container{
 
-width:98%;
+width:94%;
 margin:auto;
 
 }
@@ -66,12 +50,11 @@ margin:auto;
 
 .card{
 
-width:100%;
-background:#151515;
-margin:25px 0;
-padding:35px;
-border-radius:25px;
-text-align:center;
+background:#161616;
+margin:18px 0;
+padding:22px;
+border-radius:15px;
+border:1px solid #333;
 
 }
 
@@ -79,30 +62,21 @@ text-align:center;
 
 .league{
 
-font-size:36px;
+text-align:center;
+font-size:28px;
 font-weight:bold;
 color:#ffcc00;
-margin-bottom:20px;
+margin-bottom:15px;
 
 }
 
 
 
-.time{
-
-font-size:32px;
-margin-bottom:25px;
-
-}
-
-
-
-.teams{
+.match{
 
 display:flex;
-justify-content:space-around;
 align-items:center;
-width:100%;
+justify-content:space-between;
 
 }
 
@@ -111,9 +85,20 @@ width:100%;
 .team{
 
 width:35%;
-font-size:32px;
+display:flex;
+align-items:center;
+gap:15px;
+font-size:28px;
 font-weight:bold;
-text-align:center;
+
+}
+
+
+
+.team.right{
+
+justify-content:flex-end;
+text-align:right;
 
 }
 
@@ -121,20 +106,21 @@ text-align:center;
 
 .logo{
 
-width:130px;
-height:130px;
+width:70px;
+height:70px;
 object-fit:contain;
-margin-bottom:15px;
 
 }
 
 
 
-.vs{
+.time{
 
-font-size:45px;
+width:20%;
+text-align:center;
+font-size:32px;
 font-weight:bold;
-color:#ff3333;
+color:white;
 
 }
 
@@ -149,19 +135,8 @@ color:#ff3333;
 
 
 <div class="header">
-
 ⚽ SPORT TV
-
 </div>
-
-
-
-<div id="status">
-
-Duke ngarkuar...
-
-</div>
-
 
 
 <div class="scrollbox" id="scrollbox">
@@ -183,24 +158,24 @@ async function loadMatches(){
 try{
 
 
-let today =
+let date =
 new Date().toISOString().slice(0,10);
 
 
 
 let url =
 "https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d="
-+today+"&s=Soccer";
++date+"&s=Soccer";
 
 
 
-let response =
+let res =
 await fetch(url);
 
 
 
 let data =
-await response.json();
+await res.json();
 
 
 
@@ -213,14 +188,12 @@ box.innerHTML="";
 
 if(!data.events){
 
-
-box.innerHTML =
-"<h2>Nuk ka ndeshje sot</h2>";
+box.innerHTML="<h2>Nuk ka ndeshje sot</h2>";
 
 return;
 
-
 }
+
 
 
 
@@ -241,6 +214,26 @@ ${game.strLeague || "Liga"}
 
 
 
+<div class="match">
+
+
+<div class="team">
+
+
+<img class="logo"
+src="${game.strHomeTeamBadge || ''}">
+
+
+<span>
+${game.strHomeTeam}
+</span>
+
+
+</div>
+
+
+
+
 <div class="time">
 
 ${game.strTime ? game.strTime.substring(0,5) : "--:--"}
@@ -250,41 +243,16 @@ ${game.strTime ? game.strTime.substring(0,5) : "--:--"}
 
 
 
-<div class="teams">
+<div class="team right">
 
 
-<div class="team">
+<span>
+${game.strAwayTeam}
+</span>
 
-<img class="logo"
-src="${game.strHomeTeamBadge || ''}">
-
-<br>
-
-${game.strHomeTeam}
-
-
-</div>
-
-
-
-
-<div class="vs">
-
-VS
-
-</div>
-
-
-
-
-<div class="team">
 
 <img class="logo"
 src="${game.strAwayTeamBadge || ''}">
-
-<br>
-
-${game.strAwayTeam}
 
 
 </div>
@@ -302,15 +270,12 @@ ${game.strAwayTeam}
 });
 
 
-document.getElementById("status").innerHTML="";
-
-
 }
 
 
-catch(error){
+catch(e){
 
-document.getElementById("status").innerHTML=
+document.getElementById("matches").innerHTML=
 "Gabim interneti";
 
 }
@@ -322,7 +287,8 @@ document.getElementById("status").innerHTML=
 
 
 
-/* AUTO SCROLL ANDROID TV */
+/* AUTO SCROLL ANDROID BOX */
+
 
 let pos=0;
 
@@ -336,7 +302,7 @@ function autoScroll(){
 let box=document.getElementById("scrollbox");
 
 
-pos += speed;
+pos+=speed;
 
 
 box.scrollTop=pos;
@@ -348,8 +314,11 @@ if(pos >= box.scrollHeight-box.clientHeight){
 
 setTimeout(()=>{
 
+
 pos=0;
+
 box.scrollTop=0;
+
 
 },3000);
 
@@ -365,6 +334,7 @@ requestAnimationFrame(autoScroll);
 
 
 
+
 loadMatches();
 
 
@@ -372,7 +342,7 @@ setTimeout(()=>{
 
 autoScroll();
 
-},5000);
+},4000);
 
 
 
@@ -388,5 +358,4 @@ loadMatches();
 
 
 </body>
-
 </html>
