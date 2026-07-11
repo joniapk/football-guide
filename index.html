@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SPORT TV</title>
+<title>Play Shqip</title>
 
 <style>
 
@@ -19,19 +19,33 @@ overflow:hidden;
 
 
 .header{
-height:75px;
+
+height:60px;
 background:#111;
-text-align:center;
-font-size:38px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:12px;
+font-size:28px;
 font-weight:bold;
-padding:15px;
+
+}
+
+
+.my-logo{
+
+width:45px;
+height:45px;
+border-radius:50%;
+object-fit:contain;
+
 }
 
 
 
 .scrollbox{
 
-height:calc(100vh - 75px);
+height:calc(100vh - 60px);
 overflow:hidden;
 
 }
@@ -132,8 +146,15 @@ font-weight:bold;
 
 
 <div class="header">
-⚽ Play Shqip
+
+<img class="my-logo" src="https://i.ibb.co/yFqp6q5M/Picsart-26-01-16-13-29-42-063.png">
+
+<span>
+Play Shqip
+</span>
+
 </div>
+
 
 
 <div class="scrollbox" id="scrollbox">
@@ -143,6 +164,7 @@ font-weight:bold;
 </div>
 
 </div>
+
 
 
 
@@ -159,24 +181,28 @@ let date =
 new Date().toISOString().slice(0,10);
 
 
+
 let url =
 "https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d="
 +date+"&s=Soccer";
+
 
 
 let res =
 await fetch(url);
 
 
+
 let data =
 await res.json();
+
 
 
 let box =
 document.getElementById("matches");
 
-
 box.innerHTML="";
+
 
 
 if(!data.events){
@@ -209,7 +235,6 @@ ${game.strLeague || "Liga"}
 <div class="match">
 
 
-
 <div class="team">
 
 
@@ -234,6 +259,7 @@ ${game.strTime ? game.strTime.substring(0,5) : "--:--"}
 
 
 
+
 <div class="team right">
 
 
@@ -247,6 +273,7 @@ src="${game.strAwayTeamBadge || ''}">
 
 
 </div>
+
 
 
 </div>
@@ -280,9 +307,7 @@ document.getElementById("matches").innerHTML =
 /* AUTO SCROLL */
 
 let pos=0;
-
 let speed=1;
-
 let running=true;
 
 
@@ -293,12 +318,12 @@ function autoScroll(){
 let box=document.getElementById("scrollbox");
 
 
-
 if(running){
 
 pos += speed;
 
 box.scrollTop=pos;
+
 
 
 if(pos >= box.scrollHeight-box.clientHeight){
@@ -314,6 +339,7 @@ box.scrollTop=0;
 
 }
 
+
 }
 
 
@@ -326,8 +352,7 @@ requestAnimationFrame(autoScroll);
 
 
 
-/* TELEKOMANDA ANDROID TV */
-
+/* TELEKOMANDA */
 
 document.addEventListener("keydown",function(e){
 
@@ -339,7 +364,6 @@ let box=document.getElementById("scrollbox");
 if(e.key==="ArrowDown"){
 
 running=false;
-
 box.scrollTop += 150;
 
 }
@@ -349,7 +373,6 @@ box.scrollTop += 150;
 if(e.key==="ArrowUp"){
 
 running=false;
-
 box.scrollTop -= 150;
 
 }
@@ -369,9 +392,7 @@ running=!running;
 
 
 
-
 loadMatches();
-
 
 
 setTimeout(()=>{
