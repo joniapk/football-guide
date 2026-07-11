@@ -1,134 +1,64 @@
 <!DOCTYPE html>
-<html lang="sq">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Football Guide</title>
-
+<html lang="sq"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Football Guide PRO TV</title>
 <style>
-body{
-    margin:0;
-    background:#121212;
-    color:#fff;
-    font-family:Arial,sans-serif;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-}
-
-.widget{
-    width:650px;
-    height:500px;
-    background:#1e1e1e;
-    border-radius:20px;
-    padding:20px;
-    overflow-y:auto;
-    scrollbar-width:none;
-}
-
-.widget::-webkit-scrollbar{
-    display:none;
-}
-
-h1{
-    text-align:center;
-    color:#00d26a;
-}
-
-.match{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 0;
-    border-bottom:1px solid #333;
-}
-
-.info{
-    display:flex;
-    flex-direction:column;
-}
-
-.teams{
-    font-size:22px;
-    font-weight:bold;
-}
-
-.date{
-    color:#aaa;
-    font-size:16px;
-}
-
-.time{
-    color:#00d26a;
-    font-size:24px;
-    font-weight:bold;
-}
-</style>
-</head>
-<body>
-
-<div class="widget" id="matches">
-
-<h1>⚽ Football Guide</h1>
-
-<div class="match">
-    <div class="info">
-        <div class="teams">Manchester City vs Arsenal</div>
-        <div class="date">12 Korrik 2026</div>
-    </div>
-    <div class="time">18:30</div>
-</div>
-
-<div class="match">
-    <div class="info">
-        <div class="teams">Barcelona vs Real Madrid</div>
-        <div class="date">13 Korrik 2026</div>
-    </div>
-    <div class="time">21:00</div>
-</div>
-
-<div class="match">
-    <div class="info">
-        <div class="teams">Bayern Munich vs Dortmund</div>
-        <div class="date">14 Korrik 2026</div>
-    </div>
-    <div class="time">20:30</div>
-</div>
-
-<div class="match">
-    <div class="info">
-        <div class="teams">Liverpool vs Chelsea</div>
-        <div class="date">15 Korrik 2026</div>
-    </div>
-    <div class="time">19:45</div>
-</div>
-
-<div class="match">
-    <div class="info">
-        <div class="teams">Juventus vs Milan</div>
-        <div class="date">16 Korrik 2026</div>
-    </div>
-    <div class="time">20:45</div>
-</div>
-
-</div>
-
+*{box-sizing:border-box}body{margin:0;background:#070a0f;color:#fff;font-family:Arial,Helvetica,sans-serif;overflow:hidden}
+.header{height:70px;background:#10151d;border-bottom:2px solid #00ff99;color:#00ff99;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900}
+.wrap{height:calc(100vh - 70px);overflow:auto;padding:18px}
+.date-header{background:#00ff99;color:#000;padding:10px;border-radius:12px;margin:18px 0 10px;font-weight:bold;text-align:center}
+.match{background:linear-gradient(145deg,#18212c,#0d131b);border:1px solid #263242;border-radius:20px;padding:18px;margin-bottom:16px;transition:.25s;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.tv-focus{border:2px solid #00ff99;transform:scale(1.03);box-shadow:0 0 18px rgba(0,255,153,.5)}
+.league{color:#95a6bb;font-size:14px;margin-bottom:10px}
+.row{display:flex;align-items:center;justify-content:space-between}
+.team{width:38%;display:flex;align-items:center;gap:10px;font-size:21px;font-weight:bold}
+.team img{width:50px;height:50px;border-radius:50%;background:#fff;padding:3px}
+.center{text-align:center}.time{font-size:18px;color:#00ff99;font-weight:bold}.status{display:inline-block;margin-top:8px;background:#ff1744;padding:6px 14px;border-radius:20px;font-size:12px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900}.logo span{font-size:28px;color:#00ff99}.logo small{font-size:12px;color:#fff;display:block}
+</style></head><body>
+<div class="header"><div class="logo">⚽<span>PLAY SHQIP</span><small>FUTBOLL GUIDE</small></div></div>
+<div class="wrap" id="games">Duke ngarkuar...</div>
 <script>
-const box = document.getElementById("matches");
+const leagues=[4328,4332,4335,4331,4334,4304,4337,4338,4340,4341];
+const fmt=(d,t)=>new Date(d+"T"+t+"Z").toLocaleTimeString("sq-AL",{hour:"2-digit",minute:"2-digit",hour12:false});
+const fmtDate=d=>new Date(d).toLocaleDateString("sq-AL",{day:"2-digit",month:"long",year:"numeric"});
+let cards=[],focus=0,auto=true,timer;
+const wrap=document.querySelector('.wrap');
+async function load(){
+let all=[];
+await Promise.all(leagues.map(async id=>{
+try{let r=await fetch("https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id="+id);let j=await r.json();if(j.events)all.push(...j.events);}catch(e){}
+}));
+all.sort((a,b)=>(a.dateEvent+a.strTime).localeCompare(b.dateEvent+b.strTime));
+let last="";
+let out="";
+all.forEach(ev=>{
+ if(ev.dateEvent!==last){
+   last=ev.dateEvent;
+   out+=`<div class="date-header">📅 ${fmtDate(ev.dateEvent)}</div>`;
+ }
+ out+=`<div class="match"><div class="league">🏆 ${ev.strLeague||""}</div><div class="row"><div class="team"><img src="${ev.strHomeTeamBadge||'https://via.placeholder.com/50'}">${ev.strHomeTeam||""}</div><div class="center"><div class="time">⏰ ${fmt(ev.dateEvent,ev.strTime)}</div><div class="status">SË SHPEJTI</div></div><div class="team" style="justify-content:flex-end">${ev.strAwayTeam||""}<img src="${ev.strAwayTeamBadge||'https://via.placeholder.com/50'}"></div></div></div>`;
+});
+games.innerHTML=out||"Nuk ka ndeshje";
+cards=[...document.querySelectorAll(".match")];focus=0;if(cards[0])cards[0].classList.add("tv-focus");
+}
 
-let dir = 1;
+function pause(){auto=false;clearTimeout(timer);timer=setTimeout(()=>auto=true,7000);}
+document.addEventListener("keydown",e=>{
+if(!cards.length)return;
+pause();
+cards.forEach(c=>c.classList.remove("tv-focus"));
+if(e.key==="ArrowDown")focus=(focus+1)%cards.length;
+if(e.key==="ArrowUp")focus=(focus-1+cards.length)%cards.length;
+cards[focus].classList.add("tv-focus");
+cards[focus].scrollIntoView({behavior:"smooth",block:"center"});
+});
+(function loop(){
+if(auto&&wrap.scrollHeight>wrap.clientHeight){
+wrap.scrollTop += 0.4;
+if(wrap.scrollTop>=wrap.scrollHeight-wrap.clientHeight)setTimeout(()=>{wrap.scrollTop=0;},3000);
+}
+requestAnimationFrame(loop);
+})();
 
-setInterval(() => {
-    box.scrollTop += dir;
-
-    if (box.scrollTop + box.clientHeight >= box.scrollHeight)
-        dir = -1;
-
-    if (box.scrollTop <= 0)
-        dir = 1;
-}, 30);
-</script>
-
-</body>
-</html>
+load();setInterval(load,60000);
+</script></body></html>
