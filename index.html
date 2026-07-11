@@ -8,9 +8,7 @@
 
 <style>
 
-*{
-box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
 margin:0;
@@ -30,42 +28,34 @@ height:100vh;
 /* MENU */
 
 .sidebar{
-
-width:230px;
-background:#0d121a;
+width:260px;
+background:#0c1118;
 padding:25px 15px;
-border-right:1px solid #222b38;
-
 }
 
 
 .logo{
-
 font-size:28px;
 font-weight:900;
 color:#00ff99;
 margin-bottom:35px;
-
 }
 
 
 .menu{
-
-padding:14px;
+padding:15px;
 margin-bottom:10px;
 border-radius:12px;
-font-size:18px;
-color:#b9c3d0;
-
+font-size:20px;
+color:#aeb8c5;
 }
 
 
-.menu.active{
-
+.menu.focus-menu{
 background:#00ff99;
 color:#000;
+transform:scale(1.05);
 font-weight:bold;
-
 }
 
 
@@ -73,65 +63,46 @@ font-weight:bold;
 /* MAIN */
 
 .main{
-
 flex:1;
 padding:25px;
-
 }
 
 
-
 .header{
-
 display:flex;
 justify-content:space-between;
 align-items:center;
-
 }
 
 
 .title{
-
-font-size:32px;
+font-size:34px;
 font-weight:bold;
-
 }
 
 
 .clock{
-
-color:#00ff99;
 font-size:28px;
-
+color:#00ff99;
 }
 
 
-
-/* SECTION */
 
 h2{
-
 color:#00ff99;
-margin-top:25px;
-
 }
 
 
-
-/* CARDS */
-
 .grid{
-
 display:grid;
 grid-template-columns:repeat(4,1fr);
 gap:18px;
-
 }
 
 
 .card{
 
-height:160px;
+height:170px;
 background:#111923;
 border-radius:18px;
 padding:18px;
@@ -148,20 +119,18 @@ justify-content:space-between;
 .card.focus{
 
 border-color:#00ff99;
-transform:scale(1.05);
+transform:scale(1.06);
 box-shadow:0 0 25px #00ff9955;
 
 }
 
 
-
 .live{
 
 background:#e60000;
-padding:5px 12px;
+padding:6px 12px;
 border-radius:20px;
 width:max-content;
-font-size:13px;
 
 }
 
@@ -169,48 +138,19 @@ font-size:13px;
 .teams{
 
 display:flex;
-align-items:center;
 justify-content:center;
-gap:12px;
+align-items:center;
+gap:15px;
 
-font-size:20px;
+font-size:21px;
 font-weight:bold;
-
-}
-
-
-.team{
-
-text-align:center;
-
-}
-
-
-.team img{
-
-width:45px;
-height:45px;
-border-radius:50%;
-background:white;
-padding:3px;
-
-display:block;
-margin:auto;
-
-}
-
-
-.vs{
-
-color:#777;
 
 }
 
 
 .league{
 
-color:#98a5b6;
-font-size:14px;
+color:#9aa7b8;
 
 }
 
@@ -218,9 +158,111 @@ font-size:14px;
 .time{
 
 color:#00ff99;
-font-weight:bold;
+font-size:20px;
+}
+
+
+
+/* PLAYER PAGE */
+
+
+.player-page{
+
+display:none;
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100vh;
+
+background:#05070b;
+
+z-index:20;
 
 }
+
+
+
+.player-header{
+
+height:75px;
+
+background:#0c1118;
+
+border-bottom:2px solid #00ff99;
+
+display:flex;
+
+align-items:center;
+
+padding-left:30px;
+
+font-size:28px;
+
+font-weight:bold;
+
+color:#00ff99;
+
+}
+
+
+
+.player-box{
+
+height:75%;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:35px;
+
+}
+
+
+
+.play{
+
+width:100px;
+height:100px;
+
+background:#00ff99;
+
+color:#000;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:45px;
+
+margin-bottom:30px;
+
+}
+
+
+
+.back{
+
+text-align:center;
+
+font-size:22px;
+
+color:#aaa;
+
+}
+
 
 </style>
 
@@ -228,6 +270,7 @@ font-weight:bold;
 
 
 <body>
+
 
 
 <div class="app">
@@ -241,43 +284,32 @@ font-weight:bold;
 </div>
 
 
-<div class="menu active">
+<div class="menu focus-menu">
 🏠 Home
 </div>
 
-
 <div class="menu">
-🔴 Live Now
+🔴 Live
 </div>
-
 
 <div class="menu">
 🏆 Champions League
 </div>
 
-
 <div class="menu">
 🇬🇧 Premier League
 </div>
 
-
 <div class="menu">
 🇪🇸 La Liga
 </div>
-
 
 <div class="menu">
 🇮🇹 Serie A
 </div>
 
 
-<div class="menu">
-🇩🇪 Bundesliga
 </div>
-
-
-</div>
-
 
 
 
@@ -290,7 +322,6 @@ font-weight:bold;
 Football Live
 </div>
 
-
 <div class="clock" id="clock">
 00:00
 </div>
@@ -298,203 +329,60 @@ Football Live
 </div>
 
 
-
-
-<h2>🔴 LIVE NOW</h2>
+<h2>🔴 LIVE MATCHES</h2>
 
 
 <div class="grid">
 
 
-
-<div class="card focus">
-
+<div class="card">
 
 <div class="live">
 LIVE
 </div>
 
-
 <div class="teams">
-
-
-<div class="team">
-<img src="https://media.api-sports.io/football/teams/42.png">
-Arsenal
+Arsenal VS Chelsea
 </div>
-
-
-<div class="vs">
-VS
-</div>
-
-
-<div class="team">
-<img src="https://media.api-sports.io/football/teams/49.png">
-Chelsea
-</div>
-
-
-</div>
-
 
 <div class="league">
 Premier League
 </div>
 
-
 </div>
-
 
 
 
 <div class="card">
-
-
-<div class="live">
-LIVE
-</div>
-
-
-<div class="teams">
-
-
-<div class="team">
-<img src="https://media.api-sports.io/football/teams/541.png">
-Real
-</div>
-
-
-<div class="vs">
-VS
-</div>
-
-
-<div class="team">
-<img src="https://media.api-sports.io/football/teams/529.png">
-Barca
-</div>
-
-
-</div>
-
-
-<div class="league">
-La Liga
-</div>
-
-
-</div>
-
-
-
-
-<div class="card">
-
 
 <div class="time">
 20:45
 </div>
 
-
 <div class="teams">
-
-<div class="team">
-Inter
+Real Madrid VS Barcelona
 </div>
-
-<div class="vs">
-VS
-</div>
-
-<div class="team">
-Milan
-</div>
-
-</div>
-
 
 <div class="league">
-Serie A
+La Liga
 </div>
 
-
 </div>
+
 
 
 <div class="card">
-
 
 <div class="time">
 21:00
 </div>
 
-
 <div class="teams">
-
-<div class="team">
-Bayern
-</div>
-
-<div class="vs">
-VS
-</div>
-
-<div class="team">
-Dortmund
-</div>
-
-</div>
-
-
-<div class="league">
-Bundesliga
-</div>
-
-
-</div>
-
-
-</div>
-
-
-
-
-<h2>📅 UPCOMING</h2>
-
-
-<div class="grid">
-
-
-<div class="card">
-
-<div class="time">
-22:00
-</div>
-
-<div class="teams">
-PSG VS Lyon
+Inter VS Milan
 </div>
 
 <div class="league">
-Ligue 1
-</div>
-
-</div>
-
-
-<div class="card">
-
-<div class="time">
-21:30
-</div>
-
-<div class="teams">
-Porto VS Benfica
-</div>
-
-<div class="league">
-Portugal
+Serie A
 </div>
 
 </div>
@@ -505,12 +393,50 @@ Portugal
 
 </div>
 
+</div>
+
+
+
+
+<!-- PLAYER -->
+
+<div class="player-page" id="playerPage">
+
+
+<div class="player-header">
+⚽ FOOTBALL TV PLAYER
+</div>
+
+
+<div class="player-box">
+
+
+<div class="play">
+▶
+</div>
+
+
+<div id="matchName">
+Ndeshja
+</div>
+
 
 </div>
+
+
+<div class="back">
+BACK për kthim
+</div>
+
+
+</div>
+
+
 
 
 
 <script>
+
 
 function clock(){
 
@@ -530,33 +456,132 @@ clock();
 
 
 
+let menu=document.querySelectorAll(".menu");
+
 let cards=document.querySelectorAll(".card");
-let pos=0;
+
+
+let menuPos=0;
+let cardPos=0;
+
+let mode="menu";
+
+
+
+function menuUpdate(){
+
+menu.forEach(x=>x.classList.remove("focus-menu"));
+
+menu[menuPos].classList.add("focus-menu");
+
+}
+
+
+
+function cardUpdate(){
+
+cards.forEach(x=>x.classList.remove("focus"));
+
+cards[cardPos].classList.add("focus");
+
+}
+
+
 
 
 document.addEventListener("keydown",e=>{
 
-cards[pos].classList.remove("focus");
+
+if(mode==="menu"){
 
 
-if(e.key==="ArrowRight")
-pos=(pos+1)%cards.length;
+if(e.key==="ArrowDown"){
+
+menuPos++;
+
+if(menuPos>=menu.length)
+menuPos=0;
+
+menuUpdate();
+
+}
 
 
-if(e.key==="ArrowLeft")
-pos=(pos-1+cards.length)%cards.length;
+if(e.key==="ArrowUp"){
+
+menuPos--;
+
+if(menuPos<0)
+menuPos=menu.length-1;
+
+menuUpdate();
+
+}
 
 
-if(e.key==="ArrowDown")
-pos=(pos+1)%cards.length;
+if(e.key==="ArrowRight"){
+
+mode="cards";
+
+cardUpdate();
+
+}
 
 
-if(e.key==="ArrowUp")
-pos=(pos-1+cards.length)%cards.length;
+}
 
 
 
-cards[pos].classList.add("focus");
+else{
+
+
+if(e.key==="ArrowRight" || e.key==="ArrowDown"){
+
+cardPos++;
+
+if(cardPos>=cards.length)
+cardPos=0;
+
+cardUpdate();
+
+}
+
+
+
+if(e.key==="ArrowLeft"){
+
+mode="menu";
+
+menuUpdate();
+
+}
+
+
+
+if(e.key==="Enter"){
+
+
+document.getElementById("playerPage").style.display="block";
+
+
+document.getElementById("matchName").innerHTML=
+cards[cardPos].innerText;
+
+
+}
+
+
+
+}
+
+
+
+if(e.key==="Escape" || e.key==="Backspace"){
+
+
+document.getElementById("playerPage").style.display="none";
+
+}
 
 
 });
