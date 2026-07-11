@@ -156,6 +156,7 @@ font-size:12px;
 
 <body>
 
+
 <div class="header">
 
 <div class="logo">
@@ -178,6 +179,7 @@ FUTBOLL GUIDE
 </div>
 
 </div>
+
 
 <div class="wrap" id="games">
 Duke ngarkuar...
@@ -209,19 +211,32 @@ hour12:false
 
 
 
-const fmtDate=d=>
+const fmtDate=d=>{
 
-d ?
+if(!d) return "";
 
-new Date(d)
-.toLocaleDateString("sq-AL",
-{
-day:"2-digit",
-month:"long",
-year:"numeric"
-})
+let date=new Date(d);
 
-:"";
+let months=[
+"Janar",
+"Shkurt",
+"Mars",
+"Prill",
+"Maj",
+"Qershor",
+"Korrik",
+"Gusht",
+"Shtator",
+"Tetor",
+"Nëntor",
+"Dhjetor"
+];
+
+return date.getDate().toString().padStart(2,"0")
++" "+months[date.getMonth()]
++" "+date.getFullYear();
+
+};
 
 
 
@@ -270,7 +285,6 @@ return da-db;
 
 
 games.innerHTML = all.length ?
-
 
 all.map(ev=>`
 
@@ -326,10 +340,6 @@ SOT
 
 
 </div>
-
-
-
-
 <div class="team" style="justify-content:flex-end">
 
 
@@ -373,6 +383,9 @@ cards[0].classList.add("tv-focus");
 
 
 }
+
+
+
 function pause(){
 
 auto=false;
