@@ -71,7 +71,6 @@ padding:18px;
 
 
 
-
 .match{
 
 background:linear-gradient(145deg,#1a0808,#0d0303);
@@ -90,8 +89,6 @@ box-shadow:0 6px 18px rgba(0,0,0,.7);
 
 
 
-
-
 .tv-focus{
 
 border:2px solid #e10600;
@@ -101,8 +98,6 @@ transform:scale(1.03);
 box-shadow:0 0 18px rgba(225,6,0,.6);
 
 }
-
-
 
 
 
@@ -118,8 +113,6 @@ margin-bottom:10px;
 
 
 
-
-
 .row{
 
 display:flex;
@@ -129,8 +122,6 @@ align-items:center;
 justify-content:space-between;
 
 }
-
-
 
 
 
@@ -152,8 +143,6 @@ font-weight:bold;
 
 
 
-
-
 .team img{
 
 width:50px;
@@ -170,15 +159,11 @@ padding:3px;
 
 
 
-
-
 .center{
 
 text-align:center;
 
 }
-
-
 
 
 
@@ -194,8 +179,6 @@ font-weight:bold;
 
 
 
-
-
 .channel{
 
 display:flex;
@@ -204,9 +187,9 @@ align-items:center;
 
 justify-content:center;
 
-gap:7px;
+gap:8px;
 
-margin-top:8px;
+margin-top:10px;
 
 font-size:13px;
 
@@ -217,6 +200,22 @@ color:white;
 }
 
 
+
+.channel img{
+
+width:40px;
+
+height:35px;
+
+object-fit:contain;
+
+border-radius:8px;
+
+background:white;
+
+padding:3px;
+
+}
 
 
 
@@ -247,17 +246,12 @@ border:1px solid #e10600;
 
 
 <body>
-
-
 <div class="header">
-
 
 <div class="logo">
 
-
 <img class="play-logo"
 src="https://i.ibb.co/Kpd6bW8X/logo-256.png">
-
 
 <div>
 
@@ -265,17 +259,13 @@ src="https://i.ibb.co/Kpd6bW8X/logo-256.png">
 PLAY SHQIP
 </span>
 
-
 <small>
 FUTBOLL GUIDE
 </small>
 
-
 </div>
 
-
 </div>
-
 
 </div>
 
@@ -290,10 +280,17 @@ Duke ngarkuar...
 
 
 <script>
+
+
+/* ==========================
+   LIGAT ME TRANSMETIM SHQIP/KOSOVË
+========================== */
+
+
 const leagues=[
 
 
-/* 🌍 BOTËROR + KOMBËTARE */
+/* 🌍 BOTËROR */
 
 4429,
 5518,
@@ -308,7 +305,7 @@ const leagues=[
 
 
 
-/* 🇬🇧 ANGLI */
+/* 🏴 ANGLI */
 
 4328,
 
@@ -338,63 +335,15 @@ const leagues=[
 
 
 
-/* 🇳🇱 HOLANDË */
-
-4337,
-
-
-
-/* 🇵🇹 PORTUGALI */
-
-4338,
-
-
-
 /* 🇹🇷 TURQI */
 
 4341,
 
 
 
-/* 🇧🇪 BELGJIKË */
+/* 🇵🇹 PORTUGALI */
 
-4339,
-
-
-
-/* 🇦🇹 AUSTRI */
-
-4346,
-
-
-
-/* 🇨🇭 ZVICËR */
-
-4350,
-
-
-
-/* 🇩🇰 DANIMARKË */
-
-4347,
-
-
-
-/* 🇳🇴 NORVEGJI */
-
-4348,
-
-
-
-/* 🇸🇪 SUEDI */
-
-4349,
-
-
-
-/* 🏴 SKOCI */
-
-4356,
+4338,
 
 
 
@@ -410,13 +359,6 @@ const leagues=[
 
 
 
-/* 🌎 AMERIKË E JUGUT */
-
-4351,
-4352,
-
-
-
 /* 🏆 KUPA */
 
 4482,
@@ -429,13 +371,11 @@ const leagues=[
 
 
 
-
 let cards=[];
 
 let focus=0;
 
 let auto=true;
-
 
 
 
@@ -445,9 +385,7 @@ const games=document.getElementById("games");
 
 
 
-
-
-/* ORA E NDESHJES */
+/* ORA */
 
 function fmt(d,t){
 
@@ -455,7 +393,6 @@ function fmt(d,t){
 if(!d || !t)
 
 return "--:--";
-
 
 
 return new Date(
@@ -485,9 +422,6 @@ hour12:false
 
 
 
-
-
-
 /* DATA */
 
 function fmtDate(d){
@@ -498,9 +432,7 @@ if(!d)
 return "";
 
 
-
 let date=new Date(d);
-
 
 
 let months=[
@@ -521,7 +453,6 @@ let months=[
 ];
 
 
-
 return date.getDate()
 
 .toString()
@@ -538,16 +469,50 @@ return date.getDate()
 
 
 }
+
+
+
 const tvIcon="📺";
+const channelLogos={
+
+
+"Super Sport Albania":
+
+"https://match-images.icdb.tv/f95d179d33d096344ac14ca330a587e7.jpg",
 
 
 
-/* 🇦🇱 KANALET SHQIPTARE */
+"Tring Sport Albania":
+
+"https://play-lh.googleusercontent.com/Z3RRLs8AuUfuYgx6dlcyVzC1gEBggmOxCm2pjb1bFIrQhHlZ0nNhTzZXjFqa-MvfEMWL3zxFN3bwI8sbWxmzFw=w240-h480-rw",
+
+
+
+"Art Sport Kosova":
+
+"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNiJFBbEnpvDuj8c644Y6Tl2AIXoDTyZkYd1xcRHbmYbcnMyIYfym84S0&s=10",
+
+
+
+"RTSH Sport Albania":
+
+"https://r2.thesportsdb.com/images/media/channel/logo/nfdq4d1630964082.png"
+
+
+};
+
+
+
+
+
+/* 🇦🇱 KANALET SHQIPTARE/KOSOVARE */
+
 
 const albanianBroadcast={
 
 
-/* 🌍 KOMPETICIONE NDËRKOMBËTARE */
+
+/* 🌍 BOTËROR */
 
 "World Cup":[
 
@@ -579,15 +544,7 @@ const albanianBroadcast={
 
 
 
-/* 🏆 UEFA KLUBE */
-
-"UEFA Champions League":[
-
-"Tring Sport Albania",
-"Art Sport Kosova"
-
-],
-
+/* 🏆 UEFA */
 
 "Champions League":[
 
@@ -597,7 +554,33 @@ const albanianBroadcast={
 ],
 
 
+"UEFA Champions League":[
+
+"Tring Sport Albania",
+"Art Sport Kosova"
+
+],
+
+
+
+"Europa League":[
+
+"Super Sport Albania",
+"Art Sport Kosova"
+
+],
+
+
 "UEFA Europa League":[
+
+"Super Sport Albania",
+"Art Sport Kosova"
+
+],
+
+
+
+"Europa Conference League":[
 
 "Super Sport Albania",
 "Art Sport Kosova"
@@ -615,7 +598,6 @@ const albanianBroadcast={
 
 
 
-
 /* 🏴 ANGLI */
 
 "Premier League":[
@@ -628,7 +610,7 @@ const albanianBroadcast={
 
 
 
-/* 🇪🇸 SPANJE */
+/* 🇪🇸 SPANJË */
 
 "La Liga":[
 
@@ -681,6 +663,24 @@ const albanianBroadcast={
 
 
 
+/* 🇹🇷 TURQI */
+
+"Super Lig Turkey":[
+
+"Super Sport Albania"
+
+],
+
+
+"Turkish Super Lig":[
+
+"Super Sport Albania"
+
+],
+
+
+
+
 /* 🇵🇹 PORTUGALI */
 
 "Primeira Liga":[
@@ -692,7 +692,7 @@ const albanianBroadcast={
 
 
 
-/* 🇦🇱 FUTBOLLI SHQIPTAR */
+/* 🇦🇱 SHQIPËRI */
 
 "Albania":[
 
@@ -724,7 +724,7 @@ const albanianBroadcast={
 
 
 
-/* 🇽🇰 KOSOVA */
+/* 🇽🇰 KOSOVË */
 
 "Kosovo":[
 
@@ -741,15 +741,7 @@ const albanianBroadcast={
 
 
 };
-
-
-
-
-
-
-/* 🔎 GJETJA E KANALEVE SHQIPTARE */
-
-function getAlbanianChannels(league){
+function getChannels(league){
 
 
 let channels=[];
@@ -794,8 +786,7 @@ return [
 
 
 
-
-/* SHFAQJA */
+/* 📺 SHFAQJA E KANALEVE ME LOGO */
 
 function renderChannels(list){
 
@@ -811,7 +802,12 @@ return list.map(ch=>`
 
 <div class="channel">
 
-${tvIcon} ${ch}
+
+<img src="${channelLogos[ch]}" alt="${ch}">
+
+
+<span>${ch}</span>
+
 
 </div>
 
@@ -820,395 +816,12 @@ ${tvIcon} ${ch}
 
 
 }
- 
-/* 🌍 KANALET EUROPIANE SIPAS KAMPIONATEVE */
 
-const europeanBroadcast={
 
 
-/* 🏴 SKOCI */
 
-"Scotland":[
 
-"Sky Sports UK",
-"Premier Sports UK"
-
-],
-
-
-"Scottish Premiership":[
-
-"Sky Sports UK",
-"Premier Sports UK"
-
-],
-
-
-
-
-/* 🇷🇸 SERBI */
-
-"Serbia":[
-
-"Arena Sport Serbia"
-
-],
-
-
-"Serbian":[
-
-"Arena Sport Serbia"
-
-],
-
-
-"SuperLiga Serbia":[
-
-"Arena Sport Serbia"
-
-],
-
-
-
-
-/* 🇭🇷 KROACI */
-
-"Croatia":[
-
-"MAXSport Croatia"
-
-],
-
-
-"Croatian":[
-
-"MAXSport Croatia"
-
-],
-
-
-"HNL":[
-
-"MAXSport Croatia"
-
-],
-
-
-
-
-/* 🇧🇪 BELGJIKË */
-
-"Belgium":[
-
-"DAZN Belgium"
-
-],
-
-
-"Belgian":[
-
-"DAZN Belgium"
-
-],
-
-
-"Pro League":[
-
-"DAZN Belgium"
-
-],
-
-
-
-
-/* 🇳🇱 HOLANDË */
-
-"Netherlands":[
-
-"ESPN Netherlands"
-
-],
-
-
-"Eredivisie":[
-
-"ESPN Netherlands"
-
-],
-
-
-
-
-/* 🇸🇪 SUEDI */
-
-"Sweden":[
-
-"TV4 Play Sweden",
-"Viaplay Sweden"
-
-],
-
-
-"Allsvenskan":[
-
-"TV4 Play Sweden",
-"Viaplay Sweden"
-
-],
-
-
-
-
-/* 🇳🇴 NORVEGJI */
-
-"Norway":[
-
-"TV 2 Norway",
-"Viaplay Norway"
-
-],
-
-
-"Eliteserien":[
-
-"TV 2 Norway",
-"Viaplay Norway"
-
-],
-
-
-
-
-/* 🇩🇰 DANIMARKË */
-
-"Denmark":[
-
-"TV 2 Sport Denmark",
-"Viaplay Denmark"
-
-],
-
-
-"Superliga":[
-
-"TV 2 Sport Denmark",
-"Viaplay Denmark"
-
-],
-
-
-
-
-/* 🇦🇹 AUSTRI */
-
-"Austria":[
-
-"Sky Sport Austria"
-
-],
-
-
-"Austrian Bundesliga":[
-
-"Sky Sport Austria"
-
-],
-
-
-
-
-/* 🇨🇭 ZVICËR */
-
-"Switzerland":[
-
-"Blue Sport Switzerland"
-
-],
-
-
-"Swiss Super League":[
-
-"Blue Sport Switzerland"
-
-],
-
-
-
-
-/* 🇷🇴 RUMANI */
-
-"Romania":[
-
-"Digi Sport Romania"
-
-],
-
-
-"Romanian":[
-
-"Digi Sport Romania"
-
-],
-
-
-
-
-/* 🇬🇷 GREQI */
-
-"Greece":[
-
-"Cosmote Sport Greece"
-
-],
-
-
-"Greek":[
-
-"Cosmote Sport Greece"
-
-],
-
-
-
-
-/* 🇨🇿 ÇEKI */
-
-"Czech":[
-
-"Oneplay Sport Czech"
-
-],
-
-
-"Fortuna":[
-
-"Oneplay Sport Czech"
-
-]
-
-
-};
-
-
-
-
-
-
-/* 🔎 GJETJA E KANALEVE EUROPIANE */
-
-function getEuropeanChannels(league){
-
-
-let channels=[];
-
-
-league=league || "";
-
-
-
-Object.keys(europeanBroadcast)
-
-.forEach(key=>{
-
-
-if(league.includes(key)){
-
-
-channels.push(
-
-...europeanBroadcast[key]
-
-);
-
-
-}
-
-
-});
-
-
-
-return [
-
-...new Set(channels)
-
-];
-
-
-}
-
-
-
-
-
-
-/* 📺 FUNKSIONI FINAL I KANALEVE */
-
-
-function getChannels(league){
-
-
-let channels=[];
-
-
-
-/* 1 - SHIKO KANALET SHQIPTARE */
-
-channels.push(
-
-...getAlbanianChannels(league)
-
-);
-
-
-
-
-
-/* 2 - NËSE NUK KA SHQIPTARE */
-
-if(!channels.length){
-
-
-channels.push(
-
-...getEuropeanChannels(league)
-
-);
-
-
-}
-
-
-
-
-
-/* 3 - NËSE NUK GJEN ASGJË */
-
-if(!channels.length){
-
-
-channels.push(
-
-"Transmetuesi nuk u gjet"
-
-);
-
-
-}
-
-
-
-return [
-
-...new Set(channels)
-
-];
-
-
-}
-
-/* 🔄 NGARKIMI I NDESHJEVE NGA API */
-
+/* 🔄 NGARKIMI NGA API */
 
 async function load(){
 
@@ -1223,22 +836,15 @@ now.getFullYear()
 
 +"-"
 
-+String(now.getMonth()+1)
-
-.padStart(2,"0")
++String(now.getMonth()+1).padStart(2,"0")
 
 +"-"
 
-+String(now.getDate())
-
-.padStart(2,"0");
-
++String(now.getDate()).padStart(2,"0");
 
 
 
 let all=[];
-
-
 
 
 
@@ -1249,25 +855,19 @@ await Promise.all(
 leagues.map(async(id)=>{
 
 
-
 try{
 
 
 
 const r=await fetch(
 
-
 "https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id="+id
-
 
 );
 
 
 
-
 const j=await r.json();
-
-
 
 
 
@@ -1279,15 +879,47 @@ j.events.forEach(ev=>{
 
 
 
-const eventDate = new Date(ev.dateEvent);
-const todayDate = new Date(today);
+const eventDate=new Date(ev.dateEvent);
 
-const diffDays = 
-(eventDate - todayDate) / (1000 * 60 * 60 * 24);
+const todayDate=new Date(today);
 
-if(diffDays >= 0 && diffDays <= 2){
 
-    all.push(ev);
+
+const diffDays=(
+
+eventDate-todayDate
+
+)/(1000*60*60*24);
+
+
+
+
+
+/* vetëm 2 ditët e ardhshme */
+
+if(diffDays>=0 && diffDays<=2){
+
+
+
+let channels=getChannels(
+
+ev.strLeague
+
+);
+
+
+
+/* fut vetëm ato që kanë kanal shqiptar/kosovar */
+
+if(channels.length){
+
+
+all.push(ev);
+
+
+}
+
+
 
 }
 
@@ -1301,10 +933,7 @@ if(diffDays >= 0 && diffDays <= 2){
 
 
 
-
-
 }catch(e){
-
 
 
 console.log(
@@ -1316,7 +945,6 @@ id
 );
 
 
-
 }
 
 
@@ -1324,16 +952,12 @@ id
 })
 
 
-
 );
 
 
 
 
-
-
 /* HEQ DUBLIMET */
-
 
 all=[
 
@@ -1358,19 +982,14 @@ ev
 
 
 
-
-
-/* RENDITJA SIPAS ORËS */
-
+/* RENDIT SIPAS ORËS */
 
 all.sort((a,b)=>{
 
 
 let da=new Date(
 
-
 `${a.dateEvent}T${a.strTime || "00:00:00"}Z`
-
 
 );
 
@@ -1378,9 +997,7 @@ let da=new Date(
 
 let db=new Date(
 
-
 `${b.dateEvent}T${b.strTime || "00:00:00"}Z`
-
 
 );
 
@@ -1394,13 +1011,11 @@ return da-db;
 
 
 
-
-
 let html=[];
 
 
 
-for(let ev of all){
+all.forEach(ev=>{
 
 
 html.push(
@@ -1410,9 +1025,7 @@ createMatchCard(ev)
 );
 
 
-}
-
-
+});
 
 
 
@@ -1420,6 +1033,7 @@ games.innerHTML = html.length ?
 
 
 html.join("")
+
 
 
 :
@@ -1439,18 +1053,13 @@ color:#ccc;
 
 ">
 
-🔄 Provo pas pak po përditësohen eventet e futbollit
+📺 Nuk ka ndeshje me transmetim shqiptar/kosovar
 
 </div>
 
 `;
 
 
-
-
-
-
-/* AKTIVIZO KARTAT */
 
 
 cards=[
@@ -1465,15 +1074,10 @@ focus=0;
 
 
 
-
 if(cards[0]){
 
 
-cards[0].classList.add(
-
-"tv-focus"
-
-);
+cards[0].classList.add("tv-focus");
 
 
 }
@@ -1481,12 +1085,7 @@ cards[0].classList.add(
 
 
 }
-
-/* 🏟️ KRIJIMI I KARTËS SË NDESHJES */
-
-
 function createMatchCard(ev){
-
 
 
 let channels=getChannels(
@@ -1494,7 +1093,6 @@ let channels=getChannels(
 ev.strLeague
 
 );
-
 
 
 
@@ -1506,16 +1104,10 @@ channels
 
 
 
-
-
-
-
 return `
 
 
 <div class="match">
-
-
 
 
 
@@ -1524,7 +1116,6 @@ return `
 🏆 ${ev.strLeague || "Futboll"}
 
 </div>
-
 
 
 
@@ -1548,13 +1139,10 @@ ev.strHomeTeamBadge ||
 }">
 
 
-
 ${ev.strHomeTeam || ""}
 
 
-
 </div>
-
 
 
 
@@ -1619,11 +1207,7 @@ letter-spacing:1px;
 
 
 
-
 ${tvHTML}
-
-
-
 
 
 
@@ -1632,7 +1216,7 @@ ${tvHTML}
 <div class="status">
 
 
-Transmetimi
+Transmetim LIVE
 
 
 </div>
@@ -1653,9 +1237,7 @@ Transmetimi
 <div class="team" style="justify-content:flex-end">
 
 
-
 ${ev.strAwayTeam || ""}
-
 
 
 
@@ -1668,7 +1250,6 @@ ev.strAwayTeamBadge ||
 }">
 
 
-
 </div>
 
 
@@ -1678,8 +1259,6 @@ ev.strAwayTeamBadge ||
 
 
 </div>
-
-
 
 
 
@@ -1692,6 +1271,12 @@ ev.strAwayTeamBadge ||
 
 }
 
+
+
+
+
+
+
 /* ⌨️ TELEKOMANDA */
 
 
@@ -1699,6 +1284,7 @@ function pauseAuto(){
 
 
 auto=false;
+
 
 
 setTimeout(()=>{
@@ -1710,9 +1296,8 @@ auto=true;
 },7000);
 
 
+
 }
-
-
 
 
 
@@ -1725,12 +1310,9 @@ document.addEventListener(
 e=>{
 
 
-
 if(!cards.length)
 
 return;
-
-
 
 
 
@@ -1756,9 +1338,7 @@ card.classList.remove(
 
 
 
-
 if(e.key==="ArrowDown"){
-
 
 
 focus++;
@@ -1768,24 +1348,20 @@ focus++;
 if(focus>=cards.length){
 
 
-
 focus=0;
 
 
-
 }
 
 
 
 }
-
 
 
 
 
 
 if(e.key==="ArrowUp"){
-
 
 
 focus--;
@@ -1795,17 +1371,14 @@ focus--;
 if(focus<0){
 
 
-
 focus=cards.length-1;
 
 
-
 }
 
 
 
 }
-
 
 
 
@@ -1834,16 +1407,12 @@ block:"center"
 });
 
 
-
 });
 
 
 
 
-
-
-
-/* 📜 AUTO SCROLL PËR EKRAN TV */
+/* 📜 AUTO SCROLL PËR TV */
 
 
 (function autoScroll(){
@@ -1888,9 +1457,6 @@ wrap.scrollTop=0;
 
 
 
-
-
-
 requestAnimationFrame(
 
 autoScroll
@@ -1901,10 +1467,16 @@ autoScroll
 
 })();
 
-/* 🚀 START PROGRAMI */
 
+
+
+
+
+/* 🚀 START */
 
 load();
+
+
 
 
 
@@ -1919,6 +1491,7 @@ load();
 
 
 },60000);
+
 
 
 
