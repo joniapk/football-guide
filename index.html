@@ -26,7 +26,7 @@ overflow:hidden;
 .header{
 height:70px;
 background:#0d0000;
-border-bottom:2pxpx solid #e10600;
+border-bottom:2px solid #e10600;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -126,7 +126,7 @@ text-align:center;
 
 .time{
 font-size:18px;
-color:#e1060;
+color:#e10600;
 font-weight:bold;
 }
 
@@ -142,16 +142,19 @@ font-size:12px;
 border:1px solid #e10600;
 }
 
-
 </style>
 
 </head>
 
 
 <body>
+
+
 <div class="header">
 
+
 <div class="logo">
+
 
 <img class="play-logo"
 src="https://i.ibb.co/Kpd6bW8X/logo-256.png">
@@ -171,7 +174,9 @@ FUTBOLL GUIDE
 
 </div>
 
+
 </div>
+
 
 </div>
 
@@ -182,9 +187,6 @@ FUTBOLL GUIDE
 Duke ngarkuar...
 
 </div>
-
-
-
 <script>
 
 
@@ -193,55 +195,55 @@ const leagues=[
 
 /* 🌍 KOMBËTARE + BOTËROR */
 
-4429, // FIFA World Cup
-5518, // World Cup Qualifiers
+4429,
+5518,
 
 
 /* 🏆 UEFA KLUBE */
 
-4304, // Champions League
-4480, // Europa League
-4481, // Conference League
+4304,
+4480,
+4481,
 
 
 /* 🇬🇧 ANGLI */
 
-4328, // Premier League
+4328,
 
 
 /* 🇮🇹 ITALI */
 
-4332, // Serie A
+4332,
 
 
 /* 🇪🇸 SPANJE */
 
-4335, // La Liga
+4335,
 
 
 /* 🇩🇪 GJERMANI */
 
-4331, // Bundesliga
+4331,
 
 
 /* 🇫🇷 FRANCË */
 
-4334, // Ligue 1
+4334,
 
 
 /* 🇳🇱 HOLANDË */
 
-4337, // Eredivisie
+4337,
 
 
 /* 🇵🇹 PORTUGALI */
 
-4338, // Primeira Liga
+4338,
 
 
 /* 🇹🇷 TURQI */
 
-4341, // Turkish Super Lig
+4341,
 
 
 /* 🇧🇪 BELGJIKË */
@@ -286,16 +288,16 @@ const leagues=[
 
 /* 🌎 AMERIKË E JUGUT */
 
-4351, // Brazil Serie A
-4352, // Argentina Serie A
+4351,
+4352,
 
 
 /* 🏆 KUPA */
 
-4482, // FA Cup
-4483, // Copa del Rey
-4484, // Coupe de France
-4502 // EURO
+4482,
+4483,
+4484,
+4502
 
 
 ];
@@ -303,39 +305,61 @@ const leagues=[
 
 
 let cards=[];
+
 let focus=0;
+
 let auto=true;
 
 
 
 const wrap=document.querySelector(".wrap");
+
 const games=document.getElementById("games");
+
+
+
+
+
 const fmt=(d,t)=>{
+
 
 if(!d || !t) return "--:--";
 
 
 return new Date(d+"T"+t+"Z")
+
 .toLocaleTimeString(
+
 "sq-AL",
+
 {
+
 hour:"2-digit",
+
 minute:"2-digit",
+
 hour12:false
+
 }
+
 );
+
 
 };
 
 
 
 
+
+
 const fmtDate=d=>{
+
 
 if(!d)return "";
 
 
 let date=new Date(d);
+
 
 
 let months=[
@@ -356,21 +380,28 @@ let months=[
 ];
 
 
+
 return date.getDate()
+
 .toString()
+
 .padStart(2,"0")
+
 +" "
+
 +months[date.getMonth()]
+
 +" "
+
 +date.getFullYear();
+
+
 
 };
 
 
 
-
-
-/* 📺 LOGOT E KANALEVE */
+/* 📺 LOGOT E KANALEVE SHQIPTARE */
 
 const tvLogos={
 
@@ -400,7 +431,13 @@ const tvLogos={
 
 };
 
-/* 📺 TRANSMETUESIT SIPAS KOMPETICIONEVE */
+
+
+
+
+
+
+/* 📺 TRANSMETUESIT SHQIPTARË */
 
 function broadcaster(league){
 
@@ -408,7 +445,8 @@ function broadcaster(league){
 let channels=[];
 
 
-league = league || "";
+league=league || "";
+
 
 
 
@@ -441,12 +479,9 @@ league.includes("Copa America")
 
 ){
 
-
 channels.push("Super Sport AL");
 
-
 }
-
 
 
 
@@ -472,11 +507,10 @@ league.includes("Portugal")
 
 ){
 
-
 channels.push("Tring Sport AL");
 
-
 }
+
 
 
 
@@ -505,12 +539,9 @@ league.includes("Coppa Italia")
 
 ){
 
-
 channels.push("Art Sport KS");
 
-
 }
-
 
 
 
@@ -532,18 +563,13 @@ league.includes("Kosovar")
 
 ){
 
-
 channels.push("RTSH Sport AL");
-
 
 }
 
 
 
 
-
-
-/* HEQ DUBLIMET */
 
 channels=[...new Set(channels)];
 
@@ -552,6 +578,7 @@ channels=[...new Set(channels)];
 
 
 return channels.map(channel=>`
+
 
 <span style="
 
@@ -604,60 +631,192 @@ ${channel}
 }
 
 
+/* 🌍 KANALET EUROPIANE SIPAS LIGAVE */
+
+const europeanTV={
+
+
+/* 🇸🇪 SUEDI */
+
+"Sweden":[
+
+"TV4 Play Sweden",
+"Viaplay Sweden"
+
+],
+
+
+"Allsvenskan":[
+
+"TV4 Play Sweden",
+"Viaplay Sweden"
+
+],
 
 
 
-async function load(){
+
+/* 🇳🇴 NORVEGJI */
+
+"Norway":[
+
+"TV 2 Norway",
+"Viaplay Norway"
+
+],
 
 
-const now=new Date();
+"Eliteserien":[
 
+"TV 2 Norway",
+"Viaplay Norway"
 
-const today=
-
-now.getFullYear()
-+"-"
-+String(now.getMonth()+1).padStart(2,"0")
-+"-"
-+String(now.getDate()).padStart(2,"0");
-
-
-
-let all=[];
-
-
-
-await Promise.all(
-
-
-leagues.map(async(id)=>{
-
-
-try{
-
-
-const r=await fetch(
-
-"https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id="+id
-
-);
+],
 
 
 
-const j=await r.json();
+
+
+/* 🇩🇰 DANIMARKË */
+
+"Denmark":[
+
+"TV 2 Sport Denmark",
+"Viaplay Denmark"
+
+],
+
+
+"Superliga":[
+
+"TV 2 Sport Denmark",
+"Viaplay Denmark"
+
+],
 
 
 
-if(j.events){
 
 
-j.events.forEach(ev=>{
+/* 🇵🇱 POLONI */
+
+"Poland":[
+
+"Canal+ Poland"
+
+],
 
 
-if(ev.dateEvent===today){
+"Ekstraklasa":[
+
+"Canal+ Poland"
+
+],
 
 
-all.push(ev);
+
+
+
+/* 🇨🇿 ÇEKI */
+
+"Czech":[
+
+"Oneplay Sport Czech"
+
+],
+
+
+"Fortuna":[
+
+"Oneplay Sport Czech"
+
+],
+
+
+
+
+
+/* 🇦🇹 AUSTRI */
+
+"Austria":[
+
+"Sky Sport Austria"
+
+],
+
+
+"Austrian Bundesliga":[
+
+"Sky Sport Austria"
+
+],
+
+
+
+
+
+/* 🇨🇭 ZVICËR */
+
+"Switzerland":[
+
+"Blue Sport Switzerland"
+
+],
+
+
+"Swiss Super League":[
+
+"Blue Sport Switzerland"
+
+],
+
+
+
+
+
+/* 🇷🇴 RUMANI */
+
+"Romania":[
+
+"Digi Sport Romania"
+
+],
+
+
+"Romanian Liga":[
+
+"Digi Sport Romania"
+
+]
+
+
+
+};
+
+
+
+
+
+
+function europeanBroadcaster(league){
+
+
+let channels=[];
+
+
+league=league || "";
+
+
+
+
+
+Object.keys(europeanTV).forEach(key=>{
+
+
+if(league.includes(key)){
+
+
+channels.push(...europeanTV[key]);
 
 
 }
@@ -666,14 +825,149 @@ all.push(ev);
 });
 
 
+
+
+
+channels=[...new Set(channels)];
+
+
+
+
+
+return channels.map(channel=>`
+
+
+<span style="
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:7px;
+
+margin-top:6px;
+
+color:white;
+
+font-size:13px;
+
+font-weight:bold;
+
+letter-spacing:1px;
+
+">
+
+
+📺 ${channel}
+
+
+</span>
+
+
+`).join("");
+
+
+
 }
+
+
+async function load(){
+
+
+const now=new Date();
+
+
+
+const today=
+
+now.getFullYear()
+
++"-"
+
++String(now.getMonth()+1).padStart(2,"0")
+
++"-"
+
++String(now.getDate()).padStart(2,"0");
+
+
+
+
+
+let all=[];
+
+
+
+
+
+await Promise.all(
+
+
+
+leagues.map(async(id)=>{
+
+
+
+try{
+
+
+
+const r=await fetch(
+
+
+"https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id="+id
+
+
+);
+
+
+
+
+
+const j=await r.json();
+
+
+
+
+
+if(j.events){
+
+
+
+j.events.forEach(ev=>{
+
+
+
+if(ev.dateEvent===today){
+
+
+
+all.push(ev);
+
+
+
+}
+
+
+
+});
+
+
+
+}
+
+
 
 
 
 }catch(e){
 
 
+
 console.log("Gabim liga",id);
+
 
 
 }
@@ -683,47 +977,75 @@ console.log("Gabim liga",id);
 })
 
 
+
 );
 
 
 
-// heq dublimet
+
+
+
+
+/* HEQ DUBLIMET */
+
 
 all=[
 
+
+
 ...new Map(
+
+
 
 all.map(ev=>[ev.idEvent,ev])
 
+
+
 ).values()
+
+
 
 ];
 
 
 
-// rendit sipas orës
+
+
+
+
+/* RENDIT SIPAS ORËS */
+
 
 all.sort((a,b)=>{
 
 
+
 const da=new Date(
+
 
 `${a.dateEvent}T${a.strTime||"00:00:00"}Z`
 
+
 );
+
 
 
 const db=new Date(
 
+
 `${b.dateEvent}T${b.strTime||"00:00:00"}Z`
 
+
 );
+
 
 
 return da-db;
 
 
+
 });
+
 
 games.innerHTML = all.length ?
 
@@ -735,6 +1057,7 @@ all.map(ev=>`
 <div class="match">
 
 
+
 <div class="league">
 
 🏆 ${ev.strLeague || "Futboll"}
@@ -744,7 +1067,9 @@ all.map(ev=>`
 
 
 
+
 <div class="row">
+
 
 
 
@@ -752,10 +1077,13 @@ all.map(ev=>`
 <div class="team">
 
 
+
 <img src="${ev.strHomeTeamBadge || 'https://via.placeholder.com/50'}">
 
 
+
 ${ev.strHomeTeam || ""}
+
 
 
 </div>
@@ -775,10 +1103,13 @@ ${ev.strHomeTeam || ""}
 <div class="time">
 
 
+
 📅 ${fmtDate(ev.dateEvent)}
 
 
+
 <br>
+
 
 
 ⏰ ${fmt(ev.dateEvent,ev.strTime)}
@@ -788,6 +1119,9 @@ ${ev.strHomeTeam || ""}
 
 
 <br>
+
+
+
 
 
 <span style="
@@ -806,13 +1140,29 @@ letter-spacing:1px;
 
 ">
 
+
 ▶ PLAY SHQIP
+
 
 </span>
 
 
 
-${broadcaster(ev.strLeague)}
+
+
+
+${
+
+broadcaster(ev.strLeague)
+
+||
+
+europeanBroadcaster(ev.strLeague)
+
+}
+
+
+
 
 
 
@@ -826,19 +1176,28 @@ ${broadcaster(ev.strLeague)}
 
 <div class="status">
 
+
 Trasmetimi sot në
 
+
+</div>
+
+
+
+
+
+
+
 </div>
 
 
 
-
-</div>
 
 
 
 
 <div class="team" style="justify-content:flex-end">
+
 
 
 ${ev.strAwayTeam || ""}
@@ -848,15 +1207,20 @@ ${ev.strAwayTeam || ""}
 <img src="${ev.strAwayTeamBadge || 'https://via.placeholder.com/50'}">
 
 
+
+</div>
+
+
+
+
+
+
+
 </div>
 
 
 
 
-
-
-
-</div>
 
 
 
@@ -868,7 +1232,11 @@ ${ev.strAwayTeam || ""}
 
 
 
+
+
 :
+
+
 
 
 "Provo pas pak po azhornohen eventet futbollistike";
@@ -877,29 +1245,39 @@ ${ev.strAwayTeam || ""}
 
 
 
+
 cards=[...document.querySelectorAll(".match")];
+
 
 
 focus=0;
 
 
 
+
+
 if(cards[0]){
+
 
 
 cards[0].classList.add("tv-focus");
 
 
-}
-
-
 
 }
+
+
+
+
+
+}
+
 
 function pause(){
 
 
 auto=false;
+
 
 
 setTimeout(()=>{
@@ -909,6 +1287,7 @@ auto=true;
 
 
 },7000);
+
 
 
 }
@@ -922,11 +1301,16 @@ auto=true;
 document.addEventListener("keydown",e=>{
 
 
+
 if(!cards.length)return;
 
 
 
+
+
 pause();
+
+
 
 
 
@@ -942,13 +1326,19 @@ c.classList.remove("tv-focus");
 
 
 
+
+
 if(e.key==="ArrowDown"){
+
 
 
 focus=(focus+1)%cards.length;
 
 
+
 }
+
+
 
 
 
@@ -957,10 +1347,14 @@ focus=(focus+1)%cards.length;
 if(e.key==="ArrowUp"){
 
 
+
 focus=(focus-1+cards.length)%cards.length;
 
 
+
 }
+
+
 
 
 
@@ -974,14 +1368,22 @@ cards[focus].classList.add("tv-focus");
 
 cards[focus].scrollIntoView({
 
+
 behavior:"smooth",
+
 
 block:"center"
 
+
 });
 
 
+
 });
+
+
+
+
 
 
 
@@ -990,24 +1392,33 @@ block:"center"
 (function loop(){
 
 
+
 if(auto && wrap.scrollHeight>wrap.clientHeight){
+
 
 
 wrap.scrollTop++;
 
 
 
+
+
+
 if(wrap.scrollTop>=wrap.scrollHeight-wrap.clientHeight){
+
 
 
 wrap.scrollTop=0;
 
 
+
+}
+
+
+
 }
 
 
-
-}
 
 
 
@@ -1018,7 +1429,6 @@ requestAnimationFrame(loop);
 })();
 
 
-
 load();
 
 
@@ -1026,9 +1436,11 @@ load();
 setInterval(load,60000);
 
 
+
 </script>
 
 
 </body>
+
 
 </html>
