@@ -26,7 +26,7 @@ overflow:hidden;
 .header{
 height:70px;
 background:#0d0000;
-border-bottom:2px solid #e10600;
+border-bottom:2pxpx solid #e10600;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -126,7 +126,7 @@ text-align:center;
 
 .time{
 font-size:18px;
-color:#e10600;
+color:#e1060;
 font-weight:bold;
 }
 
@@ -144,12 +144,11 @@ border:1px solid #e10600;
 
 
 </style>
+
 </head>
 
 
 <body>
-
-
 <div class="header">
 
 <div class="logo">
@@ -196,8 +195,6 @@ const leagues=[
 
 4429, // FIFA World Cup
 5518, // World Cup Qualifiers
-// Nations League
-// EURO
 
 
 /* 🏆 UEFA KLUBE */
@@ -295,10 +292,10 @@ const leagues=[
 
 /* 🏆 KUPA */
 
-4482, // FA Cup Angli
-4483, // Copa del Rey Spanjë
-4484, // Coupe de France Francë
-4502, // EURO
+4482, // FA Cup
+4483, // Copa del Rey
+4484, // Coupe de France
+4502 // EURO
 
 
 ];
@@ -312,6 +309,7 @@ let auto=true;
 
 
 const wrap=document.querySelector(".wrap");
+const games=document.getElementById("games");
 const fmt=(d,t)=>{
 
 if(!d || !t) return "--:--";
@@ -367,6 +365,243 @@ return date.getDate()
 +date.getFullYear();
 
 };
+
+
+
+
+
+/* 📺 LOGOT E KANALEVE */
+
+const tvLogos={
+
+
+"Super Sport AL":
+
+"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkn0aMGtp1VLY3UMIrfsiyD1PBe-k-NBvnRtZOWep4iQ&s=10",
+
+
+
+"Tring Sport AL":
+
+"https://play-lh.googleusercontent.com/xj8GLCiviP_leV_eIzw3o-MLIzkNx7Uq6lW3VT7u9A3ZhpMenjJQyzc2egadTkEKSIaOnyIg4UASqUO2VL-nGQ",
+
+
+
+"Art Sport KS":
+
+"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8GbjNRnIknmPljrVN4I0qixtO3cClJOnmvg&s",
+
+
+
+"RTSH Sport AL":
+
+"https://r2.thesportsdb.com/images/media/channel/logo/nfdq4d1630964082.png"
+
+
+};
+
+/* 📺 TRANSMETUESIT SIPAS KOMPETICIONEVE */
+
+function broadcaster(league){
+
+
+let channels=[];
+
+
+league = league || "";
+
+
+
+
+/* 🔴 SUPER SPORT AL */
+
+if(
+
+league.includes("Premier League") ||
+
+league.includes("La Liga") ||
+
+league.includes("Bundesliga") ||
+
+league.includes("Ligue 1") ||
+
+league.includes("UEFA Europa League") ||
+
+league.includes("UEFA Europa Conference") ||
+
+league.includes("UEFA Nations League") ||
+
+league.includes("World Cup") ||
+
+league.includes("World Cup Qual") ||
+
+league.includes("Euro") ||
+
+league.includes("Copa America")
+
+){
+
+
+channels.push("Super Sport AL");
+
+
+}
+
+
+
+
+
+
+/* 🟣 TRING SPORT AL */
+
+if(
+
+league.includes("Serie A") ||
+
+league.includes("Italian") ||
+
+league.includes("UEFA Champions League") ||
+
+league.includes("Champions League") ||
+
+league.includes("Coppa Italia") ||
+
+league.includes("Primeira Liga") ||
+
+league.includes("Portugal")
+
+){
+
+
+channels.push("Tring Sport AL");
+
+
+}
+
+
+
+
+/* ⚫ ART SPORT KS */
+
+if(
+
+league.includes("UEFA Champions League") ||
+
+league.includes("Champions League") ||
+
+league.includes("UEFA Europa League") ||
+
+league.includes("UEFA Europa Conference") ||
+
+league.includes("Serie A") ||
+
+league.includes("Italian") ||
+
+league.includes("La Liga") ||
+
+league.includes("Ligue 1") ||
+
+league.includes("Coppa Italia")
+
+){
+
+
+channels.push("Art Sport KS");
+
+
+}
+
+
+
+
+
+
+/* 🟢 RTSH SPORT AL */
+
+if(
+
+league.includes("Albania") ||
+
+league.includes("Albanian") ||
+
+league.includes("Superliga") ||
+
+league.includes("Kosovo") ||
+
+league.includes("Kosovar")
+
+){
+
+
+channels.push("RTSH Sport AL");
+
+
+}
+
+
+
+
+
+
+/* HEQ DUBLIMET */
+
+channels=[...new Set(channels)];
+
+
+
+
+
+return channels.map(channel=>`
+
+<span style="
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:7px;
+
+margin-top:6px;
+
+color:#e10600;
+
+font-size:13px;
+
+font-weight:bold;
+
+letter-spacing:1px;
+
+">
+
+
+<img src="${tvLogos[channel]}"
+
+style="
+
+width:26px;
+
+height:26px;
+
+object-fit:contain;
+
+border-radius:4px;
+
+">
+
+
+${channel}
+
+
+</span>
+
+
+`).join("");
+
+
+
+}
 
 
 
@@ -450,6 +685,8 @@ console.log("Gabim liga",id);
 
 );
 
+
+
 // heq dublimet
 
 all=[
@@ -488,10 +725,6 @@ return da-db;
 
 });
 
-
-
-
-
 games.innerHTML = all.length ?
 
 
@@ -512,7 +745,6 @@ all.map(ev=>`
 
 
 <div class="row">
-
 
 
 
@@ -580,6 +812,9 @@ letter-spacing:1px;
 
 
 
+${broadcaster(ev.strLeague)}
+
+
 
 </div>
 
@@ -599,6 +834,10 @@ SOT
 
 
 </div>
+
+
+
+
 <div class="team" style="justify-content:flex-end">
 
 
@@ -632,7 +871,7 @@ ${ev.strAwayTeam || ""}
 :
 
 
-"Provoje pas pak ndeshjet po azhornohen";
+"Nuk ka ndeshje futbolli sot";
 
 
 
@@ -656,6 +895,7 @@ cards[0].classList.add("tv-focus");
 
 
 }
+
 function pause(){
 
 
@@ -742,6 +982,11 @@ block:"center"
 
 
 });
+
+
+
+
+
 (function loop(){
 
 
@@ -774,17 +1019,16 @@ requestAnimationFrame(loop);
 
 
 
-
-
 load();
 
 
 
 setInterval(load,60000);
+
+
 </script>
 
 
 </body>
-
 
 </html>
