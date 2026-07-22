@@ -2,1502 +2,524 @@
 <html lang="sq">
 
 <head>
-
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>Play Shqip - Futboll Ditor</title>
-
-<style>
-
-*{
-box-sizing:border-box;
-}
-
-body{
-margin:0;
-background:#070a0f;
-color:#fff;
-font-family:Arial,Helvetica,sans-serif;
-overflow:hidden;
-}
-
-
-.header{
-height:70px;
-background:#0d0000;
-border-bottom:2px solid #e10600;
-display:flex;
-align-items:center;
-justify-content:center;
-}
-
-
-.logo{
-display:flex;
-align-items:center;
-gap:12px;
-font-weight:900;
-}
-
-
-.play-logo{
-width:45px;
-height:45px;
-object-fit:contain;
-border-radius:50%;
-}
-
-
-.logo span{
-font-size:28px;
-color:white;
-}
-
-
-.logo small{
-display:block;
-font-size:12px;
-color:white;
-}
-
-
-
-.wrap{
-height:calc(100vh - 70px);
-overflow:auto;
-padding:18px;
-}
-
-
-
-.match{
-
-background:linear-gradient(145deg,#1a0808,#0d0303);
-
-border:1px solid #3a1414;
-
-border-radius:20px;
-
-padding:18px;
-
-margin-bottom:16px;
-
-box-shadow:0 6px 18px rgba(0,0,0,.7);
-
-}
-
-
-
-.tv-focus{
-
-border:2px solid #e10600;
-
-transform:scale(1.03);
-
-box-shadow:0 0 18px rgba(225,6,0,.6);
-
-}
-
-
-
-.league{
-
-color:#c9979b;
-
-font-size:14px;
-
-margin-bottom:10px;
-
-}
-
-
-
-.row{
-
-display:flex;
-
-align-items:center;
-
-justify-content:space-between;
-
-}
-
-
-
-.team{
-
-width:38%;
-
-display:flex;
-
-align-items:center;
-
-gap:10px;
-
-font-size:21px;
-
-font-weight:bold;
-
-}
-
-
-
-.team img{
-
-width:50px;
-
-height:50px;
-
-border-radius:50%;
-
-background:#fff;
-
-padding:3px;
-
-}
-
-
-
-.center{
-
-text-align:center;
-
-}
-
-
-
-.time{
-
-font-size:18px;
-
-color:#e10600;
-
-font-weight:bold;
-
-}
-
-
-
-.channel{
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-gap:8px;
-
-margin-top:10px;
-
-font-size:13px;
-
-font-weight:bold;
-
-color:white;
-
-}
-
-
-
-.channel img{
-
-width:40px;
-
-height:35px;
-
-object-fit:contain;
-
-border-radius:8px;
-
-background:white;
-
-padding:3px;
-
-}
-
-
-
-.status{
-
-display:inline-block;
-
-margin-top:8px;
-
-background:#7a0000;
-
-color:#fff;
-
-padding:6px 14px;
-
-border-radius:20px;
-
-font-size:12px;
-
-border:1px solid #e10600;
-
-}
-
-
-</style>
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Play Shqip - API-FOOTBALL Live & Upcoming</title>
+
+    <style>
+        :root {
+            --bg-main: #070a0f;
+            --card-bg: linear-gradient(145deg, #160a0a, #0d0303);
+            --card-border: #2a1010;
+            --accent-red: #e10600;
+            --text-main: #ffffff;
+            --text-sub: #a0a5b5;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .header {
+            height: 75px;
+            background: #0a0101;
+            border-bottom: 2px solid var(--accent-red);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            box-shadow: 0 4px 20px rgba(225, 6, 0, 0.2);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 900;
+        }
+
+        .play-logo {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            border-radius: 50%;
+            border: 2px solid var(--accent-red);
+        }
+
+        .logo-text span {
+            font-size: 24px;
+            color: #fff;
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        .logo-text small {
+            font-size: 11px;
+            color: var(--accent-red);
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(225, 6, 0, 0.15);
+            border: 1px solid var(--accent-red);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--accent-red);
+        }
+
+        .pulse-dot {
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-red);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(225, 6, 0, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(225, 6, 0, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(225, 6, 0, 0); }
+        }
+
+        .wrap {
+            height: calc(100vh - 75px);
+            overflow-y: auto;
+            padding: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-red) #0b0e14;
+        }
+
+        .match {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 18px 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .tv-focus {
+            border: 2px solid var(--accent-red) !important;
+            transform: scale(1.02);
+            box-shadow: 0 0 22px rgba(225, 6, 0, 0.7) !important;
+            outline: none;
+        }
+
+        .league-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #d19ca0;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 14px;
+            border-bottom: 1px dashed #2d1414;
+            padding-bottom: 8px;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .team {
+            width: 38%;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        .team.home { justify-content: flex-start; text-align: left; }
+        .team.away { justify-content: flex-end; text-align: right; }
+
+        .team img {
+            width: 46px;
+            height: 46px;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            padding: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .center {
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .score-box {
+            font-size: 28px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 2px;
+            background: #1e0505;
+            padding: 4px 16px;
+            border-radius: 10px;
+            border: 1px solid #4a1010;
+            display: inline-block;
+        }
+
+        .time-box {
+            font-size: 18px;
+            color: var(--accent-red);
+            font-weight: bold;
+        }
+
+        .status-badge {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-live {
+            background: var(--accent-red);
+            color: #fff;
+            animation: pulse 1.5s infinite;
+        }
+
+        .status-upcoming {
+            background: #201212;
+            color: #ff8a80;
+            border: 1px solid #5c1d1d;
+        }
+
+        .broadcasters {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .channel-tag {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(225, 6, 0, 0.1);
+            border: 1px solid var(--accent-red);
+            padding: 3px 8px;
+            border-radius: 6px;
+            color: #ff5252;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .channel-tag img {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+            border-radius: 3px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-sub);
+            font-size: 18px;
+        }
+    </style>
 </head>
 
-
 <body>
-<div class="header">
 
-<div class="logo">
-
-<img class="play-logo"
-src="https://i.ibb.co/Kpd6bW8X/logo-256.png">
-
-<div>
-
-<span>
-PLAY SHQIP
-</span>
-
-<small>
-FUTBOLL GUIDE
-</small>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<div class="wrap" id="games">
-
-Duke ngarkuar...
-
-</div>
-
-
-
-<script>
-
-
-/* ==========================
-   LIGAT ME TRANSMETIM SHQIP/KOSOVË
-========================== */
-
-
-const leagues=[
-
-
-/* 🌍 BOTËROR */
-
-4429,
-5518,
-
-
-
-/* 🏆 UEFA KLUBE */
-
-4304,
-4480,
-4481,
-
-
-
-/* 🏴 ANGLI */
-
-4328,
-
-
-
-/* 🇮🇹 ITALI */
-
-4332,
-
-
-
-/* 🇪🇸 SPANJE */
-
-4335,
-
-
-
-/* 🇩🇪 GJERMANI */
-
-4331,
-
-
-
-/* 🇫🇷 FRANCË */
-
-4334,
-
-
-
-/* 🇹🇷 TURQI */
-
-4341,
-
-
-
-/* 🇵🇹 PORTUGALI */
-
-4338,
-
-
-
-/* 🇦🇱 SHQIPËRI */
-
-4907,
-
-
-
-/* 🇽🇰 KOSOVË */
-
-4968,
-
-
-
-/* 🏆 KUPA */
-
-4482,
-4483,
-4484,
-4502
-
-
-];
-
-
-
-let cards=[];
-
-let focus=0;
-
-let auto=true;
-
-
-
-const wrap=document.querySelector(".wrap");
-
-const games=document.getElementById("games");
-
-
-
-/* ORA */
-
-function fmt(d,t){
-
-
-if(!d || !t)
-
-return "--:--";
-
-
-return new Date(
-
-d+"T"+t+"Z"
-
-)
-
-.toLocaleTimeString(
-
-"sq-AL",
-
-{
-
-hour:"2-digit",
-
-minute:"2-digit",
-
-hour12:false
-
-}
-
-);
-
-
-}
-
-
-
-/* DATA */
-
-function fmtDate(d){
-
-
-if(!d)
-
-return "";
-
-
-let date=new Date(d);
-
-
-let months=[
-
-"Janar",
-"Shkurt",
-"Mars",
-"Prill",
-"Maj",
-"Qershor",
-"Korrik",
-"Gusht",
-"Shtator",
-"Tetor",
-"Nëntor",
-"Dhjetor"
-
-];
-
-
-return date.getDate()
-
-.toString()
-
-.padStart(2,"0")
-
-+" "
-
-+months[date.getMonth()]
-
-+" "
-
-+date.getFullYear();
-
-
-}
-
-
-
-const tvIcon="📺";
-const channelLogos={
-
-
-"Super Sport Albania":
-
-"https://www.thesportsdb.com/images/icons/svg/flags/albania.svg",
-
-
-
-"Tring Sport Albania":
-
-"https://www.thesportsdb.com/images/icons/svg/flags/albania.svg",
-
-
-
-"Art Sport Kosova":
-
-"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Flag_of_Kosovo.svg/250px-Flag_of_Kosovo.svg.png",
-
-
-
-"RTSH Sport Albania":
-
-"https://www.thesportsdb.com/images/icons/svg/flags/albania.svg"
-
-
-};
-
-
-
-
-
-/* 🇦🇱 KANALET SHQIPTARE/KOSOVARE */
-
-
-const albanianBroadcast={
-
-
-
-/* 🌍 BOTËROR */
-
-"World Cup":[
-
-"Super Sport Albania"
-
-],
-
-
-"World Cup Qualifiers":[
-
-"Super Sport Albania"
-
-],
-
-
-"Euro":[
-
-"Super Sport Albania"
-
-],
-
-
-"UEFA Nations League":[
-
-"Super Sport Albania"
-
-],
-
-
-
-
-/* 🏆 UEFA */
-
-"Champions League":[
-
-"Tring Sport Albania",
-"Art Sport Kosova"
-
-],
-
-
-"UEFA Champions League":[
-
-"Tring Sport Albania",
-"Art Sport Kosova"
-
-],
-
-
-
-"Europa League":[
-
-"Super Sport Albania",
-"Art Sport Kosova"
-
-],
-
-
-"UEFA Europa League":[
-
-"Super Sport Albania",
-"Art Sport Kosova"
-
-],
-
-
-
-"Europa Conference League":[
-
-"Super Sport Albania",
-"Art Sport Kosova"
-
-],
-
-
-"UEFA Europa Conference League":[
-
-"Super Sport Albania",
-"Art Sport Kosova"
-
-],
-
-
-
-
-/* 🏴 ANGLI */
-
-"Premier League":[
-
-"Super Sport Albania",
-"Art Sport Kosova"
-
-],
-
-
-
-
-/* 🇪🇸 SPANJË */
-
-"La Liga":[
-
-"Super Sport Albania",
-"Art Sport Kosova"
-
-],
-
-
-
-
-/* 🇮🇹 ITALI */
-
-"Serie A":[
-
-"Tring Sport Albania",
-"Art Sport Kosova"
-
-],
-
-
-"Coppa Italia":[
-
-"Tring Sport Albania"
-
-],
-
-
-
-
-/* 🇩🇪 GJERMANI */
-
-"Bundesliga":[
-
-"Super Sport Albania"
-
-],
-
-
-
-
-/* 🇫🇷 FRANCË */
-
-"Ligue 1":[
-
-"Super Sport Albania"
-
-],
-
-
-
-
-/* 🇹🇷 TURQI */
-
-"Super Lig Turkey":[
-
-"Super Sport Albania"
-
-],
-
-
-"Turkish Super Lig":[
-
-"Super Sport Albania"
-
-],
-
-
-
-
-/* 🇵🇹 PORTUGALI */
-
-"Primeira Liga":[
-
-"Tring Sport Albania"
-
-],
-
-
-
-
-/* 🇦🇱 SHQIPËRI */
-
-"Albania":[
-
-"RTSH Sport Albania"
-
-],
-
-
-"Albanian":[
-
-"RTSH Sport Albania"
-
-],
-
-
-"Superliga":[
-
-"RTSH Sport Albania"
-
-],
-
-
-"Kategoria Superiore":[
-
-"RTSH Sport Albania"
-
-],
-
-
-
-
-/* 🇽🇰 KOSOVË */
-
-"Kosovo":[
-
-"Art Sport Kosova"
-
-],
-
-
-"Kosovar":[
-
-"Art Sport Kosova"
-
-]
-
-
-};
-function getChannels(league){
-
-
-let channels=[];
-
-
-league=league || "";
-
-
-
-Object.keys(albanianBroadcast)
-
-.forEach(key=>{
-
-
-if(league.includes(key)){
-
-
-channels.push(
-
-...albanianBroadcast[key]
-
-);
-
-
-}
-
-
-});
-
-
-
-return [
-
-...new Set(channels)
-
-];
-
-
-}
-
-
-
-
-
-/* 📺 SHFAQJA E KANALEVE ME LOGO */
-
-function renderChannels(list){
-
-
-if(!list.length)
-
-return "";
-
-
-
-return list.map(ch=>`
-
-
-<div class="channel">
-
-
-<img src="${channelLogos[ch]}" alt="${ch}">
-
-
-<span>${ch}</span>
-
-
-</div>
-
-
-`).join("");
-
-
-}
-
-
-
-
-
-/* 🔄 NGARKIMI NGA API */
-
-async function load(){
-
-
-const now=new Date();
-
-
-
-const today=
-
-now.getFullYear()
-
-+"-"
-
-+String(now.getMonth()+1).padStart(2,"0")
-
-+"-"
-
-+String(now.getDate()).padStart(2,"0");
-
-
-
-let all=[];
-
-
-
-await Promise.all(
-
-
-
-leagues.map(async(id)=>{
-
-
-try{
-
-
-
-const r=await fetch(
-
-"https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id="+id
-
-);
-
-
-
-const j=await r.json();
-
-
-
-if(j.events){
-
-
-
-j.events.forEach(ev=>{
-
-
-
-const eventDate=new Date(ev.dateEvent);
-
-const todayDate=new Date(today);
-
-
-
-const diffDays=(
-
-eventDate-todayDate
-
-)/(1000*60*60*24);
-
-
-
-
-
-/* vetëm 7 ditët e ardhshme */
-
-if(diffDays>=0 && diffDays<=7){
-
-
-
-let channels=getChannels(
-
-ev.strLeague
-
-);
-
-
-
-/* fut vetëm ato që kanë kanal shqiptar/kosovar */
-
-if(channels.length){
-
-
-all.push(ev);
-
-
-}
-
-
-
-}
-
-
-
-});
-
-
-
-}
-
-
-
-}catch(e){
-
-
-console.log(
-
-"Gabim liga",
-
-id
-
-);
-
-
-}
-
-
-
-})
-
-
-);
-
-
-
-
-/* HEQ DUBLIMET */
-
-all=[
-
-
-...new Map(
-
-
-all.map(ev=>[
-
-ev.idEvent,
-
-ev
-
-])
-
-
-).values()
-
-
-];
-
-
-
-
-/* RENDIT SIPAS ORËS */
-
-all.sort((a,b)=>{
-
-
-let da=new Date(
-
-`${a.dateEvent}T${a.strTime || "00:00:00"}Z`
-
-);
-
-
-
-let db=new Date(
-
-`${b.dateEvent}T${b.strTime || "00:00:00"}Z`
-
-);
-
-
-
-return da-db;
-
-
-});
-
-
-
-
-let html=[];
-
-
-
-all.forEach(ev=>{
-
-
-html.push(
-
-createMatchCard(ev)
-
-);
-
-
-});
-
-
-
-games.innerHTML = html.length ?
-
-
-html.join("")
-
-
-
-:
-
-
-`
-
-<div style="
-
-text-align:center;
-
-padding:30px;
-
-font-size:18px;
-
-color:#ccc;
-
-">
-
-🔄 Stafi i play shqip po përditëson eventet futbollistike provojeni pas pak...
-
-</div>
-
-`;
-
-
-
-
-cards=[
-
-...document.querySelectorAll(".match")
-
-];
-
-
-
-focus=0;
-
-
-
-if(cards[0]){
-
-
-cards[0].classList.add("tv-focus");
-
-
-}
-
-
-
-}
-function createMatchCard(ev){
-
-
-let channels=getChannels(
-
-ev.strLeague
-
-);
-
-
-
-let tvHTML=renderChannels(
-
-channels
-
-);
-
-
-
-return `
-
-
-<div class="match">
-
-
-
-<div class="league">
-
-🏆 ${ev.strLeague || "Futboll"}
-
-</div>
-
-
-
-
-
-<div class="row">
-
-
-
-
-
-<div class="team">
-
-
-<img src="${
-
-ev.strHomeTeamBadge ||
-
-'https://via.placeholder.com/50'
-
-}">
-
-
-${ev.strHomeTeam || ""}
-
-
-</div>
-
-
-
-
-
-
-
-<div class="center">
-
-
-
-
-
-<div class="time">
-
-
-📅 ${fmtDate(ev.dateEvent)}
-
-
-<br>
-
-
-⏰ ${fmt(
-
-ev.dateEvent,
-
-ev.strTime
-
-)}
-
-
-</div>
-
-
-
-
-
-
-<span style="
-
-display:block;
-
-margin-top:8px;
-
-color:white;
-
-font-size:14px;
-
-font-weight:bold;
-
-letter-spacing:1px;
-
-">
-
-
-
-
-</span>
-
-
-
-
-
-${tvHTML}
-
-
-
-
-
-<div class="status">
-
-
-Transmetim LIVE
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="team" style="justify-content:flex-end">
-
-
-${ev.strAwayTeam || ""}
-
-
-
-<img src="${
-
-ev.strAwayTeamBadge ||
-
-'https://via.placeholder.com/50'
-
-}">
-
-
-</div>
-
-
-
-
-
-
-
-</div>
-
-
-
-</div>
-
-
-`;
-
-
-
-}
-
-
-
-
-
-
-
-/* ⌨️ TELEKOMANDA */
-
-
-function pauseAuto(){
-
-
-auto=false;
-
-
-
-setTimeout(()=>{
-
-
-auto=true;
-
-
-},7000);
-
-
-
-}
-
-
-
-
-
-document.addEventListener(
-
-"keydown",
-
-e=>{
-
-
-if(!cards.length)
-
-return;
-
-
-
-pauseAuto();
-
-
-
-
-
-cards.forEach(card=>{
-
-
-card.classList.remove(
-
-"tv-focus"
-
-);
-
-
-});
-
-
-
-
-
-if(e.key==="ArrowDown"){
-
-
-focus++;
-
-
-
-if(focus>=cards.length){
-
-
-focus=0;
-
-
-}
-
-
-
-}
-
-
-
-
-
-if(e.key==="ArrowUp"){
-
-
-focus--;
-
-
-
-if(focus<0){
-
-
-focus=cards.length-1;
-
-
-}
-
-
-
-}
-
-
-
-
-
-cards[focus].classList.add(
-
-"tv-focus"
-
-);
-
-
-
-
-
-
-cards[focus].scrollIntoView({
-
-
-behavior:"smooth",
-
-
-block:"center"
-
-
-});
-
-
-});
-
-
-
-
-/* 📜 AUTO SCROLL PËR TV */
-
-
-(function autoScroll(){
-
-
-
-if(
-
-auto &&
-
-wrap.scrollHeight > wrap.clientHeight
-
-){
-
-
-
-wrap.scrollTop++;
-
-
-
-
-
-if(
-
-wrap.scrollTop >=
-
-wrap.scrollHeight - wrap.clientHeight
-
-){
-
-
-
-wrap.scrollTop=0;
-
-
-
-}
-
-
-
-}
-
-
-
-requestAnimationFrame(
-
-autoScroll
-
-);
-
-
-
-})();
-
-
-
-
-
-
-/* 🚀 START */
-
-load();
-
-
-
-
-
-
-/* 🔄 PËRDITËSIM ÇDO 60 SEKONDA */
-
-
-setInterval(()=>{
-
-
-load();
-
-
-},60000);
-
-
-
-
-</script>
-
-
+    <div class="header">
+        <div class="logo">
+            <img class="play-logo" src="https://i.ibb.co/Kpd6bW8X/logo-256.png" alt="Play Shqip Logo" onerror="this.src='https://via.placeholder.com/48?text=PS'">
+            <div class="logo-text">
+                <span>PLAY SHQIP</span>
+                <small>API-FOOTBALL LIVE & UPCOMING</small>
+            </div>
+        </div>
+
+        <div class="live-indicator">
+            <div class="pulse-dot"></div>
+            <span id="date-display">SOT</span>
+        </div>
+    </div>
+
+    <div class="wrap" id="games">
+        <div class="empty-state">Duke ngarkuar ndeshjet nga API-FOOTBALL...</div>
+    </div>
+
+    <script>
+        // LISTA E TË GJITHË ÇELËSAVE TË TU TË API-FOOTBALL
+        const API_FOOTBALL_KEYS = [
+            "59483a535bf40f0b046dc6569af667ad",
+            "5eaa86f0356ebf2b92148eeb7e5070db",
+            "c53b107e31ea98ade5b9af41c4248b34",
+            "9233fb866918f74414b30ab14dc25fc3",
+            "30fb4ac4269be3cf9f42a6616add1df2",
+            "046adb8debace9ee2c3c6bc956d6010e",
+            "a7bf20eb5a91bf60fd2d01e6effe3624"
+        ];
+
+        let currentKeyIndex = 0;
+
+        function getNextKey() {
+            const key = API_FOOTBALL_KEYS[currentKeyIndex];
+            currentKeyIndex = (currentKeyIndex + 1) % API_FOOTBALL_KEYS.length;
+            return key;
+        }
+
+        // LOGOT E KANALEVE TV
+        const tvLogos = {
+            "Super Sport AL": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkn0aMGtp1VLY3UMIrfsiyD1PBe-k-NBvnRtZOWep4iQ&s=10",
+            "Tring Sport AL": "https://play-lh.googleusercontent.com/xj8GLCiviP_leV_eIzw3o-MLIzkNx7Uq6lW3VT7u9A3ZhpMenjJQyzc2egadTkEKSIaOnyIg4UASqUO2VL-nGQ",
+            "Art Sport KS": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8GbjNRnIknmPljrVN4I0qixtO3cClJOnmvg&s",
+            "RTSH Sport AL": "https://r2.thesportsdb.com/images/media/channel/logo/nfdq4d1630964082.png"
+        };
+
+        function getBroadcasters(leagueName) {
+            let channels = [];
+            const l = (leagueName || "").toLowerCase();
+
+            if (l.includes("premier league") || l.includes("la liga") || l.includes("bundesliga") || 
+                l.includes("ligue 1") || l.includes("europa league") || l.includes("conference") || 
+                l.includes("nations league") || l.includes("world cup") || l.includes("euro")) {
+                channels.push("Super Sport AL");
+            }
+
+            if (l.includes("serie a") || l.includes("champions league") || l.includes("coppa italia") || l.includes("primeira liga")) {
+                channels.push("Tring Sport AL");
+            }
+
+            if (l.includes("champions league") || l.includes("europa league") || l.includes("conference") || 
+                l.includes("serie a") || l.includes("la liga") || l.includes("ligue 1")) {
+                channels.push("Art Sport KS");
+            }
+
+            if (l.includes("albania") || l.includes("superliga") || l.includes("kosovo") || l.includes("kupa")) {
+                channels.push("RTSH Sport AL");
+            }
+
+            channels = [...new Set(channels)];
+
+            return channels.map(ch => `
+                <div class="channel-tag">
+                    <img src="${tvLogos[ch] || 'https://via.placeholder.com/18'}" alt="${ch}">
+                    ${ch}
+                </div>
+            `).join("");
+        }
+
+        let cards = [];
+        let focusIndex = 0;
+        let autoScroll = true;
+        let refreshTimer = null;
+
+        const todayStr = new Date().toISOString().split('T')[0];
+        document.getElementById("date-display").innerText = `SOT (${new Date().toLocaleDateString('sq-AL', { day: '2-digit', month: '2-digit' })})`;
+
+        function formatTime(utcDateStr) {
+            if (!utcDateStr) return "--:--";
+            const date = new Date(utcDateStr);
+            return date.toLocaleTimeString("sq-AL", { hour: "2-digit", minute: "2-digit", hour12: false });
+        }
+
+        // MARRJA E TË DHËNAVE ME KALIM AUTOMATIK TE ÇELËSI TJETËR
+        async function fetchApiFootballMatches() {
+            for (let attempt = 0; attempt < API_FOOTBALL_KEYS.length; attempt++) {
+                const activeKey = getNextKey();
+                try {
+                    console.log(`Po provoj me API Key index [${currentKeyIndex - 1}]: ${activeKey}`);
+                    const response = await fetch(`https://v3.football.api-sports.io/fixtures?date=${todayStr}`, {
+                        method: "GET",
+                        headers: { "x-apisports-key": activeKey }
+                    });
+
+                    // Nëse merr nga servisi status 429 apo 403 (Limit ose i pabllokuar)
+                    if (response.status === 429 || response.status === 403) {
+                        console.warn(`Çelësi [${activeKey}] dha status ${response.status}. Po kaloj te tjetri...`);
+                        continue;
+                    }
+
+                    if (!response.ok) throw new Error(`Gabim nga API-FOOTBALL (Status: ${response.status})`);
+
+                    const data = await response.json();
+
+                    // Kontrollon nëse API-Sports kthen objekt gabimi brenda JSON (p.sh. request limit reached)
+                    if (data.errors && Object.keys(data.errors).length > 0) {
+                        console.warn(`Çelësi [${activeKey}] ktheu gabim nga API:`, data.errors, "Po kaloj te tjetri...");
+                        continue;
+                    }
+
+                    if (data.response) {
+                        console.log(`Sukses me çelësin [${activeKey}]!`);
+                        return data.response.map(item => ({
+                            id: item.fixture.id,
+                            league: item.league.name,
+                            homeTeam: item.teams.home.name,
+                            homeBadge: item.teams.home.logo,
+                            awayTeam: item.teams.away.name,
+                            awayBadge: item.teams.away.logo,
+                            time: item.fixture.date,
+                            statusShort: item.fixture.status.short,
+                            elapsed: item.fixture.status.elapsed,
+                            scoreHome: item.goals.home,
+                            scoreAway: item.goals.away
+                        }));
+                    }
+                } catch (e) {
+                    console.error("Dështoi kërkesa me çelësin:", activeKey, e);
+                }
+            }
+            console.error("Të gjithë çelësat dështuan ose kanë euruar limitin ditor!");
+            return [];
+        }
+
+        // NGARKIMI DHE FILTRIMI I NDESHJEVE
+        async function loadMatches() {
+            const rawMatches = await fetchApiFootballMatches();
+
+            // STATUSAT QË PËRJASHTOHEN (PËRFUNDUAR OSE TË ANULLUARA)
+            const finishedStatuses = ["FT", "AET", "PEN", "CANC", "ABD", "AWD", "WO"];
+            const liveStatuses = ["1H", "HT", "2H", "ET", "BT", "P", "SUSP", "INT", "LIVE"];
+
+            // FILTRIMI: MERR VETËM TË DISPONUESHME QË NUK KANË PËRFUNDUAR
+            const activeMatches = rawMatches.filter(m => !finishedStatuses.includes(m.statusShort));
+
+            const hasLive = activeMatches.some(m => liveStatuses.includes(m.statusShort));
+
+            // RENDITJA: LIVE NË KRYE, PASTAJ UPCOMING SIPAS ORËS
+            activeMatches.sort((a, b) => {
+                const isALive = liveStatuses.includes(a.statusShort);
+                const isBLive = liveStatuses.includes(b.statusShort);
+
+                if (isALive && !isBLive) return -1;
+                if (!isALive && isBLive) return 1;
+                return new Date(a.time) - new Date(b.time);
+            });
+
+            renderUI(activeMatches);
+
+            // SMART REFRESH
+            clearTimeout(refreshTimer);
+            if (hasLive) {
+                refreshTimer = setTimeout(loadMatches, 30000); // 30 sekonda nëse ka ndeshje LIVE
+            } else {
+                refreshTimer = setTimeout(loadMatches, 300000); // 5 minuta nëse nuk ka ndeshje LIVE
+            }
+        }
+
+        function renderUI(matches) {
+            const container = document.getElementById("games");
+
+            if (matches.length === 0) {
+                container.innerHTML = `<div class="empty-state">Nuk ka ndeshje LIVE apo të ardhshme për sot në API-FOOTBALL ose të gjithë çelësat kanë euruar limitin.</div>`;
+                return;
+            }
+
+            const liveStatuses = ["1H", "HT", "2H", "ET", "BT", "P", "SUSP", "INT", "LIVE"];
+
+            container.innerHTML = matches.map(m => {
+                const isLive = liveStatuses.includes(m.statusShort);
+
+                let statusHTML = `<span class="status-badge status-upcoming">⏰ ${formatTime(m.time)}</span>`;
+                let scoreHTML = `<div class="time-box">${formatTime(m.time)}</div>`;
+
+                if (isLive) {
+                    statusHTML = `<span class="status-badge status-live">🔴 LIVE ${m.elapsed ? m.elapsed + "'" : ''}</span>`;
+                    scoreHTML = `<div class="score-box">${m.scoreHome ?? 0} - ${m.scoreAway ?? 0}</div>`;
+                }
+
+                return `
+                    <div class="match" tabindex="0">
+                        <div class="league-header">
+                            <span>🏆 ${m.league}</span>
+                            <span>PLAY SHQIP</span>
+                        </div>
+
+                        <div class="row">
+                            <div class="team home">
+                                <img src="${m.homeBadge}" alt="${m.homeTeam}" onerror="this.src='https://via.placeholder.com/46'">
+                                <span>${m.homeTeam}</span>
+                            </div>
+
+                            <div class="center">
+                                ${scoreHTML}
+                                ${statusHTML}
+                            </div>
+
+                            <div class="team away">
+                                <span>${m.awayTeam}</span>
+                                <img src="${m.awayBadge}" alt="${m.awayTeam}" onerror="this.src='https://via.placeholder.com/46'">
+                            </div>
+                        </div>
+
+                        <div class="broadcasters">
+                            ${getBroadcasters(m.league)}
+                        </div>
+                    </div>
+                `;
+            }).join("");
+
+            cards = [...document.querySelectorAll(".match")];
+            focusIndex = 0;
+            if (cards[0]) cards[0].classList.add("tv-focus");
+        }
+
+        // KONTROLLI ME SHIGJETA / TELEKOMANDË
+        document.addEventListener("keydown", e => {
+            if (!cards.length) return;
+
+            autoScroll = false;
+            setTimeout(() => { autoScroll = true; }, 10000);
+
+            cards.forEach(c => c.classList.remove("tv-focus"));
+
+            if (e.key === "ArrowDown") {
+                focusIndex = (focusIndex + 1) % cards.length;
+            } else if (e.key === "ArrowUp") {
+                focusIndex = (focusIndex - 1 + cards.length) % cards.length;
+            }
+
+            if (cards[focusIndex]) {
+                cards[focusIndex].classList.add("tv-focus");
+                cards[focusIndex].scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+        });
+
+        // AUTO SCROLL
+        const wrapEl = document.querySelector(".wrap");
+        (function autoScrollLoop() {
+            if (autoScroll && wrapEl.scrollHeight > wrapEl.clientHeight) {
+                wrapEl.scrollTop += 1;
+                if (wrapEl.scrollTop >= wrapEl.scrollHeight - wrapEl.clientHeight) {
+                    wrapEl.scrollTop = 0;
+                }
+            }
+            requestAnimationFrame(autoScrollLoop);
+        })();
+
+        // NISJA
+        loadMatches();
+    </script>
 </body>
-
 
 </html>
