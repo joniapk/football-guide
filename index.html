@@ -359,7 +359,7 @@
         let scrollRestartTimer = null;
         let isPaused = false;
         let scrollSpeed = 0;
-        let targetSpeed = 2.5;
+        let targetSpeed = 1.2; // SHPEJTËSI E BALANCUAR
         let lastTimestamp = 0;
 
         function formatDateTime(utcDateStr) {
@@ -550,7 +550,7 @@
                 wrapEl.scrollTop = 0;
                 autoScroll = true;
                 isPaused = false;
-                scrollSpeed = 0;
+                scrollSpeed = targetSpeed * 0.5;
             }
         }
 
@@ -560,13 +560,12 @@
 
             autoScroll = false;
             isPaused = true;
-            scrollSpeed = 0;
             clearTimeout(scrollRestartTimer);
             
             scrollRestartTimer = setTimeout(() => {
                 autoScroll = true;
                 isPaused = false;
-            }, 5000);
+            }, 6000);
 
             cards.forEach(c => c.classList.remove("tv-focus"));
 
@@ -584,7 +583,7 @@
             }
         });
 
-        // AUTO-SCROLL I QETË ME requestAnimationFrame
+        // AUTO-SCROLL I QETË ME SHPEJTËSI TË BALANCUAR
         const wrapEl = document.querySelector(".wrap");
         
         function smoothScroll(timestamp) {
@@ -593,11 +592,12 @@
             lastTimestamp = timestamp;
 
             if (autoScroll && !isPaused && wrapEl) {
-                // ACCELERATION PËR FILLIM TË QETË
+                // ACCELERATION I BUTË
                 if (scrollSpeed < targetSpeed) {
-                    scrollSpeed += 0.15;
+                    scrollSpeed += 0.08;
                 }
                 
+                // LLOGARIT LËVIZJEN BAZUAR NË KOHË
                 const pixelsToMove = scrollSpeed * (delta / 16);
                 
                 if (wrapEl.scrollHeight > wrapEl.clientHeight) {
@@ -605,13 +605,13 @@
                     
                     if (wrapEl.scrollTop >= wrapEl.scrollHeight - wrapEl.clientHeight) {
                         wrapEl.scrollTop = 0;
-                        scrollSpeed = targetSpeed * 0.5; // VAZHDON PA NDRALJE
+                        scrollSpeed = targetSpeed * 0.6;
                     }
                 }
             } else {
-                // ZBRITJE E QETË KUR NDALON
+                // ZBRITJE E BUTË
                 if (scrollSpeed > 0) {
-                    scrollSpeed *= 0.95;
+                    scrollSpeed *= 0.97;
                     if (scrollSpeed < 0.01) scrollSpeed = 0;
                 }
             }
@@ -619,14 +619,13 @@
             requestAnimationFrame(smoothScroll);
         }
 
-        // FILLO SCROLL-IN E QETË
+        // FILLO SCROLL-IN
         requestAnimationFrame(smoothScroll);
 
         // RIFILLO SCROLL-IN KUR NDRYSHON PËRMBAJTJA
         const observer = new MutationObserver(() => {
-            // VETËM RIFILLO NËSE NUK ËSHTË PAUSED
             if (!isPaused) {
-                scrollSpeed = targetSpeed * 0.3;
+                scrollSpeed = targetSpeed * 0.4;
             }
         });
 
