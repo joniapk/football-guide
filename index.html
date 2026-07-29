@@ -512,6 +512,9 @@
         let lastTimestamp = 0;
         let allMatches = [];
 
+        // Indeksi i ndeshjes qe u klikua per modal
+        let lastFocusedIndex = 0;
+
         // ============ MODAL ============
         const modal = document.getElementById('oddsModal');
         const modalTitle = document.getElementById('modalMatchTitle');
@@ -536,7 +539,22 @@
 
         function closeModal() {
             modal.classList.remove('active');
-            document.body.focus();
+
+            // Kthe fokusin tek ndeshja e fundit qe u klikua
+            if (cards.length > 0 && cards[lastFocusedIndex]) {
+                // Hiq fokusin nga te gjitha
+                cards.forEach(c => c.classList.remove('tv-focus'));
+                // Fokus te karta e zgjedhur
+                const el = cards[lastFocusedIndex];
+                el.classList.add('tv-focus');
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // Rikthe auto-scroll-in nga kjo pozicion
+                autoScroll = true;
+                isPaused = false;
+                scrollSpeed = targetSpeed * 0.5;
+            } else {
+                document.body.focus();
+            }
         }
 
         // ============ KOEFICIENTET REALISTE ============
@@ -578,18 +596,15 @@
 
         async function fetchOdds(home, away) {
             try {
-                // API KEY - VENDE KETU API KEYN TEND
-                const API_KEY = 'YOUR_API_KEY_HERE'; // <-- VENDE API KEYN KETU
+                const API_KEY = 'YOUR_API_KEY_HERE';
                 
                 if (API_KEY !== 'YOUR_API_KEY_HERE') {
-                    // Perdor The Odds API
                     const response = await fetch(
                         `https://api.the-odds-api.com/v4/sports/soccer/odds/?apiKey=${API_KEY}&regions=eu&markets=h2h`
                     );
                     
                     if (response.ok) {
                         const data = await response.json();
-                        // Kërko ndeshjen
                         for (const event of data) {
                             if (event.home_team.toLowerCase().includes(home.toLowerCase()) ||
                                 event.away_team.toLowerCase().includes(away.toLowerCase())) {
@@ -619,7 +634,6 @@
                     }
                 }
                 
-                // Fallback: koeficiente realiste
                 const odds = getRealisticOdds(home, away);
                 setTimeout(() => {
                     oddsHome.textContent = odds.home;
@@ -829,7 +843,10 @@
 
             cards = [...document.querySelectorAll(".match")];
             focusIndex = 0;
-            if (cards[0]) cards[0].classList.add("tv-focus");
+            lastFocusedIndex = 0;
+            if (cards[0]) {
+                cards[0].classList.add("tv-focus");
+            }
         }
 
         // ============ RESET AUTO SCROLL ============
@@ -856,6 +873,7 @@
 
             if (!cards.length) return;
 
+            // Nese s'ka modal, vepron me shigjetat
             autoScroll = false;
             isPaused = true;
             clearTimeout(scrollRestartTimer);
@@ -877,6 +895,8 @@
                 e.preventDefault();
                 const matchEl = cards[focusIndex];
                 if (matchEl) {
+                    // Ruaj indeksin per t'u kthyer
+                    lastFocusedIndex = focusIndex;
                     const homeSpan = matchEl.querySelector('.team.home span');
                     const awaySpan = matchEl.querySelector('.team.away span');
                     if (homeSpan && awaySpan) {
@@ -896,6 +916,12 @@
         document.addEventListener('click', (e) => {
             const matchEl = e.target.closest('.match');
             if (matchEl) {
+                // Gjej indeksin e kartes se klikuar
+                const idx = cards.indexOf(matchEl);
+                if (idx !== -1) {
+                    lastFocusedIndex = idx;
+                    focusIndex = idx;
+                }
                 const homeSpan = matchEl.querySelector('.team.home span');
                 const awaySpan = matchEl.querySelector('.team.away span');
                 if (homeSpan && awaySpan) {
