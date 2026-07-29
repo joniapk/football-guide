@@ -17,6 +17,7 @@
             --text-sub: #a0a8bc;
             --gold-accent: #ffb700;
             
+            /* BET365 THEME COLORS */
             --bet365-green: #137a5a;
             --bet365-dark: #084030;
             --bet365-yellow: #ffdf1b;
@@ -119,9 +120,6 @@
             scrollbar-width: none;
             flex: 1;
             will-change: scroll-position;
-            -webkit-overflow-scrolling: touch;
-            /* TRANSICION I QETË PËR SCROLL */
-            transition: scroll-top 0.1s linear;
         }
         
         .wrap::-webkit-scrollbar {
@@ -138,7 +136,6 @@
             transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
             position: relative;
             cursor: pointer;
-            will-change: transform;
         }
 
         .match.is-live-card {
@@ -147,6 +144,7 @@
             box-shadow: 0 0 25px rgba(255, 17, 0, 0.3);
         }
 
+        /* FOKUSI I LEHTE SHIKUESHMEN ME TELEKOMANDE (TV FOCUS) */
         .tv-focus {
             border: 3.5px solid var(--accent-red) !important;
             transform: scale(1.025);
@@ -302,6 +300,7 @@
             object-fit: contain;
         }
 
+        /* MODAL POPUP */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -340,7 +339,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
             position: relative;
-            flex-shrink: 0;
         }
 
         .modal-teams {
@@ -383,7 +381,6 @@
             background: #05070a;
             padding: 10px 16px;
             border-bottom: 1px solid rgba(255,255,255,0.08);
-            flex-shrink: 0;
             flex-wrap: wrap;
         }
 
@@ -409,6 +406,7 @@
             border-color: #ffffff !important;
             transform: scale(1.08);
             box-shadow: 0 0 20px #ffffff !important;
+            background: #ff1100 !important;
         }
 
         .close-tab-btn {
@@ -420,9 +418,7 @@
             padding: 20px 28px;
             overflow-y: auto;
             flex: 1;
-            scroll-behavior: auto;
-            will-change: scroll-position;
-            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
         }
 
         .modal-body.tv-focus {
@@ -610,11 +606,6 @@
             font-size: 20px;
             font-weight: bold;
         }
-
-        /* FIX PËR ANDROID TV - TRANSFORMIME TË BUTA */
-        .match, .tv-focus {
-            transition: transform 0.15s ease-out, border-color 0.15s ease-out, box-shadow 0.15s ease-out;
-        }
     </style>
 </head>
 
@@ -639,6 +630,7 @@
         <div class="empty-state">Duke ngarkuar ndeshjet për Smart TV...</div>
     </div>
 
+    <!-- MODAL POPUP FOR FLASHSCORE & BET365 DETAILS -->
     <div class="modal-overlay" id="matchModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -662,15 +654,17 @@
                 </div>
             </div>
 
+            <!-- TË GJITHA TAB-ET + BUTONI I MBYLLJES KTHEN TE FAQJA KRYESORE -->
             <div class="modal-tabs">
-                <button class="tab-btn active-tab" id="modalTab0" onclick="switchTab(0)">⚽ Bet365</button>
-                <button class="tab-btn" id="modalTab1" onclick="switchTab(1)">👕 Formacionet</button>
+                <button class="tab-btn active-tab" id="modalTab0" onclick="switchTab(0)">⚽ Formati & Bet365</button>
+                <button class="tab-btn" id="modalTab1" onclick="switchTab(1)">👕 Formacionet (11-shja)</button>
                 <button class="tab-btn" id="modalTab2" onclick="switchTab(2)">📊 Statistikat</button>
-                <button class="tab-btn" id="modalTab3" onclick="switchTab(3)">⚡ Ngjarjet</button>
-                <button class="tab-btn close-tab-btn" id="modalTab4" onclick="closeModal()">✖ Mbyll</button>
+                <button class="tab-btn" id="modalTab3" onclick="switchTab(3)">⚡ Golat & Ngjarjet</button>
+                <button class="tab-btn close-tab-btn" id="modalTab4" onclick="closeModal()">✖ Mbyll (ESC / OK)</button>
             </div>
 
             <div class="modal-body" id="modalTabContent" tabindex="0">
+                <!-- Content injected dynamically -->
             </div>
         </div>
     </div>
@@ -729,13 +723,13 @@
         let modalFocusArea = 'TABS';
         let modalTabIndex = 0;
 
-        // AUTO-SCROLL ME METODË TË RE - PA DRIDHJE
         let autoScroll = true;
         let refreshTimer = null;
         let scrollRestartTimer = null;
         let isPaused = false;
-        let scrollInterval = null;
-        let scrollAmount = 1.8; // SHPEJTËSI MË E MADHE
+        let scrollSpeed = 0;
+        let targetSpeed = 1.2;
+        let lastTimestamp = 0;
 
         function formatDateTime(utcDateStr) {
             if (!utcDateStr) return "--:--";
@@ -997,7 +991,7 @@
             document.getElementById("modalScore").innerText = `${activeMatch.scoreHome} - ${activeMatch.scoreAway}`;
             document.getElementById("modalStatus").innerText = activeMatch.isLive ? `🔴 LIVE ${activeMatch.elapsed}` : formatDateTime(activeMatch.time);
 
-            document.getElementById("modalTabContent").innerHTML = `<div class="empty-state">Duke ngarkuar...</div>`;
+            document.getElementById("modalTabContent").innerHTML = `<div class="empty-state">Duke ngarkuar formatin, kuotat Bet365 dhe statistikat live...</div>`;
 
             modalFocusArea = 'TABS';
             modalTabIndex = 0;
@@ -1027,7 +1021,7 @@
             setTimeout(() => {
                 autoScroll = true;
                 isPaused = false;
-            }, 3000);
+            }, 2000);
         }
 
         function switchTab(index) {
@@ -1106,13 +1100,13 @@
                     <div class="bet365-badge-header">
                         <div class="bet365-logo">bet<span>365</span></div>
                         <div style="font-weight: bold; color: #fff; font-size: 15px;">
-                            KUOTAT ZYRTARE & FORMATI
+                            KUOTAT ZYRTARE LIVE & FORMATI
                         </div>
                     </div>
 
                     <div class="bet365-odds-grid">
                         <div class="bet365-odd-card">
-                            <div class="odd-title">1 (${activeMatch.homeTeam})</div>
+                            <div class="odd-title">1 (Fiton ${activeMatch.homeTeam})</div>
                             <div class="odd-val">${odds.homeWin}</div>
                         </div>
                         <div class="bet365-odd-card">
@@ -1120,56 +1114,56 @@
                             <div class="odd-val">${odds.draw}</div>
                         </div>
                         <div class="bet365-odd-card">
-                            <div class="odd-title">2 (${activeMatch.awayTeam})</div>
+                            <div class="odd-title">2 (Fiton ${activeMatch.awayTeam})</div>
                             <div class="odd-val">${odds.awayWin}</div>
                         </div>
                         <div class="bet365-odd-card">
-                            <div class="odd-title">Mbi 2.5 Gol</div>
+                            <div class="odd-title">Mbi 2.5 Golash</div>
                             <div class="odd-val">${odds.over25}</div>
                         </div>
                         <div class="bet365-odd-card">
-                            <div class="odd-title">Nën 2.5 Gol</div>
+                            <div class="odd-title">Nën 2.5 Golash</div>
                             <div class="odd-val">${odds.under25}</div>
                         </div>
                         <div class="bet365-odd-card">
-                            <div class="odd-title">GG (Të dy shënojnë)</div>
+                            <div class="odd-title">Dy Ekipet Shënojnë (GG)</div>
                             <div class="odd-val">${odds.bttsYes}</div>
                         </div>
                     </div>
 
                     <div class="pitch-container">
                         <div class="pitch-header">
-                            <span class="formation-title">📋 SKEMA: ${activeMatch.homeTeam} (${homeFormation}) vs ${activeMatch.awayTeam} (${awayFormation})</span>
-                            <span style="color: #fff; font-weight: bold; font-size: 13px; background: var(--bet365-green); padding: 3px 10px; border-radius: 6px;">BET365</span>
+                            <span class="formation-title">📋 SKEMA TAKTIKE: ${activeMatch.homeTeam} (${homeFormation}) vs ${activeMatch.awayTeam} (${awayFormation})</span>
+                            <span style="color: #fff; font-weight: bold; font-size: 13px; background: var(--bet365-green); padding: 3px 10px; border-radius: 6px;">BET365 FORMAT</span>
                         </div>
 
                         ${rosters.length > 0 ? `
                             <div class="lineups-grid">
                                 <div class="lineup-column">
-                                    <h4>🏠 ${activeMatch.homeTeam}</h4>
+                                    <h4>🏠 ${activeMatch.homeTeam} (${homeFormation})</h4>
                                     ${(homeRoster?.roster || []).slice(0, 11).map(p => `
                                         <div class="player-row">
                                             <span class="player-num">${p.jersey || '-'}</span>
                                             <span>${p.athlete?.displayName || p.athlete?.name}</span>
-                                            <small style="color:var(--bet365-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || ''}</small>
+                                            <small style="color:var(--bet365-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || '11-sh'}</small>
                                         </div>
                                     `).join('')}
                                 </div>
 
                                 <div class="lineup-column">
-                                    <h4>✈️ ${activeMatch.awayTeam}</h4>
+                                    <h4>✈️ ${activeMatch.awayTeam} (${awayFormation})</h4>
                                     ${(awayRoster?.roster || []).slice(0, 11).map(p => `
                                         <div class="player-row">
                                             <span class="player-num">${p.jersey || '-'}</span>
                                             <span>${p.athlete?.displayName || p.athlete?.name}</span>
-                                            <small style="color:var(--bet365-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || ''}</small>
+                                            <small style="color:var(--bet365-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || '11-sh'}</small>
                                         </div>
                                     `).join('')}
                                 </div>
                             </div>
                         ` : `
                             <div class="empty-state" style="padding:30px 0;">
-                                Formacionet zyrtare 45 min para ndeshjes.
+                                Formacionet zyrtare do të konfirmohen 45 minuta përpara ndeshjes nga Bet365.
                             </div>
                         `}
                     </div>
@@ -1180,20 +1174,37 @@
         function renderLineups(container) {
             const rosters = activeSummary?.rosters || [];
             if (rosters.length === 0) {
-                container.innerHTML = `<div class="empty-state">Formacionet nuk janë publikuar ende.</div>`;
+                container.innerHTML = `<div class="empty-state">Formacionet zyrtare nuk janë publikuar ende për këtë ndeshje.</div>`;
                 return;
             }
 
             const homeRoster = rosters.find(r => r.team?.id === activeMatch.homeId) || rosters[0];
             const awayRoster = rosters.find(r => r.team?.id === activeMatch.awayId) || rosters[1];
 
-            const renderPlayers = (roster) => {
+            const renderStarterPlayers = (roster) => {
                 if (!roster || !roster.roster) return "<p>Nuk ka të dhëna</p>";
-                return roster.roster.map(p => `
+                const starters = roster.roster.filter(p => p.starter || p.subbedIn === false).slice(0, 11);
+                const list = starters.length > 0 ? starters : roster.roster.slice(0, 11);
+
+                return list.map(p => `
                     <div class="player-row">
                         <span class="player-num">${p.jersey || '-'}</span>
                         <span>${p.athlete?.displayName || p.athlete?.name}</span>
-                        <small style="color:var(--text-sub); margin-left:auto;">${p.position?.abbreviation || ''}</small>
+                        <small style="color:var(--text-sub); margin-left:auto;">${p.position?.abbreviation || 'TITULLAR'}</small>
+                    </div>
+                `).join("");
+            };
+
+            const renderSubPlayers = (roster) => {
+                if (!roster || !roster.roster) return "<p>Nuk ka të dhëna</p>";
+                const subs = roster.roster.slice(11);
+                if (subs.length === 0) return "<p style='color:var(--text-sub); font-size:13px;'>Nuk ka lojtarë në bankinë të publikuar.</p>";
+
+                return subs.map(p => `
+                    <div class="player-row">
+                        <span class="player-num" style="color:var(--gold-accent);">${p.jersey || '-'}</span>
+                        <span>${p.athlete?.displayName || p.athlete?.name}</span>
+                        <small style="color:var(--text-sub); margin-left:auto;">BENCH</small>
                     </div>
                 `).join("");
             };
@@ -1201,13 +1212,19 @@
             container.innerHTML = `
                 <div class="lineups-grid">
                     <div class="lineup-column">
-                        <h4>🏠 ${activeMatch.homeTeam}</h4>
-                        ${renderPlayers(homeRoster)}
+                        <h4>🏠 ${activeMatch.homeTeam} (${homeRoster?.formation || '11-shja'})</h4>
+                        <div class="section-sub-header">🟢 11-SHJA TITULLARE</div>
+                        ${renderStarterPlayers(homeRoster)}
+                        <div class="section-sub-header">🟡 ZËVENDËSUESIT (BANKINA)</div>
+                        ${renderSubPlayers(homeRoster)}
                     </div>
 
                     <div class="lineup-column">
-                        <h4>✈️ ${activeMatch.awayTeam}</h4>
-                        ${renderPlayers(awayRoster)}
+                        <h4>✈️ ${activeMatch.awayTeam} (${awayRoster?.formation || '11-shja'})</h4>
+                        <div class="section-sub-header">🟢 11-SHJA TITULLARE</div>
+                        ${renderStarterPlayers(awayRoster)}
+                        <div class="section-sub-header">🟡 ZËVENDËSUESIT (BANKINA)</div>
+                        ${renderSubPlayers(awayRoster)}
                     </div>
                 </div>
             `;
@@ -1216,7 +1233,7 @@
         function renderStats(container) {
             const boxscore = activeSummary?.boxscore;
             if (!boxscore || !boxscore.teams) {
-                container.innerHTML = `<div class="empty-state">Statistikat do të shfaqen gjatë ndeshjes.</div>`;
+                container.innerHTML = `<div class="empty-state">Statistikat live do të shfaqen sapo të nisë ndeshja.</div>`;
                 return;
             }
 
@@ -1224,7 +1241,7 @@
             const awayStats = boxscore.teams[1]?.statistics || [];
 
             if (homeStats.length === 0) {
-                container.innerHTML = `<div class="empty-state">Statistikat nuk janë të disponueshme.</div>`;
+                container.innerHTML = `<div class="empty-state">Statistikat e detajuara nuk janë të disponueshme për këtë përballje.</div>`;
                 return;
             }
 
@@ -1259,8 +1276,8 @@
             if (keyEvents.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
-                        Nuk ka ngjarje të regjistruara.<br>
-                        <small style="font-size:14px; font-weight:normal; color:var(--text-sub);">Ngjarjet do të shfaqen gjatë lojës.</small>
+                        Ndeshja nuk ka shënuar ende ngjarje apo gola.<br>
+                        <small style="font-size:14px; font-weight:normal; color:var(--text-sub);">Ngjarjet live do të përditësohen automatikisht gjatë lojës.</small>
                     </div>
                 `;
                 return;
@@ -1278,12 +1295,13 @@
                 else if (typeText.includes("red card")) icon = "🟥";
                 else if (typeText.includes("substitution")) icon = "🔄";
                 else if (typeText.includes("penalty")) icon = "🎯";
+                else if (typeText.includes("var")) icon = "🖥️";
 
                 return `
                     <div class="timeline-item">
                         <div class="timeline-time">
                             <span>${clock}'</span>
-                            <span>${icon}</span>
+                            <span class="event-icon">${icon}</span>
                         </div>
                         <div>
                             <strong style="color:#ffffff;">${team}</strong>: 
@@ -1301,48 +1319,11 @@
                 wrapEl.scrollTop = 0;
                 autoScroll = true;
                 isPaused = false;
+                scrollSpeed = targetSpeed * 0.5;
             }
         }
 
-        // AUTO-SCROLL PERFEKT PA DRIDHJE PËR ANDROID TV
-        function startAutoScroll() {
-            if (scrollInterval) {
-                clearInterval(scrollInterval);
-                scrollInterval = null;
-            }
-
-            scrollInterval = setInterval(() => {
-                const wrapEl = document.querySelector(".wrap");
-                
-                if (!autoScroll || isPaused || isModalOpen || !wrapEl) {
-                    return;
-                }
-
-                if (wrapEl.scrollHeight > wrapEl.clientHeight) {
-                    // LËVIZJE E QETË DHE E VAZHDUESHME
-                    wrapEl.scrollTop += scrollAmount;
-                    
-                    // KUR ARRIN FUNDIN, KTHEHET NË FILLIM
-                    if (wrapEl.scrollTop >= wrapEl.scrollHeight - wrapEl.clientHeight) {
-                        wrapEl.scrollTop = 0;
-                    }
-                }
-            }, 25); // 25ms = 40fps - PERFEKT PËR ANDROID TV
-        }
-
-        // FILLO AUTO-SCROLL
-        startAutoScroll();
-
-        // RIFILLO AUTO-SCROLL KUR NDRYSHON PËRMBAJTJA
-        const observer = new MutationObserver(() => {
-            if (scrollInterval) {
-                clearInterval(scrollInterval);
-                startAutoScroll();
-            }
-        });
-
-        observer.observe(document.getElementById("games"), { childList: true, subtree: true });
-
+        /* --- TELEKOMANDA SMART TV (SAMSUNG / LG / ANDROID / FIRE TV) --- */
         const KEY_UP = ["ArrowUp", 38, 19];
         const KEY_DOWN = ["ArrowDown", 40, 20];
         const KEY_LEFT = ["ArrowLeft", 37, 21];
@@ -1438,6 +1419,41 @@
                 cards[focusIndex].scrollIntoView({ behavior: "smooth", block: "center" });
             }
         });
+
+        // AUTO-SCROLL LOGIC
+        const wrapEl = document.querySelector(".wrap");
+
+        function smoothScroll(timestamp) {
+            if (!lastTimestamp) lastTimestamp = timestamp;
+            const delta = timestamp - lastTimestamp;
+            lastTimestamp = timestamp;
+
+            if (autoScroll && !isPaused && !isModalOpen && wrapEl) {
+                if (scrollSpeed < targetSpeed) {
+                    scrollSpeed += 0.08;
+                }
+
+                const pixelsToMove = scrollSpeed * (delta / 16);
+
+                if (wrapEl.scrollHeight > wrapEl.clientHeight) {
+                    wrapEl.scrollTop += pixelsToMove;
+
+                    if (wrapEl.scrollTop >= wrapEl.scrollHeight - wrapEl.clientHeight) {
+                        wrapEl.scrollTop = 0;
+                        scrollSpeed = targetSpeed * 0.6;
+                    }
+                }
+            } else {
+                if (scrollSpeed > 0) {
+                    scrollSpeed *= 0.97;
+                    if (scrollSpeed < 0.01) scrollSpeed = 0;
+                }
+            }
+
+            requestAnimationFrame(smoothScroll);
+        }
+
+        requestAnimationFrame(smoothScroll);
 
         window.focus();
         document.body.setAttribute('tabindex', '0');
