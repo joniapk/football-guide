@@ -32,7 +32,6 @@
             height: 100vh;
         }
 
-        /* HEADER I MADH PËR TV */
         .header {
             height: 85px;
             background: linear-gradient(180deg, #0e0202 0%, #05070a 100%);
@@ -42,6 +41,7 @@
             justify-content: space-between;
             padding: 0 32px;
             box-shadow: 0 6px 30px rgba(255, 17, 0, 0.25);
+            flex-shrink: 0;
         }
 
         .logo {
@@ -109,14 +109,14 @@
             overflow-y: auto;
             padding: 24px 40px;
             scroll-behavior: smooth;
-            scrollbar-width: none; /* Fsheh scrollbar-in në TV */
+            scrollbar-width: none;
+            flex: 1;
         }
         
         .wrap::-webkit-scrollbar {
             display: none;
         }
 
-        /* MBRYTJA E NDESHJES (KARTELA TV) */
         .match {
             background: var(--card-bg);
             border: 2px solid var(--card-border);
@@ -128,7 +128,6 @@
             position: relative;
         }
 
-        /* FOKUSI I TELEKOMANDËS NEON */
         .tv-focus {
             border: 3px solid var(--accent-red) !important;
             transform: scale(1.025);
@@ -171,7 +170,7 @@
             display: flex;
             align-items: center;
             gap: 18px;
-            font-size: 26px; /* SHKRONJA TË ZMADHUARA PËR TV */
+            font-size: 26px;
             font-weight: 800;
             color: #ffffff;
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
@@ -181,7 +180,7 @@
         .team.away { justify-content: flex-end; text-align: right; }
 
         .team img {
-            width: 60px; /* LOGOT E EKIPEVE TË ZMADHUARA */
+            width: 60px;
             height: 60px;
             object-fit: contain;
             background: rgba(255, 255, 255, 0.06);
@@ -197,7 +196,7 @@
         }
 
         .score-box {
-            font-size: 36px; /* REZULTATI I MADH */
+            font-size: 36px;
             font-weight: 900;
             color: #ffffff;
             letter-spacing: 3px;
@@ -210,7 +209,7 @@
         }
 
         .time-box {
-            font-size: 22px; /* ORA E MADHE */
+            font-size: 22px;
             color: #ff8a80;
             font-weight: 800;
             background: rgba(0,0,0,0.4);
@@ -286,7 +285,6 @@
 
 <body>
 
-    <!-- HEADER I PLAY SHQIP -->
     <div class="header">
         <div class="logo">
             <img class="play-logo" src="https://i.ibb.co/Kpd6bW8X/logo-256.png" alt="Play Shqip Logo" onerror="this.src='https://via.placeholder.com/56?text=PS'">
@@ -302,13 +300,11 @@
         </div>
     </div>
 
-    <!-- PËRMBAJTJA E NDESHJEVE -->
     <div class="wrap" id="games">
         <div class="empty-state">Duke ngarkuar ndeshjet për Smart TV...</div>
     </div>
 
     <script>
-        // LOGOT E KANALEVE TELEVIZIVE SHQIPTARE
         const tvLogos = {
             "Super Sport AL": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkn0aMGtp1VLY3UMIrfsiyD1PBe-k-NBvnRtZOWep4iQ&s=10",
             "Tring Sport AL": "https://play-lh.googleusercontent.com/xj8GLCiviP_leV_eIzw3o-MLIzkNx7Uq6lW3VT7u9A3ZhpMenjJQyzc2egadTkEKSIaOnyIg4UASqUO2VL-nGQ",
@@ -316,12 +312,10 @@
             "RTSH Sport AL": "https://r2.thesportsdb.com/images/media/channel/logo/nfdq4d1630964082.png"
         };
 
-        // HARTOGRAFIKA E SAKTE E KANALEVE TV
         function getBroadcasters(leagueName) {
             let channels = [];
             const l = (leagueName || "").toLowerCase();
 
-            // SUPER SPORT AL (DigitAlb)
             if (l.includes("premier") || l.includes("la liga") || l.includes("bundesliga") || 
                 l.includes("ligue 1") || l.includes("europa") || l.includes("conference") || 
                 l.includes("nations") || l.includes("world cup") || l.includes("euro") || 
@@ -330,19 +324,16 @@
                 channels.push("Super Sport AL");
             }
 
-            // TRING SPORT AL
             if (l.includes("serie a") || l.includes("champions") || l.includes("coppa italia") || 
                 l.includes("primeira") || l.includes("super lig") || l.includes("turkish")) {
                 channels.push("Tring Sport AL");
             }
 
-            // ART SPORT KS (Kosovë)
             if (l.includes("champions") || l.includes("europa") || l.includes("conference") || 
                 l.includes("serie a") || l.includes("la liga") || l.includes("ligue 1") || l.includes("friendly")) {
                 channels.push("Art Sport KS");
             }
 
-            // RTSH SPORT AL
             if (l.includes("albania") || l.includes("superliga") || l.includes("shqiperi") || l.includes("rtsh")) {
                 channels.push("RTSH Sport AL");
             }
@@ -361,6 +352,9 @@
         let focusIndex = 0;
         let autoScroll = true;
         let refreshTimer = null;
+        let scrollRestartTimer = null;
+        let scrollInterval = null;
+        let isPaused = false;
 
         function formatDateTime(utcDateStr) {
             if (!utcDateStr) return "--:--";
@@ -395,28 +389,12 @@
             return `${formatDate(start)}-${formatDate(end)}`;
         }
 
-        // VETËM LIGAT QË TRANSMETOHEN NË TV SHQIPTARE
         const ESPN_LEAGUES = [
-            "eng.1",           // Premier League
-            "esp.1",           // La Liga
-            "ita.1",           // Serie A
-            "ger.1",           // Bundesliga
-            "fra.1",           // Ligue 1
-            "uefa.champions",  // Champions League
-            "uefa.europa",     // Europa League
-            "uefa.europa.conf",// Conference League
-            "uefa.nations",    // Nations League
-            "fifa.world",      // World Cup / Kualifikueset
-            "eng.fa",          // FA Cup
-            "eng.league_cup",  // Carabao Cup
-            "esp.copa",        // Copa del Rey
-            "ita.coppa",       // Coppa Italia
-            "ger.pokal",       // DFB Pokal
-            "por.1",           // Primeira Liga
-            "ned.1",           // Eredivisie
-            "tur.1",           // Süper Lig
-            "sau.1",           // Saudi Pro League
-            "club.friendly"    // Miqësoret e Klubeve
+            "eng.1", "esp.1", "ita.1", "ger.1", "fra.1",
+            "uefa.champions", "uefa.europa", "uefa.europa.conf",
+            "uefa.nations", "fifa.world",
+            "eng.fa", "eng.league_cup", "esp.copa", "ita.coppa", "ger.pokal",
+            "por.1", "ned.1", "tur.1", "sau.1", "club.friendly"
         ];
 
         async function fetchESPNLeagues() {
@@ -495,6 +473,7 @@
                 });
 
                 renderUI(activeMatches);
+                resetAutoScroll();
 
             } catch (err) {
                 console.error("Gabim gjatë ngarkimit:", err);
@@ -510,6 +489,7 @@
 
             if (matches.length === 0) {
                 container.innerHTML = `<div class="empty-state">Nuk ka ndeshje të caktuara për këtë javë në kanalet shqiptare.</div>`;
+                cards = [];
                 return;
             }
 
@@ -558,18 +538,35 @@
             if (cards[0]) cards[0].classList.add("tv-focus");
         }
 
-        // KONTROLLI ME SHIGJETAT E TELEKOMANDËS PËR SMART TV
+        function resetAutoScroll() {
+            const wrapEl = document.querySelector(".wrap");
+            if (wrapEl) {
+                wrapEl.scrollTop = 0;
+                autoScroll = true;
+                isPaused = false;
+            }
+        }
+
+        // KONTROLLI ME TELEKOMANDË
         document.addEventListener("keydown", e => {
             if (!cards.length) return;
 
-            autoScroll = false; // Ndalon lëvizjen automatike kur përdoret telekomanda
-            setTimeout(() => { autoScroll = true; }, 12000);
+            autoScroll = false;
+            isPaused = true;
+            clearTimeout(scrollRestartTimer);
+            
+            scrollRestartTimer = setTimeout(() => {
+                autoScroll = true;
+                isPaused = false;
+            }, 5000); // RIFILLON PAS 5 SEKONDASH
 
             cards.forEach(c => c.classList.remove("tv-focus"));
 
-            if (e.key === "ArrowDown") {
+            if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+                e.preventDefault();
                 focusIndex = (focusIndex + 1) % cards.length;
-            } else if (e.key === "ArrowUp") {
+            } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+                e.preventDefault();
                 focusIndex = (focusIndex - 1 + cards.length) % cards.length;
             }
 
@@ -579,17 +576,46 @@
             }
         });
 
-        // AUTO-SCROLL I BUTË DHE SAKTE PËR TELEVIZORËT STATIKË
+        // AUTO-SCROLL ME INTERVAL PËR SHPEJTËSI MË TË MADHE
         const wrapEl = document.querySelector(".wrap");
-        (function autoScrollLoop() {
-            if (autoScroll && wrapEl.scrollHeight > wrapEl.clientHeight) {
-                wrapEl.scrollTop += 1;
-                if (wrapEl.scrollTop >= wrapEl.scrollHeight - wrapEl.clientHeight) {
-                    wrapEl.scrollTop = 0;
+        
+        // SCROLL I SHPEJTË ME INTERVAL (60fps)
+        function startAutoScroll() {
+            if (scrollInterval) clearInterval(scrollInterval);
+            
+            scrollInterval = setInterval(() => {
+                if (!autoScroll || isPaused || !wrapEl) return;
+                
+                // LLOGARIT LARTËSINË E KARTELAVE PËR SCROLL TË QETË
+                const scrollAmount = 4; // 4px për interval = ~240px/sekondë
+                
+                if (wrapEl.scrollHeight > wrapEl.clientHeight) {
+                    wrapEl.scrollTop += scrollAmount;
+                    
+                    // KUR ARRIN FUNDIN, KTHEHET NË FILLIM PA NDRALJE
+                    if (wrapEl.scrollTop >= wrapEl.scrollHeight - wrapEl.clientHeight) {
+                        wrapEl.scrollTop = 0;
+                    }
                 }
+            }, 16); // ~60fps (16ms)
+        }
+
+        // FILLO AUTO-SCROLL
+        startAutoScroll();
+
+        // RIFILLO INTERVALIN KUR NDRYSHON PËRMBAJTJA
+        const observer = new MutationObserver(() => {
+            if (scrollInterval) {
+                clearInterval(scrollInterval);
+                startAutoScroll();
             }
-            requestAnimationFrame(autoScrollLoop);
-        })();
+        });
+
+        observer.observe(document.getElementById("games"), { childList: true, subtree: true });
+
+        window.focus();
+        document.body.setAttribute('tabindex', '0');
+        document.body.focus();
 
         loadMatches();
     </script>
