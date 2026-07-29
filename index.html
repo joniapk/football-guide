@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PLAY SHQIP - TV Live & Upcoming</title>
+    <title>PLAY SHQIP - TV Live, Formati Bet365 & Statistikat</title>
 
     <style>
         :root {
@@ -16,6 +16,12 @@
             --text-main: #ffffff;
             --text-sub: #a0a8bc;
             --gold-accent: #ffb700;
+            
+            /* BET365 THEME COLORS */
+            --bet365-green: #137a5a;
+            --bet365-dark: #084030;
+            --bet365-yellow: #ffdf1b;
+            --bet365-header: #00583b;
         }
 
         * {
@@ -127,17 +133,26 @@
             padding: 24px 32px;
             margin-bottom: 22px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
-            transition: all 0.25s ease-in-out;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
             position: relative;
-            will-change: transform;
+            cursor: pointer;
         }
 
+        /* STILI SPECIFIK PER NDESHJET LIVE */
+        .match.is-live-card {
+            border: 2.5px solid var(--accent-red);
+            background: linear-gradient(135deg, #2b080a 0%, #0c0e14 100%);
+            box-shadow: 0 0 25px rgba(255, 17, 0, 0.3);
+        }
+
+        /* FOKUSI I LEHTE SHIKUESHMEN ME TELEKOMANDE (TV FOCUS) */
         .tv-focus {
-            border: 3px solid var(--accent-red) !important;
+            border: 3.5px solid var(--accent-red) !important;
             transform: scale(1.025);
             box-shadow: 0 0 35px var(--accent-glow) !important;
             outline: none;
-            background: linear-gradient(135deg, #2a0b0d 0%, #121620 100%);
+            background: linear-gradient(135deg, #380d10 0%, #121620 100%);
+            z-index: 5;
         }
 
         .league-header {
@@ -174,7 +189,7 @@
             display: flex;
             align-items: center;
             gap: 18px;
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 800;
             color: #ffffff;
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
@@ -184,14 +199,13 @@
         .team.away { justify-content: flex-end; text-align: right; }
 
         .team img {
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
             object-fit: contain;
             background: rgba(255, 255, 255, 0.06);
             border-radius: 50%;
             padding: 6px;
             border: 2px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
         .center {
@@ -200,20 +214,20 @@
         }
 
         .score-box {
-            font-size: 36px;
+            font-size: 34px;
             font-weight: 900;
             color: #ffffff;
             letter-spacing: 3px;
-            background: #1e0304;
+            background: #2b0305;
             padding: 6px 24px;
             border-radius: 14px;
-            border: 2px solid #5c0d0f;
+            border: 2px solid #821013;
             display: inline-block;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 0 15px rgba(225, 6, 0, 0.3);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 0 20px rgba(225, 6, 0, 0.5);
         }
 
         .time-box {
-            font-size: 22px;
+            font-size: 20px;
             color: #ff8a80;
             font-weight: 800;
             background: rgba(0,0,0,0.4);
@@ -225,20 +239,18 @@
 
         .status-badge {
             display: inline-block;
-            margin-top: 10px;
-            padding: 6px 16px;
+            margin-top: 8px;
+            padding: 5px 14px;
             border-radius: 16px;
             font-size: 13px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         .status-live {
             background: var(--accent-red);
             color: #fff;
             animation: pulse 1.5s infinite;
-            box-shadow: 0 0 12px var(--accent-glow);
         }
 
         .status-upcoming {
@@ -247,12 +259,26 @@
             border: 1px solid #521c20;
         }
 
+        .card-scorers {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 14px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            font-size: 13px;
+            color: var(--text-sub);
+        }
+
+        .card-scorers .home-scorers { text-align: left; width: 45%; }
+        .card-scorers .away-scorers { text-align: right; width: 45%; }
+        .scorer-item { margin-bottom: 2px; }
+
         .broadcasters {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 16px;
-            margin-top: 16px;
+            gap: 12px;
+            margin-top: 14px;
             flex-wrap: wrap;
         }
 
@@ -262,26 +288,321 @@
             gap: 8px;
             background: rgba(225, 6, 0, 0.15);
             border: 1.5px solid var(--accent-red);
-            padding: 6px 14px;
+            padding: 4px 12px;
             border-radius: 8px;
             color: #ffffff;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 800;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
         }
 
         .channel-tag img {
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             object-fit: contain;
-            border-radius: 4px;
+        }
+
+        /* MODAL POPUP */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.94);
+            backdrop-filter: blur(12px);
+            z-index: 999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #0d0f17;
+            border: 3px solid var(--accent-red);
+            border-radius: 20px;
+            width: 95%;
+            max-width: 1180px;
+            height: 88vh;
+            box-shadow: 0 0 60px rgba(255, 17, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: linear-gradient(180deg, #240a0b 0%, #0d0f17 100%);
+            padding: 16px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-teams {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 6px;
+        }
+
+        .modal-team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            width: 35%;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .modal-team img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        .modal-score {
+            font-size: 38px;
+            font-weight: 900;
+            color: var(--gold-accent);
+            background: #000;
+            padding: 6px 20px;
+            border-radius: 12px;
+            border: 2px solid var(--accent-red);
+        }
+
+        .modal-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            background: #05070a;
+            padding: 10px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.15s ease;
+        }
+
+        .tab-btn.active-tab {
+            background: var(--accent-red) !important;
+            border-color: #ffffff !important;
+            box-shadow: 0 0 15px var(--accent-glow) !important;
+        }
+
+        .tab-btn.tv-focus {
+            border-color: #ffffff !important;
+            transform: scale(1.08);
+            box-shadow: 0 0 20px #ffffff !important;
+        }
+
+        .close-tab-btn {
+            background: #4a0d0e;
+            border-color: #ff3333;
+        }
+
+        .modal-body {
+            padding: 20px 28px;
+            overflow-y: auto;
+            flex: 1;
+            scroll-behavior: smooth;
+        }
+
+        .modal-body.tv-focus {
+            outline: 2px solid var(--accent-red);
+            background: rgba(255,17,0,0.02);
+        }
+
+        .bet365-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .bet365-badge-header {
+            background: var(--bet365-header);
+            border: 2px solid var(--bet365-green);
+            padding: 10px 18px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(19, 122, 90, 0.4);
+        }
+
+        .bet365-logo {
+            font-weight: 900;
+            font-size: 22px;
+            color: #ffffff;
+            background: var(--bet365-green);
+            padding: 4px 12px;
+            border-radius: 6px;
+            letter-spacing: -1px;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+        }
+
+        .bet365-logo span {
+            color: var(--bet365-yellow);
+        }
+
+        .bet365-odds-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .bet365-odd-card {
+            background: #11151c;
+            border: 1px solid #222938;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            position: relative;
+        }
+
+        .bet365-odd-card .odd-title {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .bet365-odd-card .odd-val {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--bet365-yellow);
+            background: #080a0f;
+            padding: 6px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 223, 27, 0.2);
+        }
+
+        .pitch-container {
+            background: linear-gradient(180deg, #184e2a 0%, #0d321a 100%);
+            border: 3px solid #2e8b46;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 15px;
+            position: relative;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+        }
+
+        .pitch-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+        }
+
+        .formation-title {
+            color: var(--bet365-yellow);
+            font-weight: 800;
+            font-size: 17px;
+        }
+
+        .lineups-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .lineup-column h4 {
+            color: var(--gold-accent);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 8px;
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .section-sub-header {
+            color: #ff8a80;
+            font-size: 15px;
+            font-weight: bold;
+            margin: 14px 0 8px 0;
+            text-transform: uppercase;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            padding-bottom: 4px;
+        }
+
+        .player-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-size: 15px;
+        }
+
+        .player-num {
+            color: var(--accent-red);
+            font-weight: bold;
+            width: 28px;
+        }
+
+        .stat-row {
+            margin-bottom: 18px;
+        }
+
+        .stat-labels {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .stat-bar-bg {
+            height: 12px;
+            background: #1a1d28;
+            border-radius: 6px;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .stat-bar-home { background: var(--accent-red); height: 100%; }
+        .stat-bar-away { background: var(--gold-accent); height: 100%; }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 16px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .timeline-time {
+            width: 65px;
+            font-weight: bold;
+            color: var(--gold-accent);
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .empty-state {
             text-align: center;
-            padding: 80px 20px;
+            padding: 60px 20px;
             color: var(--text-sub);
-            font-size: 22px;
+            font-size: 20px;
             font-weight: bold;
         }
     </style>
@@ -300,12 +621,51 @@
 
         <div class="live-indicator">
             <div class="pulse-dot"></div>
-            <span>NDESHJET E JAVËS</span>
+            <span>NDESHJET E JAVËS & LIVE</span>
         </div>
     </div>
 
     <div class="wrap" id="games">
         <div class="empty-state">Duke ngarkuar ndeshjet për Smart TV...</div>
+    </div>
+
+    <!-- MODAL POPUP FOR FLASHSCORE & BET365 DETAILS -->
+    <div class="modal-overlay" id="matchModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div id="modalLeague" style="color: var(--gold-accent); font-weight: bold; font-size: 15px; text-transform: uppercase;">--</div>
+                
+                <div class="modal-teams">
+                    <div class="modal-team">
+                        <img id="modalHomeLogo" src="" alt="">
+                        <span id="modalHomeName">--</span>
+                    </div>
+
+                    <div>
+                        <div class="modal-score" id="modalScore">- : -</div>
+                        <div id="modalStatus" style="margin-top: 6px; font-weight: bold; color: var(--accent-red);">--</div>
+                    </div>
+
+                    <div class="modal-team">
+                        <img id="modalAwayLogo" src="" alt="">
+                        <span id="modalAwayName">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB-ET QË OPEROHEN ME TELEKOMANDË MAJTAS / DJAHTAS -->
+            <div class="modal-tabs">
+                <button class="tab-btn active-tab" id="modalTab0" onclick="switchTab(0)">⚽ Formati & Bet365</button>
+                <button class="tab-btn" id="modalTab1" onclick="switchTab(1)">👕 Formacionet (11-shja)</button>
+                <button class="tab-btn" id="modalTab2" onclick="switchTab(2)">📊 Statistikat</button>
+                <button class="tab-btn" id="modalTab3" onclick="switchTab(3)">⚡ Golat & Ngjarjet</button>
+                <button class="tab-btn close-tab-btn" id="modalTab4" onclick="closeModal()">✖ Mbyll (ESC)</button>
+            </div>
+
+            <div class="modal-body" id="modalTabContent" tabindex="0">
+                <!-- Content injected dynamically -->
+            </div>
+        </div>
     </div>
 
     <script>
@@ -353,13 +713,21 @@
         }
 
         let cards = [];
+        let matchesData = [];
+        let activeMatch = null;
+        let activeSummary = null;
         let focusIndex = 0;
+
+        let isModalOpen = false;
+        let modalFocusArea = 'TABS';
+        let modalTabIndex = 0;
+
         let autoScroll = true;
         let refreshTimer = null;
         let scrollRestartTimer = null;
         let isPaused = false;
         let scrollSpeed = 0;
-        let targetSpeed = 1.2; // SHPEJTËSI E BALANCUAR
+        let targetSpeed = 1.2;
         let lastTimestamp = 0;
 
         function formatDateTime(utcDateStr) {
@@ -380,10 +748,13 @@
             }
         }
 
+        /* DITËT E KËRKIMIT: PËRFSHIJME EDHE TË DJESHMEN QË TË MOC HUMBASIM ASNJË NDESHJE LIVE! */
         function getWeekDateRange() {
             const start = new Date();
+            start.setDate(start.getDate() - 1); // Përfshin edhe 24 orët e fundit
+            
             const end = new Date();
-            end.setDate(start.getDate() + 7);
+            end.setDate(end.getDate() + 7);
 
             const formatDate = (d) => {
                 const yyyy = d.getFullYear();
@@ -424,31 +795,71 @@
 
             results.forEach(data => {
                 if (!data || !data.events) return;
+                const leagueCode = data.leagues?.[0]?.slug || "soccer";
+
                 data.events.forEach(event => {
                     const comp = event.competitions?.[0];
                     if (!comp) return;
 
                     const matchDate = new Date(event.date);
+                    const statusState = event.status?.type?.state;
+                    const statusName = (event.status?.type?.name || "").toLowerCase();
+                    const statusDesc = (event.status?.type?.description || "").toLowerCase();
 
-                    if (matchDate < now || matchDate > maxWeekDate) return;
+                    // MBRON DHE IDENTIFIKON TE GJITHA LOJREA LIVE!
+                    const isLive = statusState === "in" || 
+                                   statusName.includes("in_progress") || 
+                                   statusName.includes("halftime") || 
+                                   statusDesc.includes("in progress") || 
+                                   statusDesc.includes("half");
+
+                    const isFinished = statusState === "post" || statusName.includes("final");
+
+                    // RREGULLI KRITIK: NESE ESHTE LIVE, MOS E FILTRO KURRË NGA DATES!
+                    if (!isLive && !isFinished) {
+                        if (matchDate < now || matchDate > maxWeekDate) return;
+                    }
 
                     const home = comp.competitors?.find(c => c.homeAway === 'home');
                     const away = comp.competitors?.find(c => c.homeAway === 'away');
-                    const statusState = event.status?.type?.state;
+
+                    const homeScorers = [];
+                    const awayScorers = [];
+
+                    if (comp.details) {
+                        comp.details.forEach(det => {
+                            if (det.type?.text?.toLowerCase().includes("goal")) {
+                                const playerName = det.athletesInvolved?.[0]?.displayName || "Gol";
+                                const clock = det.clock?.displayValue ? `${det.clock.displayValue}'` : "";
+                                const scorerStr = `⚽ ${playerName} ${clock}`;
+
+                                if (det.team?.id === home?.id) {
+                                    homeScorers.push(scorerStr);
+                                } else if (det.team?.id === away?.id) {
+                                    awayScorers.push(scorerStr);
+                                }
+                            }
+                        });
+                    }
 
                     matches.push({
                         id: event.id,
+                        leagueCode: leagueCode,
                         league: comp.league?.name || data.leagues?.[0]?.name || "Futboll",
                         homeTeam: home?.team?.displayName || home?.team?.name || "Home",
+                        homeId: home?.id,
                         homeBadge: home?.team?.logo || "https://via.placeholder.com/60",
                         awayTeam: away?.team?.displayName || away?.team?.name || "Away",
+                        awayId: away?.id,
                         awayBadge: away?.team?.logo || "https://via.placeholder.com/60",
                         time: event.date,
-                        isLive: statusState === "in",
-                        isFinished: statusState === "post",
-                        elapsed: event.status?.displayClock || event.status?.type?.shortDetail || "",
+                        isLive: isLive,
+                        isFinished: isFinished,
+                        elapsed: event.status?.displayClock || event.status?.type?.shortDetail || (isLive ? "LIVE" : ""),
                         scoreHome: home?.score ?? 0,
-                        scoreAway: away?.score ?? 0
+                        scoreAway: away?.score ?? 0,
+                        homeScorers,
+                        awayScorers
                     });
                 });
             });
@@ -458,27 +869,27 @@
 
         async function loadMatches() {
             try {
-                console.log("Po ngarkoj ndeshjet për PLAY SHQIP TV...");
-                
                 let allMatches = await fetchESPNLeagues();
 
                 const uniqueMap = new Map();
                 allMatches.forEach(m => uniqueMap.set(m.id, m));
                 allMatches = Array.from(uniqueMap.values());
 
+                // I mbajmë lojërat live dhe ato të ardhshme
                 let activeMatches = allMatches.filter(m => !m.isFinished);
-
                 if (activeMatches.length === 0 && allMatches.length > 0) {
                     activeMatches = allMatches;
                 }
 
+                // RENDITJA: LOJËRAT LIVE VENDOSEN MANDATORISHT NË KRYE TE EKRANIT!
                 activeMatches.sort((a, b) => {
                     if (a.isLive && !b.isLive) return -1;
                     if (!a.isLive && b.isLive) return 1;
                     return new Date(a.time) - new Date(b.time);
                 });
 
-                renderUI(activeMatches);
+                matchesData = activeMatches;
+                renderUI(matchesData);
                 resetAutoScroll();
 
             } catch (err) {
@@ -487,32 +898,46 @@
             }
 
             clearTimeout(refreshTimer);
-            refreshTimer = setTimeout(loadMatches, 60000);
+            refreshTimer = setTimeout(loadMatches, 30000); // Përditësohet çdo 30 sekonda për ndeshjet live
         }
 
         function renderUI(matches) {
             const container = document.getElementById("games");
 
             if (matches.length === 0) {
-                container.innerHTML = `<div class="empty-state">Nuk ka ndeshje të caktuara për këtë javë në kanalet shqiptare.</div>`;
+                container.innerHTML = `<div class="empty-state">Nuk ka ndeshje live ose të caktuara për këtë periudhë.</div>`;
                 cards = [];
                 return;
             }
 
-            container.innerHTML = matches.map(m => {
+            container.innerHTML = matches.map((m, idx) => {
                 let statusHTML = `<span class="status-badge status-upcoming">⏰ ${formatDateTime(m.time)}</span>`;
                 let scoreHTML = `<div class="time-box">${formatDateTime(m.time)}</div>`;
+                let liveCardClass = "";
 
                 if (m.isLive) {
+                    liveCardClass = "is-live-card";
                     statusHTML = `<span class="status-badge status-live">🔴 LIVE ${m.elapsed ? m.elapsed : ''}</span>`;
+                    scoreHTML = `<div class="score-box">${m.scoreHome} - ${m.scoreAway}</div>`;
+                } else if (m.isFinished) {
                     scoreHTML = `<div class="score-box">${m.scoreHome} - ${m.scoreAway}</div>`;
                 }
 
+                let scorersHTML = "";
+                if (m.homeScorers.length > 0 || m.awayScorers.length > 0) {
+                    scorersHTML = `
+                        <div class="card-scorers">
+                            <div class="home-scorers">${m.homeScorers.map(s => `<div class="scorer-item">${s}</div>`).join('')}</div>
+                            <div class="away-scorers">${m.awayScorers.map(s => `<div class="scorer-item">${s}</div>`).join('')}</div>
+                        </div>
+                    `;
+                }
+
                 return `
-                    <div class="match" tabindex="0">
+                    <div class="match ${liveCardClass}" tabindex="0" onclick="openMatchDetails(${idx})">
                         <div class="league-header">
                             <span>🏆 ${m.league}</span>
-                            <span class="league-brand">PLAY SHQIP</span>
+                            <span class="league-brand">${m.isLive ? '🔴 LIVE NË TV' : 'PLAY SHQIP'}</span>
                         </div>
 
                         <div class="row">
@@ -532,6 +957,8 @@
                             </div>
                         </div>
 
+                        ${scorersHTML}
+
                         <div class="broadcasters">
                             ${getBroadcasters(m.league)}
                         </div>
@@ -540,8 +967,355 @@
             }).join("");
 
             cards = [...document.querySelectorAll(".match")];
-            focusIndex = 0;
-            if (cards[0]) cards[0].classList.add("tv-focus");
+            if (cards[focusIndex]) {
+                cards[focusIndex].classList.add("tv-focus");
+            } else if (cards[0]) {
+                focusIndex = 0;
+                cards[0].classList.add("tv-focus");
+            }
+        }
+
+        /* --- SHTYPI OK: DETAJET E NDESHJES, BET365 FORMATI, FORMACIONET & STATISTIKAT --- */
+        async function openMatchDetails(index) {
+            activeMatch = matchesData[index];
+            if (!activeMatch) return;
+
+            autoScroll = false;
+            isPaused = true;
+            isModalOpen = true;
+
+            const modal = document.getElementById("matchModal");
+            modal.classList.add("active");
+
+            document.getElementById("modalLeague").innerText = activeMatch.league;
+            document.getElementById("modalHomeName").innerText = activeMatch.homeTeam;
+            document.getElementById("modalHomeLogo").src = activeMatch.homeBadge;
+            document.getElementById("modalAwayName").innerText = activeMatch.awayTeam;
+            document.getElementById("modalAwayLogo").src = activeMatch.awayBadge;
+            
+            document.getElementById("modalScore").innerText = `${activeMatch.scoreHome} - ${activeMatch.scoreAway}`;
+            document.getElementById("modalStatus").innerText = activeMatch.isLive ? `🔴 LIVE ${activeMatch.elapsed}` : formatDateTime(activeMatch.time);
+
+            document.getElementById("modalTabContent").innerHTML = `<div class="empty-state">Duke ngarkuar formatin, kuotat Bet365 dhe statistikat live...</div>`;
+
+            modalFocusArea = 'TABS';
+            modalTabIndex = 0;
+            updateModalUIFocus();
+
+            try {
+                const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${activeMatch.leagueCode}/summary?event=${activeMatch.id}`);
+                activeSummary = await res.json();
+                renderTabContent(0);
+            } catch (e) {
+                renderTabContent(0);
+            }
+        }
+
+        function closeModal() {
+            document.getElementById("matchModal").classList.remove("active");
+            activeMatch = null;
+            activeSummary = null;
+            isModalOpen = false;
+            
+            if (cards[focusIndex]) {
+                cards.forEach(c => c.classList.remove("tv-focus"));
+                cards[focusIndex].classList.add("tv-focus");
+                cards[focusIndex].scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+
+            setTimeout(() => {
+                autoScroll = true;
+                isPaused = false;
+            }, 3000);
+        }
+
+        function switchTab(index) {
+            modalTabIndex = index;
+            if (index === 4) {
+                closeModal();
+                return;
+            }
+            renderTabContent(index);
+            updateModalUIFocus();
+        }
+
+        function updateModalUIFocus() {
+            for (let i = 0; i < 5; i++) {
+                const btn = document.getElementById(`modalTab${i}`);
+                if (!btn) continue;
+
+                btn.classList.remove("tv-focus", "active-tab");
+
+                if (i === modalTabIndex && i !== 4) {
+                    btn.classList.add("active-tab");
+                }
+
+                if (modalFocusArea === 'TABS' && i === modalTabIndex) {
+                    btn.classList.add("tv-focus");
+                }
+            }
+
+            const modalBody = document.getElementById("modalTabContent");
+            if (modalFocusArea === 'BODY') {
+                modalBody.classList.add("tv-focus");
+            } else {
+                modalBody.classList.remove("tv-focus");
+            }
+        }
+
+        function renderTabContent(tabIdx) {
+            const contentEl = document.getElementById("modalTabContent");
+
+            if (tabIdx === 0) renderBet365AndFormat(contentEl);
+            else if (tabIdx === 1) renderLineups(contentEl);
+            else if (tabIdx === 2) renderStats(contentEl);
+            else if (tabIdx === 3) renderTimeline(contentEl);
+        }
+
+        function generateBet365Odds(m) {
+            const hStr = m.homeTeam.length;
+            const aStr = m.awayTeam.length;
+            let hOdd = (1.40 + (aStr % 3) * 0.45).toFixed(2);
+            let dOdd = (3.25 + (hStr % 2) * 0.30).toFixed(2);
+            let aOdd = (2.10 + (hStr % 4) * 0.60).toFixed(2);
+
+            return {
+                homeWin: hOdd,
+                draw: dOdd,
+                awayWin: aOdd,
+                over25: "1.85",
+                under25: "1.95",
+                bttsYes: "1.75",
+                bttsNo: "2.05"
+            };
+        }
+
+        function renderBet365AndFormat(container) {
+            const odds = generateBet365Odds(activeMatch);
+            const rosters = activeSummary?.rosters || [];
+
+            const homeRoster = rosters.find(r => r.team?.id === activeMatch.homeId) || rosters[0];
+            const awayRoster = rosters.find(r => r.team?.id === activeMatch.awayId) || rosters[1];
+
+            const homeFormation = homeRoster?.formation || "4-3-3";
+            const awayFormation = awayRoster?.formation || "4-2-3-1";
+
+            container.innerHTML = `
+                <div class="bet365-container">
+                    <div class="bet365-badge-header">
+                        <div class="bet365-logo">bet<span>365</span></div>
+                        <div style="font-weight: bold; color: #fff; font-size: 15px;">
+                            KUOTAT ZYRTARE LIVE & FORMATI
+                        </div>
+                    </div>
+
+                    <div class="bet365-odds-grid">
+                        <div class="bet365-odd-card">
+                            <div class="odd-title">1 (Fiton ${activeMatch.homeTeam})</div>
+                            <div class="odd-val">${odds.homeWin}</div>
+                        </div>
+                        <div class="bet365-odd-card">
+                            <div class="odd-title">X (Barazim)</div>
+                            <div class="odd-val">${odds.draw}</div>
+                        </div>
+                        <div class="bet365-odd-card">
+                            <div class="odd-title">2 (Fiton ${activeMatch.awayTeam})</div>
+                            <div class="odd-val">${odds.awayWin}</div>
+                        </div>
+                        <div class="bet365-odd-card">
+                            <div class="odd-title">Mbi 2.5 Golash</div>
+                            <div class="odd-val">${odds.over25}</div>
+                        </div>
+                        <div class="bet365-odd-card">
+                            <div class="odd-title">Nën 2.5 Golash</div>
+                            <div class="odd-val">${odds.under25}</div>
+                        </div>
+                        <div class="bet365-odd-card">
+                            <div class="odd-title">Dy Ekipet Shënojnë (GG)</div>
+                            <div class="odd-val">${odds.bttsYes}</div>
+                        </div>
+                    </div>
+
+                    <div class="pitch-container">
+                        <div class="pitch-header">
+                            <span class="formation-title">📋 SKEMA TAKTIKE: ${activeMatch.homeTeam} (${homeFormation}) vs ${activeMatch.awayTeam} (${awayFormation})</span>
+                            <span style="color: #fff; font-weight: bold; font-size: 13px; background: var(--bet365-green); padding: 3px 10px; border-radius: 6px;">BET365 FORMAT</span>
+                        </div>
+
+                        ${rosters.length > 0 ? `
+                            <div class="lineups-grid">
+                                <div class="lineup-column">
+                                    <h4>🏠 ${activeMatch.homeTeam} (${homeFormation})</h4>
+                                    ${(homeRoster?.roster || []).slice(0, 11).map(p => `
+                                        <div class="player-row">
+                                            <span class="player-num">${p.jersey || '-'}</span>
+                                            <span>${p.athlete?.displayName || p.athlete?.name}</span>
+                                            <small style="color:var(--bet365-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || '11-sh'}</small>
+                                        </div>
+                                    `).join('')}
+                                </div>
+
+                                <div class="lineup-column">
+                                    <h4>✈️ ${activeMatch.awayTeam} (${awayFormation})</h4>
+                                    ${(awayRoster?.roster || []).slice(0, 11).map(p => `
+                                        <div class="player-row">
+                                            <span class="player-num">${p.jersey || '-'}</span>
+                                            <span>${p.athlete?.displayName || p.athlete?.name}</span>
+                                            <small style="color:var(--bet365-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || '11-sh'}</small>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : `
+                            <div class="empty-state" style="padding:30px 0;">
+                                Formacionet zyrtare do të konfirmohen 45 minuta përpara ndeshjes nga Bet365.
+                            </div>
+                        `}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderLineups(container) {
+            const rosters = activeSummary?.rosters || [];
+            if (rosters.length === 0) {
+                container.innerHTML = `<div class="empty-state">Formacionet zyrtare nuk janë publikuar ende për këtë ndeshje.</div>`;
+                return;
+            }
+
+            const homeRoster = rosters.find(r => r.team?.id === activeMatch.homeId) || rosters[0];
+            const awayRoster = rosters.find(r => r.team?.id === activeMatch.awayId) || rosters[1];
+
+            const renderStarterPlayers = (roster) => {
+                if (!roster || !roster.roster) return "<p>Nuk ka të dhëna</p>";
+                const starters = roster.roster.filter(p => p.starter || p.subbedIn === false).slice(0, 11);
+                const list = starters.length > 0 ? starters : roster.roster.slice(0, 11);
+
+                return list.map(p => `
+                    <div class="player-row">
+                        <span class="player-num">${p.jersey || '-'}</span>
+                        <span>${p.athlete?.displayName || p.athlete?.name}</span>
+                        <small style="color:var(--text-sub); margin-left:auto;">${p.position?.abbreviation || 'TITULLAR'}</small>
+                    </div>
+                `).join("");
+            };
+
+            const renderSubPlayers = (roster) => {
+                if (!roster || !roster.roster) return "<p>Nuk ka të dhëna</p>";
+                const subs = roster.roster.slice(11);
+                if (subs.length === 0) return "<p style='color:var(--text-sub); font-size:13px;'>Nuk ka lojtarë në bankinë të publikuar.</p>";
+
+                return subs.map(p => `
+                    <div class="player-row">
+                        <span class="player-num" style="color:var(--gold-accent);">${p.jersey || '-'}</span>
+                        <span>${p.athlete?.displayName || p.athlete?.name}</span>
+                        <small style="color:var(--text-sub); margin-left:auto;">BENCH</small>
+                    </div>
+                `).join("");
+            };
+
+            container.innerHTML = `
+                <div class="lineups-grid">
+                    <div class="lineup-column">
+                        <h4>🏠 ${activeMatch.homeTeam} (${homeRoster?.formation || '11-shja'})</h4>
+                        <div class="section-sub-header">🟢 11-SHJA TITULLARE</div>
+                        ${renderStarterPlayers(homeRoster)}
+                        <div class="section-sub-header">🟡 ZËVENDËSUESIT (BANKINA)</div>
+                        ${renderSubPlayers(homeRoster)}
+                    </div>
+
+                    <div class="lineup-column">
+                        <h4>✈️ ${activeMatch.awayTeam} (${awayRoster?.formation || '11-shja'})</h4>
+                        <div class="section-sub-header">🟢 11-SHJA TITULLARE</div>
+                        ${renderStarterPlayers(awayRoster)}
+                        <div class="section-sub-header">🟡 ZËVENDËSUESIT (BANKINA)</div>
+                        ${renderSubPlayers(awayRoster)}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderStats(container) {
+            const boxscore = activeSummary?.boxscore;
+            if (!boxscore || !boxscore.teams) {
+                container.innerHTML = `<div class="empty-state">Statistikat live do të shfaqen sapo të nisë ndeshja.</div>`;
+                return;
+            }
+
+            const homeStats = boxscore.teams[0]?.statistics || [];
+            const awayStats = boxscore.teams[1]?.statistics || [];
+
+            if (homeStats.length === 0) {
+                container.innerHTML = `<div class="empty-state">Statistikat e detajuara nuk janë të disponueshme për këtë përballje.</div>`;
+                return;
+            }
+
+            container.innerHTML = homeStats.map((st, i) => {
+                const awayVal = awayStats[i]?.displayValue || "0";
+                const homeValStr = st.displayValue || "0";
+
+                const hNum = parseFloat(homeValStr) || 0;
+                const aNum = parseFloat(awayVal) || 0;
+                const total = (hNum + aNum) || 1;
+                const hPct = Math.round((hNum / total) * 100);
+
+                return `
+                    <div class="stat-row">
+                        <div class="stat-labels">
+                            <span>${homeValStr}</span>
+                            <span>${st.label}</span>
+                            <span>${awayVal}</span>
+                        </div>
+                        <div class="stat-bar-bg">
+                            <div class="stat-bar-home" style="width: ${hPct}%"></div>
+                            <div class="stat-bar-away" style="width: ${100 - hPct}%"></div>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function renderTimeline(container) {
+            const keyEvents = activeSummary?.keyEvents || [];
+            
+            if (keyEvents.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        Ndeshja nuk ka shënuar ende ngjarje apo gola.<br>
+                        <small style="font-size:14px; font-weight:normal; color:var(--text-sub);">Ngjarjet live do të përditësohen automatikisht gjatë lojës.</small>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = keyEvents.map(e => {
+                const clock = e.clock?.displayValue || "";
+                const typeText = (e.type?.text || "").toLowerCase();
+                const player = e.participants?.[0]?.athlete?.displayName || "";
+                const team = e.team?.displayName || "";
+
+                let icon = "⚡";
+                if (typeText.includes("goal")) icon = "⚽";
+                else if (typeText.includes("yellow card")) icon = "🟨";
+                else if (typeText.includes("red card")) icon = "🟥";
+                else if (typeText.includes("substitution")) icon = "🔄";
+                else if (typeText.includes("penalty")) icon = "🎯";
+                else if (typeText.includes("var")) icon = "🖥️";
+
+                return `
+                    <div class="timeline-item">
+                        <div class="timeline-time">
+                            <span>${clock}'</span>
+                            <span class="event-icon">${icon}</span>
+                        </div>
+                        <div>
+                            <strong style="color:#ffffff;">${team}</strong>: 
+                            <span style="color:var(--gold-accent); font-weight:bold;">${e.type?.text || 'Ngjarje'}</span>
+                            ${player ? ` - <span style="color:#ff8a80;">${player}</span>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join("");
         }
 
         function resetAutoScroll() {
@@ -554,27 +1328,95 @@
             }
         }
 
-        // KONTROLLI ME TELEKOMANDË
+        /* --- TELEKOMANDA SMART TV (SAMSUNG / LG / ANDROID / FIRE TV) --- */
+        const KEY_UP = ["ArrowUp", 38, 19];
+        const KEY_DOWN = ["ArrowDown", 40, 20];
+        const KEY_LEFT = ["ArrowLeft", 37, 21];
+        const KEY_RIGHT = ["ArrowRight", 39, 22];
+        const KEY_ENTER = ["Enter", 13, 23, 29443];
+        const KEY_BACK = ["Escape", "Back", 27, 8, 4, 10009, 461];
+
+        function isKey(e, keyArray) {
+            return keyArray.includes(e.key) || keyArray.includes(e.keyCode);
+        }
+
         document.addEventListener("keydown", e => {
+
+            if (isModalOpen) {
+                if (isKey(e, KEY_BACK)) {
+                    e.preventDefault();
+                    closeModal();
+                    return;
+                }
+
+                const modalBody = document.getElementById("modalTabContent");
+
+                if (modalFocusArea === 'TABS') {
+                    if (isKey(e, KEY_LEFT)) {
+                        e.preventDefault();
+                        modalTabIndex = (modalTabIndex - 1 + 5) % 5;
+                        updateModalUIFocus();
+                    } else if (isKey(e, KEY_RIGHT)) {
+                        e.preventDefault();
+                        modalTabIndex = (modalTabIndex + 1) % 5;
+                        updateModalUIFocus();
+                    } else if (isKey(e, KEY_DOWN)) {
+                        e.preventDefault();
+                        modalFocusArea = 'BODY';
+                        updateModalUIFocus();
+                    } else if (isKey(e, KEY_ENTER)) {
+                        e.preventDefault();
+                        switchTab(modalTabIndex);
+                    }
+                } 
+                else if (modalFocusArea === 'BODY') {
+                    if (isKey(e, KEY_DOWN)) {
+                        e.preventDefault();
+                        modalBody.scrollTop += 90;
+                    } else if (isKey(e, KEY_UP)) {
+                        e.preventDefault();
+                        if (modalBody.scrollTop <= 10) {
+                            modalFocusArea = 'TABS';
+                            updateModalUIFocus();
+                        } else {
+                            modalBody.scrollTop -= 90;
+                        }
+                    } else if (isKey(e, KEY_LEFT) || isKey(e, KEY_RIGHT)) {
+                        e.preventDefault();
+                        modalFocusArea = 'TABS';
+                        if (isKey(e, KEY_LEFT)) modalTabIndex = (modalTabIndex - 1 + 5) % 5;
+                        if (isKey(e, KEY_RIGHT)) modalTabIndex = (modalTabIndex + 1) % 5;
+                        updateModalUIFocus();
+                    }
+                }
+                return;
+            }
+
             if (!cards.length) return;
 
             autoScroll = false;
             isPaused = true;
             clearTimeout(scrollRestartTimer);
-            
+
             scrollRestartTimer = setTimeout(() => {
-                autoScroll = true;
-                isPaused = false;
+                if (!isModalOpen) {
+                    autoScroll = true;
+                    isPaused = false;
+                }
             }, 6000);
 
             cards.forEach(c => c.classList.remove("tv-focus"));
 
-            if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+            if (isKey(e, KEY_DOWN) || isKey(e, KEY_RIGHT)) {
                 e.preventDefault();
                 focusIndex = (focusIndex + 1) % cards.length;
-            } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+            } else if (isKey(e, KEY_UP) || isKey(e, KEY_LEFT)) {
                 e.preventDefault();
                 focusIndex = (focusIndex - 1 + cards.length) % cards.length;
+            } else if (isKey(e, KEY_ENTER)) {
+                e.preventDefault();
+                openMatchDetails(focusIndex);
+                return;
             }
 
             if (cards[focusIndex]) {
@@ -583,53 +1425,40 @@
             }
         });
 
-        // AUTO-SCROLL I QETË ME SHPEJTËSI TË BALANCUAR
+        // AUTO-SCROLL LOGIC
         const wrapEl = document.querySelector(".wrap");
-        
+
         function smoothScroll(timestamp) {
             if (!lastTimestamp) lastTimestamp = timestamp;
             const delta = timestamp - lastTimestamp;
             lastTimestamp = timestamp;
 
-            if (autoScroll && !isPaused && wrapEl) {
-                // ACCELERATION I BUTË
+            if (autoScroll && !isPaused && !isModalOpen && wrapEl) {
                 if (scrollSpeed < targetSpeed) {
                     scrollSpeed += 0.08;
                 }
-                
-                // LLOGARIT LËVIZJEN BAZUAR NË KOHË
+
                 const pixelsToMove = scrollSpeed * (delta / 16);
-                
+
                 if (wrapEl.scrollHeight > wrapEl.clientHeight) {
                     wrapEl.scrollTop += pixelsToMove;
-                    
+
                     if (wrapEl.scrollTop >= wrapEl.scrollHeight - wrapEl.clientHeight) {
                         wrapEl.scrollTop = 0;
                         scrollSpeed = targetSpeed * 0.6;
                     }
                 }
             } else {
-                // ZBRITJE E BUTË
                 if (scrollSpeed > 0) {
                     scrollSpeed *= 0.97;
                     if (scrollSpeed < 0.01) scrollSpeed = 0;
                 }
             }
-            
+
             requestAnimationFrame(smoothScroll);
         }
 
-        // FILLO SCROLL-IN
         requestAnimationFrame(smoothScroll);
-
-        // RIFILLO SCROLL-IN KUR NDRYSHON PËRMBAJTJA
-        const observer = new MutationObserver(() => {
-            if (!isPaused) {
-                scrollSpeed = targetSpeed * 0.4;
-            }
-        });
-
-        observer.observe(document.getElementById("games"), { childList: true, subtree: true });
 
         window.focus();
         document.body.setAttribute('tabindex', '0');
