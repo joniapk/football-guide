@@ -120,6 +120,8 @@
             flex: 1;
             will-change: scroll-position;
             -webkit-overflow-scrolling: touch;
+            /* TRANSICION I QETË PËR SCROLL */
+            transition: scroll-top 0.1s linear;
         }
         
         .wrap::-webkit-scrollbar {
@@ -727,13 +729,13 @@
         let modalFocusArea = 'TABS';
         let modalTabIndex = 0;
 
-        // AUTO-SCROLL VARIABLES - METODË E RE PËR ANDROID TV
+        // AUTO-SCROLL ME METODË TË RE - PA DRIDHJE
         let autoScroll = true;
         let refreshTimer = null;
         let scrollRestartTimer = null;
         let isPaused = false;
         let scrollInterval = null;
-        let scrollAmount = 0.8; // SHPEJTËSI E BALANCUAR PËR ANDROID TV
+        let scrollAmount = 1.8; // SHPEJTËSI MË E MADHE
 
         function formatDateTime(utcDateStr) {
             if (!utcDateStr) return "--:--";
@@ -1302,7 +1304,7 @@
             }
         }
 
-        // FUNKSIONI I RI PËR AUTO-SCROLL PA DRIDHJE PËR ANDROID TV
+        // AUTO-SCROLL PERFEKT PA DRIDHJE PËR ANDROID TV
         function startAutoScroll() {
             if (scrollInterval) {
                 clearInterval(scrollInterval);
@@ -1325,7 +1327,7 @@
                         wrapEl.scrollTop = 0;
                     }
                 }
-            }, 30); // ~33fps - MË E QETË PËR ANDROID TV
+            }, 25); // 25ms = 40fps - PERFEKT PËR ANDROID TV
         }
 
         // FILLO AUTO-SCROLL
@@ -1406,7 +1408,6 @@
 
             if (!cards.length) return;
 
-            // NDALON AUTO-SCROLL KUR PËRDORET TELEKOMANDA
             autoScroll = false;
             isPaused = true;
             clearTimeout(scrollRestartTimer);
