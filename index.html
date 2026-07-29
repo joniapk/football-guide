@@ -42,6 +42,8 @@
             padding: 0 32px;
             box-shadow: 0 6px 30px rgba(255, 17, 0, 0.25);
             flex-shrink: 0;
+            z-index: 10;
+            position: relative;
         }
 
         .logo {
@@ -108,9 +110,10 @@
             height: calc(100vh - 85px);
             overflow-y: auto;
             padding: 24px 40px;
-            scroll-behavior: smooth;
+            scroll-behavior: auto;
             scrollbar-width: none;
             flex: 1;
+            will-change: scroll-position;
         }
         
         .wrap::-webkit-scrollbar {
@@ -126,6 +129,7 @@
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
             transition: all 0.25s ease-in-out;
             position: relative;
+            will-change: transform;
         }
 
         .tv-focus {
@@ -353,8 +357,10 @@
         let autoScroll = true;
         let refreshTimer = null;
         let scrollRestartTimer = null;
-        let scrollInterval = null;
         let isPaused = false;
+        let scrollSpeed = 0;
+        let targetSpeed = 2.5;
+        let lastTimestamp = 0;
 
         function formatDateTime(utcDateStr) {
             if (!utcDateStr) return "--:--";
@@ -544,6 +550,7 @@
                 wrapEl.scrollTop = 0;
                 autoScroll = true;
                 isPaused = false;
+                scrollSpeed = 0;
             }
         }
 
@@ -553,12 +560,13 @@
 
             autoScroll = false;
             isPaused = true;
+            scrollSpeed = 0;
             clearTimeout(scrollRestartTimer);
             
             scrollRestartTimer = setTimeout(() => {
                 autoScroll = true;
                 isPaused = false;
-            }, 5000); // RIFILLON PAS 5 SEKONDASH
+            }, 5000);
 
             cards.forEach(c => c.classList.remove("tv-focus"));
 
@@ -576,38 +584,49 @@
             }
         });
 
-        // AUTO-SCROLL ME INTERVAL PËR SHPEJTËSI MË TË MADHE
+        // AUTO-SCROLL I QETË ME requestAnimationFrame
         const wrapEl = document.querySelector(".wrap");
         
-        // SCROLL I SHPEJTË ME INTERVAL (60fps)
-        function startAutoScroll() {
-            if (scrollInterval) clearInterval(scrollInterval);
-            
-            scrollInterval = setInterval(() => {
-                if (!autoScroll || isPaused || !wrapEl) return;
+        function smoothScroll(timestamp) {
+            if (!lastTimestamp) lastTimestamp = timestamp;
+            const delta = timestamp - lastTimestamp;
+            lastTimestamp = timestamp;
+
+            if (autoScroll && !isPaused && wrapEl) {
+                // ACCELERATION PËR FILLIM TË QETË
+                if (scrollSpeed < targetSpeed) {
+                    scrollSpeed += 0.15;
+                }
                 
-                // LLOGARIT LARTËSINË E KARTELAVE PËR SCROLL TË QETË
-                const scrollAmount = 4; // 4px për interval = ~240px/sekondë
+                const pixelsToMove = scrollSpeed * (delta / 16);
                 
                 if (wrapEl.scrollHeight > wrapEl.clientHeight) {
-                    wrapEl.scrollTop += scrollAmount;
+                    wrapEl.scrollTop += pixelsToMove;
                     
-                    // KUR ARRIN FUNDIN, KTHEHET NË FILLIM PA NDRALJE
                     if (wrapEl.scrollTop >= wrapEl.scrollHeight - wrapEl.clientHeight) {
                         wrapEl.scrollTop = 0;
+                        scrollSpeed = targetSpeed * 0.5; // VAZHDON PA NDRALJE
                     }
                 }
-            }, 16); // ~60fps (16ms)
+            } else {
+                // ZBRITJE E QETË KUR NDALON
+                if (scrollSpeed > 0) {
+                    scrollSpeed *= 0.95;
+                    if (scrollSpeed < 0.01) scrollSpeed = 0;
+                }
+            }
+            
+            requestAnimationFrame(smoothScroll);
         }
 
-        // FILLO AUTO-SCROLL
-        startAutoScroll();
+        // FILLO SCROLL-IN E QETË
+        requestAnimationFrame(smoothScroll);
 
-        // RIFILLO INTERVALIN KUR NDRYSHON PËRMBAJTJA
+        // RIFILLO SCROLL-IN KUR NDRYSHON PËRMBAJTJA
         const observer = new MutationObserver(() => {
-            if (scrollInterval) {
-                clearInterval(scrollInterval);
-                startAutoScroll();
+            // VETËM RIFILLO NËSE NUK ËSHTË PAUSED
+            if (!isPaused) {
+                scrollSpeed = targetSpeed * 0.3;
             }
         });
 
