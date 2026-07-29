@@ -119,6 +119,7 @@
             scrollbar-width: none;
             flex: 1;
             will-change: scroll-position;
+            -webkit-overflow-scrolling: touch;
         }
         
         .wrap::-webkit-scrollbar {
@@ -417,8 +418,9 @@
             padding: 20px 28px;
             overflow-y: auto;
             flex: 1;
-            scroll-behavior: smooth;
+            scroll-behavior: auto;
             will-change: scroll-position;
+            -webkit-overflow-scrolling: touch;
         }
 
         .modal-body.tv-focus {
@@ -606,6 +608,11 @@
             font-size: 20px;
             font-weight: bold;
         }
+
+        /* FIX PËR ANDROID TV - TRANSFORMIME TË BUTA */
+        .match, .tv-focus {
+            transition: transform 0.15s ease-out, border-color 0.15s ease-out, box-shadow 0.15s ease-out;
+        }
     </style>
 </head>
 
@@ -654,7 +661,7 @@
             </div>
 
             <div class="modal-tabs">
-                <button class="tab-btn active-tab" id="modalTab0" onclick="switchTab(0)">⚽ Formati & Bet365</button>
+                <button class="tab-btn active-tab" id="modalTab0" onclick="switchTab(0)">⚽ Bet365</button>
                 <button class="tab-btn" id="modalTab1" onclick="switchTab(1)">👕 Formacionet</button>
                 <button class="tab-btn" id="modalTab2" onclick="switchTab(2)">📊 Statistikat</button>
                 <button class="tab-btn" id="modalTab3" onclick="switchTab(3)">⚡ Ngjarjet</button>
@@ -720,14 +727,13 @@
         let modalFocusArea = 'TABS';
         let modalTabIndex = 0;
 
-        // AUTO-SCROLL VARIABLES
+        // AUTO-SCROLL VARIABLES - METODË E RE PËR ANDROID TV
         let autoScroll = true;
         let refreshTimer = null;
         let scrollRestartTimer = null;
         let isPaused = false;
-        let scrollSpeed = 0;
-        let targetSpeed = 1.2;
-        let lastTimestamp = 0;
+        let scrollInterval = null;
+        let scrollAmount = 0.8; // SHPEJTËSI E BALANCUAR PËR ANDROID TV
 
         function formatDateTime(utcDateStr) {
             if (!utcDateStr) return "--:--";
@@ -1293,9 +1299,47 @@
                 wrapEl.scrollTop = 0;
                 autoScroll = true;
                 isPaused = false;
-                scrollSpeed = targetSpeed * 0.5;
             }
         }
+
+        // FUNKSIONI I RI PËR AUTO-SCROLL PA DRIDHJE PËR ANDROID TV
+        function startAutoScroll() {
+            if (scrollInterval) {
+                clearInterval(scrollInterval);
+                scrollInterval = null;
+            }
+
+            scrollInterval = setInterval(() => {
+                const wrapEl = document.querySelector(".wrap");
+                
+                if (!autoScroll || isPaused || isModalOpen || !wrapEl) {
+                    return;
+                }
+
+                if (wrapEl.scrollHeight > wrapEl.clientHeight) {
+                    // LËVIZJE E QETË DHE E VAZHDUESHME
+                    wrapEl.scrollTop += scrollAmount;
+                    
+                    // KUR ARRIN FUNDIN, KTHEHET NË FILLIM
+                    if (wrapEl.scrollTop >= wrapEl.scrollHeight - wrapEl.clientHeight) {
+                        wrapEl.scrollTop = 0;
+                    }
+                }
+            }, 30); // ~33fps - MË E QETË PËR ANDROID TV
+        }
+
+        // FILLO AUTO-SCROLL
+        startAutoScroll();
+
+        // RIFILLO AUTO-SCROLL KUR NDRYSHON PËRMBAJTJA
+        const observer = new MutationObserver(() => {
+            if (scrollInterval) {
+                clearInterval(scrollInterval);
+                startAutoScroll();
+            }
+        });
+
+        observer.observe(document.getElementById("games"), { childList: true, subtree: true });
 
         const KEY_UP = ["ArrowUp", 38, 19];
         const KEY_DOWN = ["ArrowDown", 40, 20];
@@ -1362,6 +1406,7 @@
 
             if (!cards.length) return;
 
+            // NDALON AUTO-SCROLL KUR PËRDORET TELEKOMANDA
             autoScroll = false;
             isPaused = true;
             clearTimeout(scrollRestartTimer);
@@ -1392,41 +1437,6 @@
                 cards[focusIndex].scrollIntoView({ behavior: "smooth", block: "center" });
             }
         });
-
-        // AUTO-SCROLL I QETË PA DRIDHJE
-        const wrapEl = document.querySelector(".wrap");
-
-        function smoothScroll(timestamp) {
-            if (!lastTimestamp) lastTimestamp = timestamp;
-            const delta = timestamp - lastTimestamp;
-            lastTimestamp = timestamp;
-
-            if (autoScroll && !isPaused && !isModalOpen && wrapEl) {
-                if (scrollSpeed < targetSpeed) {
-                    scrollSpeed += 0.08;
-                }
-
-                const pixelsToMove = scrollSpeed * (delta / 16);
-
-                if (wrapEl.scrollHeight > wrapEl.clientHeight) {
-                    wrapEl.scrollTop += pixelsToMove;
-
-                    if (wrapEl.scrollTop >= wrapEl.scrollHeight - wrapEl.clientHeight) {
-                        wrapEl.scrollTop = 0;
-                        scrollSpeed = targetSpeed * 0.6;
-                    }
-                }
-            } else {
-                if (scrollSpeed > 0) {
-                    scrollSpeed *= 0.97;
-                    if (scrollSpeed < 0.01) scrollSpeed = 0;
-                }
-            }
-
-            requestAnimationFrame(smoothScroll);
-        }
-
-        requestAnimationFrame(smoothScroll);
 
         window.focus();
         document.body.setAttribute('tabindex', '0');
