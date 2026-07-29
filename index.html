@@ -17,7 +17,6 @@
             --text-sub: #a0a8bc;
             --gold-accent: #ffb700;
             
-            /* BET365 THEME COLORS */
             --bet365-green: #137a5a;
             --bet365-dark: #084030;
             --bet365-yellow: #ffdf1b;
@@ -39,13 +38,13 @@
         }
 
         .header {
-            height: 85px;
+            height: 65px;
             background: linear-gradient(180deg, #0e0202 0%, #05070a 100%);
             border-bottom: 3px solid var(--accent-red);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 32px;
+            padding: 0 20px;
             box-shadow: 0 6px 30px rgba(255, 17, 0, 0.25);
             flex-shrink: 0;
             z-index: 10;
@@ -55,13 +54,13 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             font-weight: 900;
         }
 
         .play-logo {
-            width: 56px;
-            height: 56px;
+            width: 40px;
+            height: 40px;
             object-fit: contain;
             border-radius: 50%;
             border: 3px solid var(--accent-red);
@@ -69,38 +68,39 @@
         }
 
         .logo-text span {
-            font-size: 28px;
+            font-size: 20px;
             color: #fff;
             letter-spacing: 2px;
             display: block;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            line-height: 1.1;
         }
 
         .logo-text small {
-            font-size: 12px;
+            font-size: 10px;
             color: var(--accent-red);
             font-weight: 800;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
         .live-indicator {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             background: rgba(255, 17, 0, 0.15);
             border: 2px solid var(--accent-red);
-            padding: 8px 20px;
+            padding: 5px 14px;
             border-radius: 30px;
-            font-size: 15px;
+            font-size: 12px;
             font-weight: 800;
             color: #ffffff;
             box-shadow: 0 0 15px rgba(255, 17, 0, 0.2);
         }
 
         .pulse-dot {
-            width: 12px;
-            height: 12px;
+            width: 8px;
+            height: 8px;
             background-color: var(--accent-red);
             border-radius: 50%;
             animation: pulse 1.5s infinite;
@@ -113,42 +113,44 @@
         }
 
         .wrap {
-            height: calc(100vh - 85px);
+            height: calc(100vh - 65px);
             overflow-y: auto;
-            padding: 24px 40px;
+            padding: 12px 20px;
             scroll-behavior: auto;
             scrollbar-width: none;
             flex: 1;
             will-change: scroll-position;
+            -webkit-overflow-scrolling: touch;
         }
         
         .wrap::-webkit-scrollbar {
             display: none;
         }
 
+        /* KARTELA MË E VOGËL PËR MË SHUMË NDESHJE NË EKRAN */
         .match {
             background: var(--card-bg);
             border: 2px solid var(--card-border);
-            border-radius: 22px;
-            padding: 24px 32px;
-            margin-bottom: 22px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
-            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+            transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
             position: relative;
             cursor: pointer;
+            will-change: transform;
         }
 
         .match.is-live-card {
             border: 2.5px solid var(--accent-red);
             background: linear-gradient(135deg, #2b080a 0%, #0c0e14 100%);
-            box-shadow: 0 0 25px rgba(255, 17, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 17, 0, 0.25);
         }
 
-        /* FOKUSI I LEHTE SHIKUESHMEN ME TELEKOMANDE (TV FOCUS) */
         .tv-focus {
-            border: 3.5px solid var(--accent-red) !important;
-            transform: scale(1.025);
-            box-shadow: 0 0 35px var(--accent-glow) !important;
+            border: 3px solid var(--accent-red) !important;
+            transform: scale(1.02);
+            box-shadow: 0 0 30px var(--accent-glow) !important;
             outline: none;
             background: linear-gradient(135deg, #380d10 0%, #121620 100%);
             z-index: 5;
@@ -159,21 +161,21 @@
             align-items: center;
             justify-content: space-between;
             color: var(--gold-accent);
-            font-size: 16px;
+            font-size: 12px;
             font-weight: 800;
-            margin-bottom: 16px;
-            border-bottom: 1px dashed rgba(255, 183, 0, 0.25);
-            padding-bottom: 10px;
+            margin-bottom: 8px;
+            border-bottom: 1px dashed rgba(255, 183, 0, 0.2);
+            padding-bottom: 6px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .league-brand {
             color: #ffffff;
-            font-size: 13px;
+            font-size: 10px;
             background: rgba(225, 6, 0, 0.3);
-            padding: 3px 10px;
-            border-radius: 6px;
+            padding: 2px 8px;
+            border-radius: 4px;
             border: 1px solid var(--accent-red);
         }
 
@@ -184,11 +186,11 @@
         }
 
         .team {
-            width: 38%;
+            width: 35%;
             display: flex;
             align-items: center;
-            gap: 18px;
-            font-size: 24px;
+            gap: 10px;
+            font-size: 16px;
             font-weight: 800;
             color: #ffffff;
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
@@ -198,50 +200,50 @@
         .team.away { justify-content: flex-end; text-align: right; }
 
         .team img {
-            width: 55px;
-            height: 55px;
+            width: 32px;
+            height: 32px;
             object-fit: contain;
             background: rgba(255, 255, 255, 0.06);
             border-radius: 50%;
-            padding: 6px;
-            border: 2px solid rgba(255, 255, 255, 0.15);
+            padding: 3px;
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
         }
 
         .center {
             text-align: center;
-            min-width: 180px;
+            min-width: 120px;
         }
 
         .score-box {
-            font-size: 34px;
+            font-size: 22px;
             font-weight: 900;
             color: #ffffff;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             background: #2b0305;
-            padding: 6px 24px;
-            border-radius: 14px;
+            padding: 4px 16px;
+            border-radius: 10px;
             border: 2px solid #821013;
             display: inline-block;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 0 20px rgba(225, 6, 0, 0.5);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 0 15px rgba(225, 6, 0, 0.4);
         }
 
         .time-box {
-            font-size: 20px;
+            font-size: 15px;
             color: #ff8a80;
             font-weight: 800;
             background: rgba(0,0,0,0.4);
-            padding: 6px 18px;
-            border-radius: 10px;
+            padding: 4px 12px;
+            border-radius: 8px;
             border: 1px solid rgba(255, 138, 128, 0.2);
             display: inline-block;
         }
 
         .status-badge {
             display: inline-block;
-            margin-top: 8px;
-            padding: 5px 14px;
-            border-radius: 16px;
-            font-size: 13px;
+            margin-top: 4px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 10px;
             font-weight: 800;
             text-transform: uppercase;
         }
@@ -261,46 +263,45 @@
         .card-scorers {
             display: flex;
             justify-content: space-between;
-            margin-top: 14px;
-            padding-top: 10px;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            font-size: 13px;
+            margin-top: 6px;
+            padding-top: 6px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            font-size: 11px;
             color: var(--text-sub);
         }
 
         .card-scorers .home-scorers { text-align: left; width: 45%; }
         .card-scorers .away-scorers { text-align: right; width: 45%; }
-        .scorer-item { margin-bottom: 2px; }
+        .scorer-item { margin-bottom: 1px; }
 
         .broadcasters {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            margin-top: 14px;
+            gap: 8px;
+            margin-top: 8px;
             flex-wrap: wrap;
         }
 
         .channel-tag {
             display: flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(225, 6, 0, 0.15);
-            border: 1.5px solid var(--accent-red);
-            padding: 4px 12px;
-            border-radius: 8px;
+            gap: 5px;
+            background: rgba(225, 6, 0, 0.12);
+            border: 1px solid var(--accent-red);
+            padding: 2px 8px;
+            border-radius: 6px;
             color: #ffffff;
-            font-size: 13px;
-            font-weight: 800;
+            font-size: 10px;
+            font-weight: 700;
         }
 
         .channel-tag img {
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             object-fit: contain;
         }
 
-        /* MODAL POPUP */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -313,7 +314,7 @@
             display: none;
             justify-content: center;
             align-items: center;
-            padding: 25px;
+            padding: 15px;
         }
 
         .modal-overlay.active {
@@ -323,10 +324,10 @@
         .modal-content {
             background: #0d0f17;
             border: 3px solid var(--accent-red);
-            border-radius: 20px;
-            width: 95%;
+            border-radius: 16px;
+            width: 98%;
             max-width: 1180px;
-            height: 88vh;
+            height: 92vh;
             box-shadow: 0 0 60px rgba(255, 17, 0, 0.5);
             display: flex;
             flex-direction: column;
@@ -335,52 +336,54 @@
 
         .modal-header {
             background: linear-gradient(180deg, #240a0b 0%, #0d0f17 100%);
-            padding: 16px 30px;
+            padding: 12px 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
             position: relative;
+            flex-shrink: 0;
         }
 
         .modal-teams {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-top: 6px;
+            margin-top: 4px;
         }
 
         .modal-team {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
             width: 35%;
-            font-size: 22px;
+            font-size: 16px;
             font-weight: bold;
         }
 
         .modal-team img {
-            width: 60px;
-            height: 60px;
+            width: 40px;
+            height: 40px;
             object-fit: contain;
         }
 
         .modal-score {
-            font-size: 38px;
+            font-size: 28px;
             font-weight: 900;
             color: var(--gold-accent);
             background: #000;
-            padding: 6px 20px;
-            border-radius: 12px;
+            padding: 4px 16px;
+            border-radius: 10px;
             border: 2px solid var(--accent-red);
         }
 
         .modal-tabs {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 6px;
             background: #05070a;
-            padding: 10px 16px;
+            padding: 6px 12px;
             border-bottom: 1px solid rgba(255,255,255,0.08);
+            flex-shrink: 0;
             flex-wrap: wrap;
         }
 
@@ -388,11 +391,11 @@
             background: rgba(255, 255, 255, 0.05);
             border: 2px solid rgba(255, 255, 255, 0.2);
             color: #fff;
-            padding: 8px 18px;
-            border-radius: 10px;
+            padding: 6px 14px;
+            border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 12px;
             transition: all 0.15s ease;
         }
 
@@ -404,9 +407,8 @@
 
         .tab-btn.tv-focus {
             border-color: #ffffff !important;
-            transform: scale(1.08);
+            transform: scale(1.06);
             box-shadow: 0 0 20px #ffffff !important;
-            background: #ff1100 !important;
         }
 
         .close-tab-btn {
@@ -415,10 +417,12 @@
         }
 
         .modal-body {
-            padding: 20px 28px;
+            padding: 14px 20px;
             overflow-y: auto;
             flex: 1;
-            scroll-behavior: smooth;
+            scroll-behavior: auto;
+            will-change: scroll-position;
+            -webkit-overflow-scrolling: touch;
         }
 
         .modal-body.tv-focus {
@@ -429,14 +433,14 @@
         .bet365-container {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 14px;
         }
 
         .bet365-badge-header {
             background: var(--bet365-header);
             border: 2px solid var(--bet365-green);
-            padding: 10px 18px;
-            border-radius: 12px;
+            padding: 8px 14px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -445,11 +449,11 @@
 
         .bet365-logo {
             font-weight: 900;
-            font-size: 22px;
+            font-size: 18px;
             color: #ffffff;
             background: var(--bet365-green);
-            padding: 4px 12px;
-            border-radius: 6px;
+            padding: 3px 10px;
+            border-radius: 5px;
             letter-spacing: -1px;
             box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
         }
@@ -461,42 +465,42 @@
         .bet365-odds-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-top: 8px;
+            gap: 8px;
+            margin-top: 4px;
         }
 
         .bet365-odd-card {
             background: #11151c;
             border: 1px solid #222938;
-            border-radius: 10px;
-            padding: 12px;
+            border-radius: 8px;
+            padding: 8px;
             text-align: center;
             position: relative;
         }
 
         .bet365-odd-card .odd-title {
-            font-size: 13px;
+            font-size: 11px;
             color: var(--text-sub);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             font-weight: bold;
         }
 
         .bet365-odd-card .odd-val {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 900;
             color: var(--bet365-yellow);
             background: #080a0f;
-            padding: 6px;
-            border-radius: 8px;
+            padding: 4px;
+            border-radius: 6px;
             border: 1px solid rgba(255, 223, 27, 0.2);
         }
 
         .pitch-container {
             background: linear-gradient(180deg, #184e2a 0%, #0d321a 100%);
             border: 3px solid #2e8b46;
-            border-radius: 16px;
-            padding: 20px;
-            margin-top: 15px;
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 10px;
             position: relative;
             box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
         }
@@ -506,71 +510,71 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid rgba(255,255,255,0.2);
-            padding-bottom: 8px;
-            margin-bottom: 16px;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
         }
 
         .formation-title {
             color: var(--bet365-yellow);
             font-weight: 800;
-            font-size: 17px;
+            font-size: 14px;
         }
 
         .lineups-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 25px;
+            gap: 15px;
         }
 
         .lineup-column h4 {
             color: var(--gold-accent);
             border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 8px;
+            padding-bottom: 6px;
             margin-top: 0;
-            font-size: 18px;
+            font-size: 15px;
         }
 
         .section-sub-header {
             color: #ff8a80;
-            font-size: 15px;
+            font-size: 12px;
             font-weight: bold;
-            margin: 14px 0 8px 0;
+            margin: 10px 0 6px 0;
             text-transform: uppercase;
             border-bottom: 1px dashed rgba(255,255,255,0.1);
-            padding-bottom: 4px;
+            padding-bottom: 3px;
         }
 
         .player-row {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 8px 0;
+            gap: 8px;
+            padding: 5px 0;
             border-bottom: 1px solid rgba(255,255,255,0.04);
-            font-size: 15px;
+            font-size: 13px;
         }
 
         .player-num {
             color: var(--accent-red);
             font-weight: bold;
-            width: 28px;
+            width: 24px;
         }
 
         .stat-row {
-            margin-bottom: 18px;
+            margin-bottom: 12px;
         }
 
         .stat-labels {
             display: flex;
             justify-content: space-between;
             font-weight: bold;
-            font-size: 15px;
-            margin-bottom: 6px;
+            font-size: 13px;
+            margin-bottom: 4px;
         }
 
         .stat-bar-bg {
-            height: 12px;
+            height: 8px;
             background: #1a1d28;
-            border-radius: 6px;
+            border-radius: 4px;
             display: flex;
             overflow: hidden;
         }
@@ -581,29 +585,29 @@
         .timeline-item {
             display: flex;
             align-items: center;
-            padding: 12px 14px;
+            padding: 8px 12px;
             border-bottom: 1px solid rgba(255,255,255,0.06);
-            font-size: 16px;
+            font-size: 14px;
             background: rgba(255,255,255,0.02);
-            border-radius: 8px;
-            margin-bottom: 8px;
+            border-radius: 6px;
+            margin-bottom: 6px;
         }
 
         .timeline-time {
-            width: 65px;
+            width: 55px;
             font-weight: bold;
             color: var(--gold-accent);
-            font-size: 18px;
+            font-size: 15px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
         }
 
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
+            padding: 40px 20px;
             color: var(--text-sub);
-            font-size: 20px;
+            font-size: 16px;
             font-weight: bold;
         }
     </style>
@@ -613,7 +617,7 @@
 
     <div class="header">
         <div class="logo">
-            <img class="play-logo" src="https://i.ibb.co/Kpd6bW8X/logo-256.png" alt="Play Shqip Logo" onerror="this.src='https://via.placeholder.com/56?text=PS'">
+            <img class="play-logo" src="https://i.ibb.co/Kpd6bW8X/logo-256.png" alt="Play Shqip Logo" onerror="this.src='https://via.placeholder.com/40?text=PS'">
             <div class="logo-text">
                 <span>PLAY SHQIP</span>
                 <small>KANALET TV & LIGAT ELITARE</small>
@@ -622,7 +626,7 @@
 
         <div class="live-indicator">
             <div class="pulse-dot"></div>
-            <span>NDESHJET E JAVËS & LIVE</span>
+            <span>NDESHJET E JAVËS</span>
         </div>
     </div>
 
@@ -630,11 +634,10 @@
         <div class="empty-state">Duke ngarkuar ndeshjet për Smart TV...</div>
     </div>
 
-    <!-- MODAL POPUP FOR FLASHSCORE & BET365 DETAILS -->
     <div class="modal-overlay" id="matchModal">
         <div class="modal-content">
             <div class="modal-header">
-                <div id="modalLeague" style="color: var(--gold-accent); font-weight: bold; font-size: 15px; text-transform: uppercase;">--</div>
+                <div id="modalLeague" style="color: var(--gold-accent); font-weight: bold; font-size: 13px; text-transform: uppercase;">--</div>
                 
                 <div class="modal-teams">
                     <div class="modal-team">
@@ -644,7 +647,7 @@
 
                     <div>
                         <div class="modal-score" id="modalScore">- : -</div>
-                        <div id="modalStatus" style="margin-top: 6px; font-weight: bold; color: var(--accent-red);">--</div>
+                        <div id="modalStatus" style="margin-top: 4px; font-weight: bold; color: var(--accent-red); font-size: 13px;">--</div>
                     </div>
 
                     <div class="modal-team">
@@ -654,17 +657,15 @@
                 </div>
             </div>
 
-            <!-- TË GJITHA TAB-ET + BUTONI I MBYLLJES KTHEN TE FAQJA KRYESORE -->
             <div class="modal-tabs">
-                <button class="tab-btn active-tab" id="modalTab0" onclick="switchTab(0)">⚽ Formati & Bet365</button>
-                <button class="tab-btn" id="modalTab1" onclick="switchTab(1)">👕 Formacionet (11-shja)</button>
+                <button class="tab-btn active-tab" id="modalTab0" onclick="switchTab(0)">⚽ Bet365</button>
+                <button class="tab-btn" id="modalTab1" onclick="switchTab(1)">👕 Formacionet</button>
                 <button class="tab-btn" id="modalTab2" onclick="switchTab(2)">📊 Statistikat</button>
-                <button class="tab-btn" id="modalTab3" onclick="switchTab(3)">⚡ Golat & Ngjarjet</button>
-                <button class="tab-btn close-tab-btn" id="modalTab4" onclick="closeModal()">✖ Mbyll (ESC / OK)</button>
+                <button class="tab-btn" id="modalTab3" onclick="switchTab(3)">⚡ Ngjarjet</button>
+                <button class="tab-btn close-tab-btn" id="modalTab4" onclick="closeModal()">✖ Mbyll</button>
             </div>
 
             <div class="modal-body" id="modalTabContent" tabindex="0">
-                <!-- Content injected dynamically -->
             </div>
         </div>
     </div>
@@ -707,7 +708,7 @@
 
             return channels.map(ch => `
                 <div class="channel-tag">
-                    <img src="${tvLogos[ch] || 'https://via.placeholder.com/22'}" alt="${ch}">
+                    <img src="${tvLogos[ch] || 'https://via.placeholder.com/16'}" alt="${ch}">
                     <span>${ch}</span>
                 </div>
             `).join("");
@@ -727,9 +728,8 @@
         let refreshTimer = null;
         let scrollRestartTimer = null;
         let isPaused = false;
-        let scrollSpeed = 0;
-        let targetSpeed = 1.2;
-        let lastTimestamp = 0;
+        let scrollInterval = null;
+        let scrollAmount = 1.8;
 
         function formatDateTime(utcDateStr) {
             if (!utcDateStr) return "--:--";
@@ -846,10 +846,10 @@
                         league: comp.league?.name || data.leagues?.[0]?.name || "Futboll",
                         homeTeam: home?.team?.displayName || home?.team?.name || "Home",
                         homeId: home?.id,
-                        homeBadge: home?.team?.logo || "https://via.placeholder.com/60",
+                        homeBadge: home?.team?.logo || "https://via.placeholder.com/32",
                         awayTeam: away?.team?.displayName || away?.team?.name || "Away",
                         awayId: away?.id,
-                        awayBadge: away?.team?.logo || "https://via.placeholder.com/60",
+                        awayBadge: away?.team?.logo || "https://via.placeholder.com/32",
                         time: event.date,
                         isLive: isLive,
                         isFinished: isFinished,
@@ -933,12 +933,12 @@
                     <div class="match ${liveCardClass}" tabindex="0" onclick="openMatchDetails(${idx})">
                         <div class="league-header">
                             <span>🏆 ${m.league}</span>
-                            <span class="league-brand">${m.isLive ? '🔴 LIVE NË TV' : 'PLAY SHQIP'}</span>
+                            <span class="league-brand">${m.isLive ? '🔴 LIVE' : 'PLAY SHQIP'}</span>
                         </div>
 
                         <div class="row">
                             <div class="team home">
-                                <img src="${m.homeBadge}" alt="${m.homeTeam}" onerror="this.src='https://via.placeholder.com/60'">
+                                <img src="${m.homeBadge}" alt="${m.homeTeam}" onerror="this.src='https://via.placeholder.com/32'">
                                 <span>${m.homeTeam}</span>
                             </div>
 
@@ -949,7 +949,7 @@
 
                             <div class="team away">
                                 <span>${m.awayTeam}</span>
-                                <img src="${m.awayBadge}" alt="${m.awayTeam}" onerror="this.src='https://via.placeholder.com/60'">
+                                <img src="${m.awayBadge}" alt="${m.awayTeam}" onerror="this.src='https://via.placeholder.com/32'">
                             </div>
                         </div>
 
@@ -991,7 +991,7 @@
             document.getElementById("modalScore").innerText = `${activeMatch.scoreHome} - ${activeMatch.scoreAway}`;
             document.getElementById("modalStatus").innerText = activeMatch.isLive ? `🔴 LIVE ${activeMatch.elapsed}` : formatDateTime(activeMatch.time);
 
-            document.getElementById("modalTabContent").innerHTML = `<div class="empty-state">Duke ngarkuar formatin, kuotat Bet365 dhe statistikat live...</div>`;
+            document.getElementById("modalTabContent").innerHTML = `<div class="empty-state">Duke ngarkuar...</div>`;
 
             modalFocusArea = 'TABS';
             modalTabIndex = 0;
@@ -1021,7 +1021,7 @@
             setTimeout(() => {
                 autoScroll = true;
                 isPaused = false;
-            }, 2000);
+            }, 3000);
         }
 
         function switchTab(index) {
@@ -1099,14 +1099,14 @@
                 <div class="bet365-container">
                     <div class="bet365-badge-header">
                         <div class="bet365-logo">bet<span>365</span></div>
-                        <div style="font-weight: bold; color: #fff; font-size: 15px;">
-                            KUOTAT ZYRTARE LIVE & FORMATI
+                        <div style="font-weight: bold; color: #fff; font-size: 13px;">
+                            KUOTAT ZYRTARE & FORMATI
                         </div>
                     </div>
 
                     <div class="bet365-odds-grid">
                         <div class="bet365-odd-card">
-                            <div class="odd-title">1 (Fiton ${activeMatch.homeTeam})</div>
+                            <div class="odd-title">1 (${activeMatch.homeTeam})</div>
                             <div class="odd-val">${odds.homeWin}</div>
                         </div>
                         <div class="bet365-odd-card">
@@ -1114,56 +1114,56 @@
                             <div class="odd-val">${odds.draw}</div>
                         </div>
                         <div class="bet365-odd-card">
-                            <div class="odd-title">2 (Fiton ${activeMatch.awayTeam})</div>
+                            <div class="odd-title">2 (${activeMatch.awayTeam})</div>
                             <div class="odd-val">${odds.awayWin}</div>
                         </div>
                         <div class="bet365-odd-card">
-                            <div class="odd-title">Mbi 2.5 Golash</div>
+                            <div class="odd-title">Mbi 2.5 Gol</div>
                             <div class="odd-val">${odds.over25}</div>
                         </div>
                         <div class="bet365-odd-card">
-                            <div class="odd-title">Nën 2.5 Golash</div>
+                            <div class="odd-title">Nën 2.5 Gol</div>
                             <div class="odd-val">${odds.under25}</div>
                         </div>
                         <div class="bet365-odd-card">
-                            <div class="odd-title">Dy Ekipet Shënojnë (GG)</div>
+                            <div class="odd-title">GG (Të dy shënojnë)</div>
                             <div class="odd-val">${odds.bttsYes}</div>
                         </div>
                     </div>
 
                     <div class="pitch-container">
                         <div class="pitch-header">
-                            <span class="formation-title">📋 SKEMA TAKTIKE: ${activeMatch.homeTeam} (${homeFormation}) vs ${activeMatch.awayTeam} (${awayFormation})</span>
-                            <span style="color: #fff; font-weight: bold; font-size: 13px; background: var(--bet365-green); padding: 3px 10px; border-radius: 6px;">BET365 FORMAT</span>
+                            <span class="formation-title">📋 SKEMA: ${activeMatch.homeTeam} (${homeFormation}) vs ${activeMatch.awayTeam} (${awayFormation})</span>
+                            <span style="color: #fff; font-weight: bold; font-size: 11px; background: var(--bet365-green); padding: 2px 8px; border-radius: 4px;">BET365</span>
                         </div>
 
                         ${rosters.length > 0 ? `
                             <div class="lineups-grid">
                                 <div class="lineup-column">
-                                    <h4>🏠 ${activeMatch.homeTeam} (${homeFormation})</h4>
+                                    <h4>🏠 ${activeMatch.homeTeam}</h4>
                                     ${(homeRoster?.roster || []).slice(0, 11).map(p => `
                                         <div class="player-row">
                                             <span class="player-num">${p.jersey || '-'}</span>
                                             <span>${p.athlete?.displayName || p.athlete?.name}</span>
-                                            <small style="color:var(--bet365-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || '11-sh'}</small>
+                                            <small style="color:var(--bet365-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || ''}</small>
                                         </div>
                                     `).join('')}
                                 </div>
 
                                 <div class="lineup-column">
-                                    <h4>✈️ ${activeMatch.awayTeam} (${awayFormation})</h4>
+                                    <h4>✈️ ${activeMatch.awayTeam}</h4>
                                     ${(awayRoster?.roster || []).slice(0, 11).map(p => `
                                         <div class="player-row">
                                             <span class="player-num">${p.jersey || '-'}</span>
                                             <span>${p.athlete?.displayName || p.athlete?.name}</span>
-                                            <small style="color:var(--bet365-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || '11-sh'}</small>
+                                            <small style="color:var(--bet365-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || ''}</small>
                                         </div>
                                     `).join('')}
                                 </div>
                             </div>
                         ` : `
-                            <div class="empty-state" style="padding:30px 0;">
-                                Formacionet zyrtare do të konfirmohen 45 minuta përpara ndeshjes nga Bet365.
+                            <div class="empty-state" style="padding:20px 0;">
+                                Formacionet zyrtare 45 min para ndeshjes.
                             </div>
                         `}
                     </div>
@@ -1174,37 +1174,20 @@
         function renderLineups(container) {
             const rosters = activeSummary?.rosters || [];
             if (rosters.length === 0) {
-                container.innerHTML = `<div class="empty-state">Formacionet zyrtare nuk janë publikuar ende për këtë ndeshje.</div>`;
+                container.innerHTML = `<div class="empty-state">Formacionet nuk janë publikuar ende.</div>`;
                 return;
             }
 
             const homeRoster = rosters.find(r => r.team?.id === activeMatch.homeId) || rosters[0];
             const awayRoster = rosters.find(r => r.team?.id === activeMatch.awayId) || rosters[1];
 
-            const renderStarterPlayers = (roster) => {
+            const renderPlayers = (roster) => {
                 if (!roster || !roster.roster) return "<p>Nuk ka të dhëna</p>";
-                const starters = roster.roster.filter(p => p.starter || p.subbedIn === false).slice(0, 11);
-                const list = starters.length > 0 ? starters : roster.roster.slice(0, 11);
-
-                return list.map(p => `
+                return roster.roster.map(p => `
                     <div class="player-row">
                         <span class="player-num">${p.jersey || '-'}</span>
                         <span>${p.athlete?.displayName || p.athlete?.name}</span>
-                        <small style="color:var(--text-sub); margin-left:auto;">${p.position?.abbreviation || 'TITULLAR'}</small>
-                    </div>
-                `).join("");
-            };
-
-            const renderSubPlayers = (roster) => {
-                if (!roster || !roster.roster) return "<p>Nuk ka të dhëna</p>";
-                const subs = roster.roster.slice(11);
-                if (subs.length === 0) return "<p style='color:var(--text-sub); font-size:13px;'>Nuk ka lojtarë në bankinë të publikuar.</p>";
-
-                return subs.map(p => `
-                    <div class="player-row">
-                        <span class="player-num" style="color:var(--gold-accent);">${p.jersey || '-'}</span>
-                        <span>${p.athlete?.displayName || p.athlete?.name}</span>
-                        <small style="color:var(--text-sub); margin-left:auto;">BENCH</small>
+                        <small style="color:var(--text-sub); margin-left:auto;">${p.position?.abbreviation || ''}</small>
                     </div>
                 `).join("");
             };
@@ -1212,19 +1195,13 @@
             container.innerHTML = `
                 <div class="lineups-grid">
                     <div class="lineup-column">
-                        <h4>🏠 ${activeMatch.homeTeam} (${homeRoster?.formation || '11-shja'})</h4>
-                        <div class="section-sub-header">🟢 11-SHJA TITULLARE</div>
-                        ${renderStarterPlayers(homeRoster)}
-                        <div class="section-sub-header">🟡 ZËVENDËSUESIT (BANKINA)</div>
-                        ${renderSubPlayers(homeRoster)}
+                        <h4>🏠 ${activeMatch.homeTeam}</h4>
+                        ${renderPlayers(homeRoster)}
                     </div>
 
                     <div class="lineup-column">
-                        <h4>✈️ ${activeMatch.awayTeam} (${awayRoster?.formation || '11-shja'})</h4>
-                        <div class="section-sub-header">🟢 11-SHJA TITULLARE</div>
-                        ${renderStarterPlayers(awayRoster)}
-                        <div class="section-sub-header">🟡 ZËVENDËSUESIT (BANKINA)</div>
-                        ${renderSubPlayers(awayRoster)}
+                        <h4>✈️ ${activeMatch.awayTeam}</h4>
+                        ${renderPlayers(awayRoster)}
                     </div>
                 </div>
             `;
@@ -1233,7 +1210,7 @@
         function renderStats(container) {
             const boxscore = activeSummary?.boxscore;
             if (!boxscore || !boxscore.teams) {
-                container.innerHTML = `<div class="empty-state">Statistikat live do të shfaqen sapo të nisë ndeshja.</div>`;
+                container.innerHTML = `<div class="empty-state">Statistikat do të shfaqen gjatë ndeshjes.</div>`;
                 return;
             }
 
@@ -1241,7 +1218,7 @@
             const awayStats = boxscore.teams[1]?.statistics || [];
 
             if (homeStats.length === 0) {
-                container.innerHTML = `<div class="empty-state">Statistikat e detajuara nuk janë të disponueshme për këtë përballje.</div>`;
+                container.innerHTML = `<div class="empty-state">Statistikat nuk janë të disponueshme.</div>`;
                 return;
             }
 
@@ -1276,8 +1253,8 @@
             if (keyEvents.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
-                        Ndeshja nuk ka shënuar ende ngjarje apo gola.<br>
-                        <small style="font-size:14px; font-weight:normal; color:var(--text-sub);">Ngjarjet live do të përditësohen automatikisht gjatë lojës.</small>
+                        Nuk ka ngjarje të regjistruara.<br>
+                        <small style="font-size:12px; font-weight:normal; color:var(--text-sub);">Ngjarjet do të shfaqen gjatë lojës.</small>
                     </div>
                 `;
                 return;
@@ -1295,13 +1272,12 @@
                 else if (typeText.includes("red card")) icon = "🟥";
                 else if (typeText.includes("substitution")) icon = "🔄";
                 else if (typeText.includes("penalty")) icon = "🎯";
-                else if (typeText.includes("var")) icon = "🖥️";
 
                 return `
                     <div class="timeline-item">
                         <div class="timeline-time">
                             <span>${clock}'</span>
-                            <span class="event-icon">${icon}</span>
+                            <span>${icon}</span>
                         </div>
                         <div>
                             <strong style="color:#ffffff;">${team}</strong>: 
@@ -1319,11 +1295,43 @@
                 wrapEl.scrollTop = 0;
                 autoScroll = true;
                 isPaused = false;
-                scrollSpeed = targetSpeed * 0.5;
             }
         }
 
-        /* --- TELEKOMANDA SMART TV (SAMSUNG / LG / ANDROID / FIRE TV) --- */
+        function startAutoScroll() {
+            if (scrollInterval) {
+                clearInterval(scrollInterval);
+                scrollInterval = null;
+            }
+
+            scrollInterval = setInterval(() => {
+                const wrapEl = document.querySelector(".wrap");
+                
+                if (!autoScroll || isPaused || isModalOpen || !wrapEl) {
+                    return;
+                }
+
+                if (wrapEl.scrollHeight > wrapEl.clientHeight) {
+                    wrapEl.scrollTop += scrollAmount;
+                    
+                    if (wrapEl.scrollTop >= wrapEl.scrollHeight - wrapEl.clientHeight) {
+                        wrapEl.scrollTop = 0;
+                    }
+                }
+            }, 25);
+        }
+
+        startAutoScroll();
+
+        const observer = new MutationObserver(() => {
+            if (scrollInterval) {
+                clearInterval(scrollInterval);
+                startAutoScroll();
+            }
+        });
+
+        observer.observe(document.getElementById("games"), { childList: true, subtree: true });
+
         const KEY_UP = ["ArrowUp", 38, 19];
         const KEY_DOWN = ["ArrowDown", 40, 20];
         const KEY_LEFT = ["ArrowLeft", 37, 21];
@@ -1419,41 +1427,6 @@
                 cards[focusIndex].scrollIntoView({ behavior: "smooth", block: "center" });
             }
         });
-
-        // AUTO-SCROLL LOGIC
-        const wrapEl = document.querySelector(".wrap");
-
-        function smoothScroll(timestamp) {
-            if (!lastTimestamp) lastTimestamp = timestamp;
-            const delta = timestamp - lastTimestamp;
-            lastTimestamp = timestamp;
-
-            if (autoScroll && !isPaused && !isModalOpen && wrapEl) {
-                if (scrollSpeed < targetSpeed) {
-                    scrollSpeed += 0.08;
-                }
-
-                const pixelsToMove = scrollSpeed * (delta / 16);
-
-                if (wrapEl.scrollHeight > wrapEl.clientHeight) {
-                    wrapEl.scrollTop += pixelsToMove;
-
-                    if (wrapEl.scrollTop >= wrapEl.scrollHeight - wrapEl.clientHeight) {
-                        wrapEl.scrollTop = 0;
-                        scrollSpeed = targetSpeed * 0.6;
-                    }
-                }
-            } else {
-                if (scrollSpeed > 0) {
-                    scrollSpeed *= 0.97;
-                    if (scrollSpeed < 0.01) scrollSpeed = 0;
-                }
-            }
-
-            requestAnimationFrame(smoothScroll);
-        }
-
-        requestAnimationFrame(smoothScroll);
 
         window.focus();
         document.body.setAttribute('tabindex', '0');
