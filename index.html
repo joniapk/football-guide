@@ -4,29 +4,27 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Play Shqip - LIVE Score Pro</title>
+    <title>PLAY SHQIP - TV Live & Upcoming</title>
 
     <style>
         :root {
-            --bg-main: #070a0f;
-            --card-bg: linear-gradient(145deg, #160a0a, #0d0303);
-            --card-border: #2a1010;
-            --accent-red: #e10600;
+            --bg-main: #05070a;
+            --card-bg: linear-gradient(135deg, #18090a 0%, #0c0e14 100%);
+            --card-border: rgba(225, 6, 0, 0.25);
+            --accent-red: #ff1100;
+            --accent-glow: rgba(255, 17, 0, 0.85);
             --text-main: #ffffff;
-            --text-sub: #a0a5b5;
-            --live-bg: linear-gradient(145deg, #1a0808, #2a0a0a);
-            --live-border: #ff2200;
-            --live-glow: rgba(255, 34, 0, 0.4);
+            --text-sub: #a0a8bc;
+            --gold-accent: #ffb700;
         }
 
         * {
             box-sizing: border-box;
             user-select: none;
-            margin: 0;
-            padding: 0;
         }
 
         body {
+            margin: 0;
             background: var(--bg-main);
             color: var(--text-main);
             font-family: 'Segoe UI', Arial, sans-serif;
@@ -34,192 +32,132 @@
             height: 100vh;
         }
 
+        /* HEADER I MADH PËR TV */
         .header {
-            height: 75px;
-            background: #0a0101;
-            border-bottom: 2px solid var(--accent-red);
+            height: 85px;
+            background: linear-gradient(180deg, #0e0202 0%, #05070a 100%);
+            border-bottom: 3px solid var(--accent-red);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 24px;
-            box-shadow: 0 4px 20px rgba(225, 6, 0, 0.2);
+            padding: 0 32px;
+            box-shadow: 0 6px 30px rgba(255, 17, 0, 0.25);
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
             font-weight: 900;
         }
 
         .play-logo {
-            width: 48px;
-            height: 48px;
+            width: 56px;
+            height: 56px;
             object-fit: contain;
             border-radius: 50%;
-            border: 2px solid var(--accent-red);
+            border: 3px solid var(--accent-red);
+            box-shadow: 0 0 15px var(--accent-glow);
         }
 
         .logo-text span {
-            font-size: 24px;
+            font-size: 28px;
             color: #fff;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             display: block;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
         .logo-text small {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--accent-red);
-            font-weight: bold;
-            letter-spacing: 2px;
+            font-weight: 800;
+            letter-spacing: 3px;
             text-transform: uppercase;
         }
 
         .live-indicator {
             display: flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(225, 6, 0, 0.15);
-            border: 1px solid var(--accent-red);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: bold;
-            color: var(--accent-red);
+            gap: 10px;
+            background: rgba(255, 17, 0, 0.15);
+            border: 2px solid var(--accent-red);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 800;
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 17, 0, 0.2);
         }
 
         .pulse-dot {
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             background-color: var(--accent-red);
             border-radius: 50%;
             animation: pulse 1.5s infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(225, 6, 0, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(225, 6, 0, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(225, 6, 0, 0); }
+            0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 17, 0, 0.8); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 12px rgba(255, 17, 0, 0); }
+            100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 17, 0, 0); }
         }
 
         .wrap {
-            height: calc(100vh - 75px);
+            height: calc(100vh - 85px);
             overflow-y: auto;
-            padding: 20px;
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent-red) #0b0e14;
+            padding: 24px 40px;
+            scroll-behavior: smooth;
+            scrollbar-width: none; /* Fsheh scrollbar-in në TV */
         }
-
-        .match {
-            background: var(--card-bg);
-            border: 2px solid var(--card-border);
-            border-radius: 18px;
-            padding: 18px 24px;
-            margin-bottom: 16px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
-            transition: all 0.3s ease;
-            animation: fadeIn 0.3s ease;
-            position: relative;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .match.live {
-            background: var(--live-bg) !important;
-            border: 3px solid var(--live-border) !important;
-            box-shadow: 0 0 30px var(--live-glow), inset 0 0 30px rgba(255, 34, 0, 0.05) !important;
-            transform: scale(1.02);
-        }
-
-        .match.live .league-header {
-            color: #ff6b6b !important;
-            border-bottom-color: #ff2200 !important;
-        }
-
-        .match.live .score-box {
-            font-size: 34px !important;
-            background: #1a0505 !important;
-            border-color: #ff2200 !important;
-            box-shadow: 0 0 30px rgba(255, 34, 0, 0.5) !important;
-            animation: scorePulse 1.5s infinite;
-        }
-
-        @keyframes scorePulse {
-            0%, 100% { box-shadow: 0 0 30px rgba(255, 34, 0, 0.5); }
-            50% { box-shadow: 0 0 60px rgba(255, 34, 0, 0.8); }
-        }
-
-        .match.live .status-badge {
-            background: #ff2200 !important;
-            font-size: 13px !important;
-            padding: 6px 16px !important;
-            animation: pulse 1s infinite;
-        }
-
-        .live-time {
-            display: inline-block;
-            background: #ff2200;
-            color: #fff;
-            font-weight: 900;
-            font-size: 18px;
-            padding: 4px 14px;
-            border-radius: 8px;
-            margin-top: 6px;
-            letter-spacing: 1px;
-            font-variant-numeric: tabular-nums;
-            animation: timePulse 1s infinite;
-        }
-
-        @keyframes timePulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        .live-badge-corner {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: #ff2200;
-            color: #fff;
-            font-size: 11px;
-            font-weight: 900;
-            padding: 3px 12px;
-            border-radius: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            animation: pulse 1s infinite;
-        }
-
-        .match:not(.live) .live-badge-corner {
+        
+        .wrap::-webkit-scrollbar {
             display: none;
         }
 
-        .tv-focus {
-            border-color: var(--accent-red) !important;
-            transform: scale(1.02);
-            box-shadow: 0 0 22px rgba(225, 6, 0, 0.7) !important;
-            outline: none;
+        /* MBRYTJA E NDESHJES (KARTELA TV) */
+        .match {
+            background: var(--card-bg);
+            border: 2px solid var(--card-border);
+            border-radius: 22px;
+            padding: 24px 32px;
+            margin-bottom: 22px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+            transition: all 0.25s ease-in-out;
+            position: relative;
         }
 
-        .match.live.tv-focus {
-            border-color: #ff4400 !important;
-            box-shadow: 0 0 40px rgba(255, 68, 0, 0.9), 0 0 80px rgba(255, 34, 0, 0.3) !important;
-            transform: scale(1.05);
+        /* FOKUSI I TELEKOMANDËS NEON */
+        .tv-focus {
+            border: 3px solid var(--accent-red) !important;
+            transform: scale(1.025);
+            box-shadow: 0 0 35px var(--accent-glow) !important;
+            outline: none;
+            background: linear-gradient(135deg, #2a0b0d 0%, #121620 100%);
         }
 
         .league-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            color: #d19ca0;
+            color: var(--gold-accent);
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            border-bottom: 1px dashed rgba(255, 183, 0, 0.25);
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .league-brand {
+            color: #ffffff;
             font-size: 13px;
-            font-weight: bold;
-            margin-bottom: 14px;
-            border-bottom: 1px dashed #2d1414;
-            padding-bottom: 8px;
+            background: rgba(225, 6, 0, 0.3);
+            padding: 3px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--accent-red);
         }
 
         .row {
@@ -232,170 +170,145 @@
             width: 38%;
             display: flex;
             align-items: center;
-            gap: 14px;
-            font-size: 19px;
+            gap: 18px;
+            font-size: 26px; /* SHKRONJA TË ZMADHUARA PËR TV */
             font-weight: 800;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         }
 
         .team.home { justify-content: flex-start; text-align: left; }
         .team.away { justify-content: flex-end; text-align: right; }
 
         .team img {
-            width: 46px;
-            height: 46px;
+            width: 60px; /* LOGOT E EKIPEVE TË ZMADHUARA */
+            height: 60px;
             object-fit: contain;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.06);
             border-radius: 50%;
-            padding: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 6px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
         .center {
             text-align: center;
-            min-width: 150px;
+            min-width: 180px;
         }
 
         .score-box {
-            font-size: 28px;
+            font-size: 36px; /* REZULTATI I MADH */
             font-weight: 900;
-            color: #fff;
-            letter-spacing: 2px;
-            background: #1e0505;
-            padding: 4px 20px;
-            border-radius: 10px;
-            border: 1px solid #4a1010;
+            color: #ffffff;
+            letter-spacing: 3px;
+            background: #1e0304;
+            padding: 6px 24px;
+            border-radius: 14px;
+            border: 2px solid #5c0d0f;
             display: inline-block;
-            min-width: 90px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 0 15px rgba(225, 6, 0, 0.3);
         }
 
         .time-box {
-            font-size: 17px;
+            font-size: 22px; /* ORA E MADHE */
             color: #ff8a80;
-            font-weight: bold;
+            font-weight: 800;
+            background: rgba(0,0,0,0.4);
+            padding: 6px 18px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 138, 128, 0.2);
+            display: inline-block;
         }
 
         .status-badge {
             display: inline-block;
-            margin-top: 8px;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: bold;
+            margin-top: 10px;
+            padding: 6px 16px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 800;
             text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .status-live {
+            background: var(--accent-red);
+            color: #fff;
+            animation: pulse 1.5s infinite;
+            box-shadow: 0 0 12px var(--accent-glow);
         }
 
         .status-upcoming {
-            background: #201212;
+            background: #1d0f11;
             color: #ff8a80;
-            border: 1px solid #5c1d1d;
+            border: 1px solid #521c20;
         }
 
         .broadcasters {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            margin-top: 12px;
+            gap: 16px;
+            margin-top: 16px;
             flex-wrap: wrap;
         }
 
         .channel-tag {
             display: flex;
             align-items: center;
-            gap: 6px;
-            background: rgba(225, 6, 0, 0.12);
-            border: 1px solid var(--accent-red);
-            padding: 4px 10px;
-            border-radius: 6px;
-            color: #ff5252;
-            font-size: 12px;
-            font-weight: bold;
+            gap: 8px;
+            background: rgba(225, 6, 0, 0.15);
+            border: 1.5px solid var(--accent-red);
+            padding: 6px 14px;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 800;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
         }
 
         .channel-tag img {
-            width: 18px;
-            height: 18px;
+            width: 22px;
+            height: 22px;
             object-fit: contain;
-            border-radius: 3px;
+            border-radius: 4px;
         }
 
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
+            padding: 80px 20px;
             color: var(--text-sub);
-            font-size: 18px;
-        }
-
-        .live-count {
-            background: rgba(225, 6, 0, 0.2);
-            color: var(--accent-red);
-            padding: 2px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            margin-left: 8px;
-        }
-
-        .filters {
-            display: flex;
-            gap: 10px;
-            padding: 0 20px 15px 20px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            background: transparent;
-            border: 1px solid #333;
-            color: #888;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            font-size: 22px;
             font-weight: bold;
-        }
-
-        .filter-btn:hover {
-            border-color: var(--accent-red);
-            color: #fff;
-        }
-
-        .filter-btn.active {
-            background: var(--accent-red);
-            border-color: var(--accent-red);
-            color: #fff;
         }
     </style>
 </head>
 
 <body>
 
+    <!-- HEADER I PLAY SHQIP -->
     <div class="header">
         <div class="logo">
-            <img class="play-logo" src="https://i.ibb.co/Kpd6bW8X/logo-256.png" alt="Play Shqip Logo" onerror="this.src='https://via.placeholder.com/48?text=PS'">
+            <img class="play-logo" src="https://i.ibb.co/Kpd6bW8X/logo-256.png" alt="Play Shqip Logo" onerror="this.src='https://via.placeholder.com/56?text=PS'">
             <div class="logo-text">
                 <span>PLAY SHQIP</span>
-                <small>LIVE SCORE PRO</small>
+                <small>KANALET TV & LIGAT ELITARE</small>
             </div>
         </div>
 
         <div class="live-indicator">
             <div class="pulse-dot"></div>
-            <span>LIVE</span>
-            <span class="live-count" id="liveCount">0</span>
+            <span>NDESHJET E JAVËS</span>
         </div>
     </div>
 
-    <div class="filters">
-        <button class="filter-btn active" data-filter="all">Të Gjitha</button>
-        <button class="filter-btn" data-filter="live">🔴 LIVE</button>
-        <button class="filter-btn" data-filter="upcoming">⏰ Në Pritje</button>
-    </div>
-
+    <!-- PËRMBAJTJA E NDESHJEVE -->
     <div class="wrap" id="games">
-        <div class="empty-state">Duke ngarkuar ndeshjet...</div>
+        <div class="empty-state">Duke ngarkuar ndeshjet për Smart TV...</div>
     </div>
 
     <script>
+        // LOGOT E KANALEVE TELEVIZIVE SHQIPTARE
         const tvLogos = {
             "Super Sport AL": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkn0aMGtp1VLY3UMIrfsiyD1PBe-k-NBvnRtZOWep4iQ&s=10",
             "Tring Sport AL": "https://play-lh.googleusercontent.com/xj8GLCiviP_leV_eIzw3o-MLIzkNx7Uq6lW3VT7u9A3ZhpMenjJQyzc2egadTkEKSIaOnyIg4UASqUO2VL-nGQ",
@@ -403,43 +316,43 @@
             "RTSH Sport AL": "https://r2.thesportsdb.com/images/media/channel/logo/nfdq4d1630964082.png"
         };
 
+        // HARTOGRAFIKA E SAKTE E KANALEVE TV
         function getBroadcasters(leagueName) {
             let channels = [];
             const l = (leagueName || "").toLowerCase();
 
+            // SUPER SPORT AL (DigitAlb)
             if (l.includes("premier") || l.includes("la liga") || l.includes("bundesliga") || 
                 l.includes("ligue 1") || l.includes("europa") || l.includes("conference") || 
                 l.includes("nations") || l.includes("world cup") || l.includes("euro") || 
                 l.includes("fa cup") || l.includes("copa del rey") || l.includes("eredivisie") || 
-                l.includes("saudi") || l.includes("carabao") || l.includes("dfb")) {
+                l.includes("saudi") || l.includes("carabao") || l.includes("dfb") || l.includes("friendly")) {
                 channels.push("Super Sport AL");
             }
 
+            // TRING SPORT AL
             if (l.includes("serie a") || l.includes("champions") || l.includes("coppa italia") || 
                 l.includes("primeira") || l.includes("super lig") || l.includes("turkish")) {
                 channels.push("Tring Sport AL");
             }
 
+            // ART SPORT KS (Kosovë)
             if (l.includes("champions") || l.includes("europa") || l.includes("conference") || 
-                l.includes("serie a") || l.includes("la liga") || l.includes("ligue 1")) {
+                l.includes("serie a") || l.includes("la liga") || l.includes("ligue 1") || l.includes("friendly")) {
                 channels.push("Art Sport KS");
             }
 
-            if (l.includes("albania") || l.includes("superliga") || l.includes("shqiperi") || 
-                l.includes("kupa e shqiperise") || l.includes("rtsh")) {
+            // RTSH SPORT AL
+            if (l.includes("albania") || l.includes("superliga") || l.includes("shqiperi") || l.includes("rtsh")) {
                 channels.push("RTSH Sport AL");
-            }
-
-            if (channels.length === 0) {
-                channels.push("Super Sport AL", "Art Sport KS");
             }
 
             channels = [...new Set(channels)];
 
             return channels.map(ch => `
                 <div class="channel-tag">
-                    <img src="${tvLogos[ch] || 'https://via.placeholder.com/18'}" alt="${ch}">
-                    ${ch}
+                    <img src="${tvLogos[ch] || 'https://via.placeholder.com/22'}" alt="${ch}">
+                    <span>${ch}</span>
                 </div>
             `).join("");
         }
@@ -447,11 +360,7 @@
         let cards = [];
         let focusIndex = 0;
         let autoScroll = true;
-        let autoScrollTimer = null;
         let refreshTimer = null;
-        let liveCount = 0;
-        let currentFilter = 'all';
-        let matchesData = [];
 
         function formatDateTime(utcDateStr) {
             if (!utcDateStr) return "--:--";
@@ -486,12 +395,28 @@
             return `${formatDate(start)}-${formatDate(end)}`;
         }
 
+        // VETËM LIGAT QË TRANSMETOHEN NË TV SHQIPTARE
         const ESPN_LEAGUES = [
-            "eng.1", "esp.1", "ita.1", "ger.1", "fra.1",
-            "uefa.champions", "uefa.europa", "uefa.europa.conf",
-            "fifa.world", "uefa.nations", "por.1", "ned.1",
-            "tur.1", "sau.1", "eng.fa", "eng.league_cup",
-            "esp.copa", "ita.coppa", "ger.pokal"
+            "eng.1",           // Premier League
+            "esp.1",           // La Liga
+            "ita.1",           // Serie A
+            "ger.1",           // Bundesliga
+            "fra.1",           // Ligue 1
+            "uefa.champions",  // Champions League
+            "uefa.europa",     // Europa League
+            "uefa.europa.conf",// Conference League
+            "uefa.nations",    // Nations League
+            "fifa.world",      // World Cup / Kualifikueset
+            "eng.fa",          // FA Cup
+            "eng.league_cup",  // Carabao Cup
+            "esp.copa",        // Copa del Rey
+            "ita.coppa",       // Coppa Italia
+            "ger.pokal",       // DFB Pokal
+            "por.1",           // Primeira Liga
+            "ned.1",           // Eredivisie
+            "tur.1",           // Süper Lig
+            "sau.1",           // Saudi Pro League
+            "club.friendly"    // Miqësoret e Klubeve
         ];
 
         async function fetchESPNLeagues() {
@@ -520,27 +445,24 @@
                     if (!comp) return;
 
                     const matchDate = new Date(event.date);
+
                     if (matchDate < now || matchDate > maxWeekDate) return;
 
                     const home = comp.competitors?.find(c => c.homeAway === 'home');
                     const away = comp.competitors?.find(c => c.homeAway === 'away');
                     const statusState = event.status?.type?.state;
 
-                    if (statusState === "post") return;
-
                     matches.push({
                         id: event.id,
                         league: comp.league?.name || data.leagues?.[0]?.name || "Futboll",
                         homeTeam: home?.team?.displayName || home?.team?.name || "Home",
-                        homeBadge: home?.team?.logo || "https://via.placeholder.com/46",
+                        homeBadge: home?.team?.logo || "https://via.placeholder.com/60",
                         awayTeam: away?.team?.displayName || away?.team?.name || "Away",
-                        awayBadge: away?.team?.logo || "https://via.placeholder.com/46",
+                        awayBadge: away?.team?.logo || "https://via.placeholder.com/60",
                         time: event.date,
                         isLive: statusState === "in",
                         isFinished: statusState === "post",
-                        elapsed: event.status?.displayClock || "",
-                        period: event.status?.period || 0,
-                        periodDisplay: event.status?.type?.shortDetail || "",
+                        elapsed: event.status?.displayClock || event.status?.type?.shortDetail || "",
                         scoreHome: home?.score ?? 0,
                         scoreAway: away?.score ?? 0
                     });
@@ -552,6 +474,8 @@
 
         async function loadMatches() {
             try {
+                console.log("Po ngarkoj ndeshjet për PLAY SHQIP TV...");
+                
                 let allMatches = await fetchESPNLeagues();
 
                 const uniqueMap = new Map();
@@ -560,80 +484,54 @@
 
                 let activeMatches = allMatches.filter(m => !m.isFinished);
 
+                if (activeMatches.length === 0 && allMatches.length > 0) {
+                    activeMatches = allMatches;
+                }
+
                 activeMatches.sort((a, b) => {
                     if (a.isLive && !b.isLive) return -1;
                     if (!a.isLive && b.isLive) return 1;
                     return new Date(a.time) - new Date(b.time);
                 });
 
-                matchesData = activeMatches;
                 renderUI(activeMatches);
 
             } catch (err) {
-                console.error("Gabim:", err);
-                document.getElementById("games").innerHTML = `<div class="empty-state">Gabim në ngarkim: ${err.message}</div>`;
+                console.error("Gabim gjatë ngarkimit:", err);
+                document.getElementById("games").innerHTML = `<div class="empty-state">Ndodhi një gabim gjatë ngarkimit të të dhënave.</div>`;
             }
 
             clearTimeout(refreshTimer);
-            refreshTimer = setTimeout(loadMatches, 15000);
+            refreshTimer = setTimeout(loadMatches, 60000);
         }
 
         function renderUI(matches) {
             const container = document.getElementById("games");
-            liveCount = 0;
 
-            let filtered = matches;
-            if (currentFilter === 'live') {
-                filtered = matches.filter(m => m.isLive);
-            } else if (currentFilter === 'upcoming') {
-                filtered = matches.filter(m => !m.isLive);
-            }
-
-            if (filtered.length === 0) {
-                container.innerHTML = `<div class="empty-state">Nuk ka ndeshje për këtë filtrim</div>`;
-                document.getElementById("liveCount").textContent = matches.filter(m => m.isLive).length;
+            if (matches.length === 0) {
+                container.innerHTML = `<div class="empty-state">Nuk ka ndeshje të caktuara për këtë javë në kanalet shqiptare.</div>`;
                 return;
             }
 
-            liveCount = matches.filter(m => m.isLive).length;
-            document.getElementById("liveCount").textContent = liveCount;
+            container.innerHTML = matches.map(m => {
+                let statusHTML = `<span class="status-badge status-upcoming">⏰ ${formatDateTime(m.time)}</span>`;
+                let scoreHTML = `<div class="time-box">${formatDateTime(m.time)}</div>`;
 
-            container.innerHTML = filtered.map((m, idx) => {
-                const isLive = m.isLive;
-                let statusHTML, scoreHTML;
-
-                if (isLive) {
-                    const periodText = m.periodDisplay || 
-                                      (m.period === 1 ? "PJESA 1" : 
-                                       m.period === 2 ? "PJESA 2" : 
-                                       m.period > 0 ? `PJESA ${m.period}` : "");
-                    
-                    const clockDisplay = m.elapsed ? `${m.elapsed}'` : '';
-                    
-                    statusHTML = `
-                        <div class="live-time">⏱️ ${clockDisplay}</div>
-                        <span class="status-badge">🔴 LIVE ${periodText}</span>
-                    `;
+                if (m.isLive) {
+                    statusHTML = `<span class="status-badge status-live">🔴 LIVE ${m.elapsed ? m.elapsed : ''}</span>`;
                     scoreHTML = `<div class="score-box">${m.scoreHome} - ${m.scoreAway}</div>`;
-                } else {
-                    statusHTML = `<span class="status-badge status-upcoming">⏰ ${formatDateTime(m.time)}</span>`;
-                    scoreHTML = `<div class="time-box">${formatDateTime(m.time)}</div>`;
                 }
 
-                const liveClass = isLive ? 'live' : '';
-                const liveBadge = isLive ? `<div class="live-badge-corner">🔴 LIVE</div>` : '';
-
                 return `
-                    <div class="match ${liveClass}" tabindex="${idx + 1}" data-live="${isLive}" data-index="${idx}">
-                        ${liveBadge}
+                    <div class="match" tabindex="0">
                         <div class="league-header">
                             <span>🏆 ${m.league}</span>
-                            <span>PLAY SHQIP</span>
+                            <span class="league-brand">PLAY SHQIP</span>
                         </div>
 
                         <div class="row">
                             <div class="team home">
-                                <img src="${m.homeBadge}" onerror="this.src='https://via.placeholder.com/46'">
+                                <img src="${m.homeBadge}" alt="${m.homeTeam}" onerror="this.src='https://via.placeholder.com/60'">
                                 <span>${m.homeTeam}</span>
                             </div>
 
@@ -644,7 +542,7 @@
 
                             <div class="team away">
                                 <span>${m.awayTeam}</span>
-                                <img src="${m.awayBadge}" onerror="this.src='https://via.placeholder.com/46'">
+                                <img src="${m.awayBadge}" alt="${m.awayTeam}" onerror="this.src='https://via.placeholder.com/60'">
                             </div>
                         </div>
 
@@ -656,59 +554,23 @@
             }).join("");
 
             cards = [...document.querySelectorAll(".match")];
-            
-            let firstLive = document.querySelector(".match.live");
-            if (firstLive) {
-                focusIndex = cards.indexOf(firstLive);
-            } else {
-                focusIndex = 0;
-            }
-
-            cards.forEach((c, i) => {
-                c.classList.toggle("tv-focus", i === focusIndex);
-                if (i === focusIndex) {
-                    c.scrollIntoView({ behavior: "smooth", block: "center" });
-                }
-            });
+            focusIndex = 0;
+            if (cards[0]) cards[0].classList.add("tv-focus");
         }
 
-        // ===== KONTROLLI I PLOTË PËR REMOTE TV =====
-        document.addEventListener("keydown", function(e) {
+        // KONTROLLI ME SHIGJETAT E TELEKOMANDËS PËR SMART TV
+        document.addEventListener("keydown", e => {
             if (!cards.length) return;
 
-            const key = e.key;
-            
-            autoScroll = false;
-            clearTimeout(autoScrollTimer);
-            autoScrollTimer = setTimeout(() => { autoScroll = true; }, 15000);
+            autoScroll = false; // Ndalon lëvizjen automatike kur përdoret telekomanda
+            setTimeout(() => { autoScroll = true; }, 12000);
 
             cards.forEach(c => c.classList.remove("tv-focus"));
 
-            if (key === "ArrowDown" || key === "ArrowRight") {
-                e.preventDefault();
+            if (e.key === "ArrowDown") {
                 focusIndex = (focusIndex + 1) % cards.length;
-            } else if (key === "ArrowUp" || key === "ArrowLeft") {
-                e.preventDefault();
+            } else if (e.key === "ArrowUp") {
                 focusIndex = (focusIndex - 1 + cards.length) % cards.length;
-            } else if (key === "Enter" || key === " ") {
-                e.preventDefault();
-                if (cards[focusIndex]) {
-                    const idx = parseInt(cards[focusIndex].dataset.index);
-                    const m = matchesData[idx];
-                    if (m) {
-                        if (m.isLive) {
-                            alert(`🔴 LIVE: ${m.homeTeam} vs ${m.awayTeam}\nRezultati: ${m.scoreHome} - ${m.scoreAway}\nMinuta: ${m.elapsed || '0'}'`);
-                        } else {
-                            alert(`⏰ Ndeshje: ${m.homeTeam} vs ${m.awayTeam}\nLiga: ${m.league}\nOra: ${formatDateTime(m.time)}`);
-                        }
-                    }
-                }
-            } else if (key === "Backspace" || key === "Escape") {
-                e.preventDefault();
-                focusIndex = 0;
-                if (cards[0]) {
-                    cards[0].classList.add("tv-focus");
-                }
             }
 
             if (cards[focusIndex]) {
@@ -717,17 +579,7 @@
             }
         });
 
-        // Filter buttons
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                currentFilter = this.dataset.filter;
-                loadMatches();
-            });
-        });
-
-        // Auto-scroll
+        // AUTO-SCROLL I BUTË DHE SAKTE PËR TELEVIZORËT STATIKË
         const wrapEl = document.querySelector(".wrap");
         (function autoScrollLoop() {
             if (autoScroll && wrapEl.scrollHeight > wrapEl.clientHeight) {
@@ -739,7 +591,6 @@
             requestAnimationFrame(autoScrollLoop);
         })();
 
-        // Nisja
         loadMatches();
     </script>
 </body>
