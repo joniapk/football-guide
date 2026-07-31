@@ -16,7 +16,7 @@
             --text-main: #ffffff;
             --text-sub: #a0a8bc;
             --gold-accent: #ffb700;
-            
+
             /* BWIN THEME COLORS */
             --bwin-black: #000000;
             --bwin-dark: #121212;
@@ -40,13 +40,13 @@
         }
 
         .header {
-            height: 85px;
+            height: 72px;
             background: linear-gradient(180deg, #0e0202 0%, #05070a 100%);
             border-bottom: 3px solid var(--accent-red);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 32px;
+            padding: 0 24px;
             box-shadow: 0 6px 30px rgba(255, 17, 0, 0.25);
             flex-shrink: 0;
             z-index: 10;
@@ -56,13 +56,13 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             font-weight: 900;
         }
 
         .play-logo {
-            width: 56px;
-            height: 56px;
+            width: 46px;
+            height: 46px;
             object-fit: contain;
             border-radius: 50%;
             border: 3px solid var(--accent-red);
@@ -70,15 +70,16 @@
         }
 
         .logo-text span {
-            font-size: 28px;
+            font-size: 22px;
             color: #fff;
             letter-spacing: 2px;
             display: block;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            line-height: 1.1;
         }
 
         .logo-text small {
-            font-size: 12px;
+            font-size: 10px;
             color: var(--accent-red);
             font-weight: 800;
             letter-spacing: 3px;
@@ -88,41 +89,52 @@
         .live-indicator {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             background: rgba(255, 17, 0, 0.15);
             border: 2px solid var(--accent-red);
-            padding: 8px 20px;
+            padding: 6px 16px;
             border-radius: 30px;
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 800;
             color: #ffffff;
             box-shadow: 0 0 15px rgba(255, 17, 0, 0.2);
+            white-space: nowrap;
         }
 
         .pulse-dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             background-color: var(--accent-red);
             border-radius: 50%;
             animation: pulse 1.5s infinite;
+            flex-shrink: 0;
         }
 
         @keyframes pulse {
-            0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 17, 0, 0.8); }
-            70% { transform: scale(1.1); box-shadow: 0 0 0 12px rgba(255, 17, 0, 0); }
-            100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 17, 0, 0); }
+            0% {
+                transform: scale(0.9);
+                box-shadow: 0 0 0 0 rgba(255, 17, 0, 0.8);
+            }
+            70% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 12px rgba(255, 17, 0, 0);
+            }
+            100% {
+                transform: scale(0.9);
+                box-shadow: 0 0 0 0 rgba(255, 17, 0, 0);
+            }
         }
 
         .wrap {
-            height: calc(100vh - 85px);
+            height: calc(100vh - 72px);
             overflow-y: auto;
-            padding: 24px 40px;
+            padding: 16px 24px 16px 24px;
             scroll-behavior: auto;
             scrollbar-width: none;
             flex: 1;
             will-change: scroll-position;
         }
-        
+
         .wrap::-webkit-scrollbar {
             display: none;
         }
@@ -130,10 +142,10 @@
         .match {
             background: var(--card-bg);
             border: 2px solid var(--card-border);
-            border-radius: 22px;
-            padding: 24px 32px;
-            margin-bottom: 22px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+            border-radius: 18px;
+            padding: 14px 18px;
+            margin-bottom: 14px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8);
             transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
             position: relative;
             cursor: pointer;
@@ -159,20 +171,20 @@
             align-items: center;
             justify-content: space-between;
             color: var(--gold-accent);
-            font-size: 16px;
+            font-size: 13px;
             font-weight: 800;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
             border-bottom: 1px dashed rgba(255, 183, 0, 0.25);
-            padding-bottom: 10px;
+            padding-bottom: 6px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .league-brand {
             color: #ffffff;
-            font-size: 13px;
+            font-size: 11px;
             background: rgba(225, 6, 0, 0.3);
-            padding: 3px 10px;
+            padding: 2px 8px;
             border-radius: 6px;
             border: 1px solid var(--accent-red);
         }
@@ -181,71 +193,80 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 6px;
         }
 
         .team {
-            width: 38%;
+            width: 34%;
             display: flex;
             align-items: center;
-            gap: 18px;
-            font-size: 24px;
+            gap: 10px;
+            font-size: 18px;
             font-weight: 800;
             color: #ffffff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
         }
 
-        .team.home { justify-content: flex-start; text-align: left; }
-        .team.away { justify-content: flex-end; text-align: right; }
+        .team.home {
+            justify-content: flex-start;
+            text-align: left;
+        }
+        .team.away {
+            justify-content: flex-end;
+            text-align: right;
+        }
 
         .team img {
-            width: 55px;
-            height: 55px;
+            width: 40px;
+            height: 40px;
             object-fit: contain;
             background: rgba(255, 255, 255, 0.06);
             border-radius: 50%;
-            padding: 6px;
+            padding: 4px;
             border: 2px solid rgba(255, 255, 255, 0.15);
+            flex-shrink: 0;
         }
 
         .center {
             text-align: center;
-            min-width: 220px;
+            min-width: 140px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
         }
 
         .score-box {
-            font-size: 36px;
+            font-size: 28px;
             font-weight: 900;
             color: #ffffff;
-            letter-spacing: 4px;
+            letter-spacing: 2px;
             background: #2b0305;
-            padding: 6px 26px;
-            border-radius: 14px;
+            padding: 4px 16px;
+            border-radius: 12px;
             border: 2px solid #821013;
             display: inline-block;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 0 20px rgba(225, 6, 0, 0.5);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(225, 6, 0, 0.5);
         }
 
         .time-box {
-            font-size: 19px;
+            font-size: 15px;
             color: #ff8a80;
             font-weight: 800;
-            background: rgba(0,0,0,0.5);
-            padding: 8px 22px;
-            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 4px 14px;
+            border-radius: 10px;
             border: 1.5px solid rgba(255, 138, 128, 0.3);
             display: inline-block;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            white-space: nowrap;
         }
 
         .status-badge {
             display: inline-block;
-            padding: 5px 14px;
+            padding: 3px 12px;
             border-radius: 16px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 800;
             text-transform: uppercase;
         }
@@ -263,46 +284,59 @@
             border: 1px solid #521c20;
         }
 
+        .bwin-odds-mini {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 8px;
+            padding-top: 6px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .bwin-odd-mini {
+            background: #111215;
+            border: 1px solid #282a30;
+            border-radius: 8px;
+            padding: 3px 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .bwin-odd-mini .odd-label {
+            color: var(--text-sub);
+            font-weight: 400;
+            font-size: 12px;
+        }
+
+        .bwin-odd-mini .odd-val {
+            color: var(--bwin-yellow);
+            font-weight: 900;
+            font-size: 15px;
+        }
+
         .card-scorers {
             display: flex;
             justify-content: space-between;
-            margin-top: 14px;
-            padding-top: 10px;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            font-size: 13px;
+            margin-top: 8px;
+            padding-top: 6px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 12px;
             color: var(--text-sub);
         }
 
-        .card-scorers .home-scorers { text-align: left; width: 45%; }
-        .card-scorers .away-scorers { text-align: right; width: 45%; }
-        .scorer-item { margin-bottom: 2px; }
-
-        .broadcasters {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 14px;
-            flex-wrap: wrap;
+        .card-scorers .home-scorers {
+            text-align: left;
+            width: 45%;
         }
-
-        .channel-tag {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(225, 6, 0, 0.15);
-            border: 1.5px solid var(--accent-red);
-            padding: 4px 12px;
-            border-radius: 8px;
-            color: #ffffff;
-            font-size: 13px;
-            font-weight: 800;
+        .card-scorers .away-scorers {
+            text-align: right;
+            width: 45%;
         }
-
-        .channel-tag img {
-            width: 20px;
-            height: 20px;
-            object-fit: contain;
+        .scorer-item {
+            margin-bottom: 2px;
         }
 
         /* MODAL POPUP */
@@ -386,7 +420,8 @@
             gap: 10px;
             background: #05070a;
             padding: 10px 16px;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            flex-wrap: wrap;
         }
 
         .tab-btn {
@@ -427,7 +462,7 @@
 
         .modal-body.tv-focus {
             outline: 2px solid var(--accent-red);
-            background: rgba(255,17,0,0.02);
+            background: rgba(255, 17, 0, 0.02);
         }
 
         .bwin-container {
@@ -499,14 +534,14 @@
             padding: 20px;
             margin-top: 15px;
             position: relative;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8);
         }
 
         .pitch-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             padding-bottom: 8px;
             margin-bottom: 16px;
         }
@@ -525,7 +560,7 @@
 
         .lineup-column h4 {
             color: var(--gold-accent);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 8px;
             margin-top: 0;
             font-size: 18px;
@@ -537,7 +572,7 @@
             font-weight: bold;
             margin: 14px 0 8px 0;
             text-transform: uppercase;
-            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
             padding-bottom: 4px;
         }
 
@@ -546,7 +581,7 @@
             align-items: center;
             gap: 12px;
             padding: 8px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
             font-size: 15px;
         }
 
@@ -576,16 +611,22 @@
             overflow: hidden;
         }
 
-        .stat-bar-home { background: var(--accent-red); height: 100%; }
-        .stat-bar-away { background: var(--gold-accent); height: 100%; }
+        .stat-bar-home {
+            background: var(--accent-red);
+            height: 100%;
+        }
+        .stat-bar-away {
+            background: var(--gold-accent);
+            height: 100%;
+        }
 
         .timeline-item {
             display: flex;
             align-items: center;
             padding: 12px 14px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             font-size: 16px;
-            background: rgba(255,255,255,0.02);
+            background: rgba(255, 255, 255, 0.02);
             border-radius: 8px;
             margin-bottom: 8px;
         }
@@ -607,6 +648,112 @@
             font-size: 20px;
             font-weight: bold;
         }
+
+        /* Përshtatje për Android TV (ekrane më të vegjël) */
+        @media (max-width: 720px) {
+            .header {
+                padding: 0 12px;
+                height: 60px;
+            }
+            .play-logo {
+                width: 36px;
+                height: 36px;
+            }
+            .logo-text span {
+                font-size: 18px;
+            }
+            .logo-text small {
+                font-size: 9px;
+            }
+            .live-indicator {
+                font-size: 11px;
+                padding: 4px 10px;
+            }
+            .wrap {
+                padding: 10px 12px;
+            }
+            .match {
+                padding: 10px 12px;
+                margin-bottom: 10px;
+                border-radius: 14px;
+            }
+            .team {
+                font-size: 14px;
+                gap: 6px;
+                width: 30%;
+            }
+            .team img {
+                width: 30px;
+                height: 30px;
+            }
+            .center {
+                min-width: 100px;
+            }
+            .score-box {
+                font-size: 20px;
+                padding: 2px 10px;
+            }
+            .time-box {
+                font-size: 12px;
+                padding: 2px 8px;
+            }
+            .status-badge {
+                font-size: 10px;
+                padding: 2px 8px;
+            }
+            .league-header {
+                font-size: 11px;
+                margin-bottom: 6px;
+                padding-bottom: 4px;
+            }
+            .bwin-odds-mini {
+                gap: 8px;
+                margin-top: 4px;
+                padding-top: 4px;
+            }
+            .bwin-odd-mini {
+                padding: 2px 8px;
+                font-size: 11px;
+            }
+            .bwin-odd-mini .odd-val {
+                font-size: 12px;
+            }
+            .card-scorers {
+                font-size: 10px;
+                margin-top: 4px;
+                padding-top: 4px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .team {
+                font-size: 12px;
+                gap: 4px;
+                width: 28%;
+            }
+            .team img {
+                width: 24px;
+                height: 24px;
+            }
+            .center {
+                min-width: 80px;
+            }
+            .score-box {
+                font-size: 16px;
+                padding: 2px 6px;
+            }
+            .time-box {
+                font-size: 10px;
+                padding: 2px 6px;
+            }
+            .bwin-odd-mini {
+                font-size: 10px;
+                padding: 2px 6px;
+            }
+            .bwin-odd-mini .odd-val {
+                font-size: 11px;
+            }
+        }
     </style>
 </head>
 
@@ -617,13 +764,13 @@
             <img class="play-logo" src="https://i.ibb.co/Kpd6bW8X/logo-256.png" alt="Play Shqip Logo" onerror="this.src='https://via.placeholder.com/56?text=PS'">
             <div class="logo-text">
                 <span>PLAY SHQIP</span>
-                <small>KANALET TV & LIGAT ELITARE</small>
+                <small>LIGAT ELITARE & LIVE</small>
             </div>
         </div>
 
         <div class="live-indicator">
             <div class="pulse-dot"></div>
-            <span>NDESHJET E 7 DITËVE & LIVE</span>
+            <span>7 DITËT & LIVE</span>
         </div>
     </div>
 
@@ -636,7 +783,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div id="modalLeague" style="color: var(--gold-accent); font-weight: bold; font-size: 15px; text-transform: uppercase;">--</div>
-                
+
                 <div class="modal-teams">
                     <div class="modal-team">
                         <img id="modalHomeLogo" src="" alt="">
@@ -670,97 +817,7 @@
     </div>
 
     <script>
-        const tvLogos = {
-            "Super Sport AL": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkn0aMGtp1VLY3UMIrfsiyD1PBe-k-NBvnRtZOWep4iQ&s=10",
-            "Tring Sport AL": "https://play-lh.googleusercontent.com/xj8GLCiviP_leV_eIzw3o-MLIzkNx7Uq6lW3VT7u9A3ZhpMenjJQyzc2egadTkEKSIaOnyIg4UASqUO2VL-nGQ",
-            "Art Sport KS": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8GbjNRnIknmPljrVN4I0qixtO3cClJOnmvg&s",
-            "RTSH Sport AL": "https://r2.thesportsdb.com/images/media/channel/logo/nfdq4d1630964082.png",
-            "TV Klan": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/TV_Klan_logo.png/600px-TV_Klan_logo.png"
-        };
-
-        function getBroadcasters(leagueName, homeTeam = "", awayTeam = "") {
-            let channels = [];
-            const l = (leagueName || "").toLowerCase();
-            const teams = (homeTeam + " " + awayTeam).toLowerCase();
-
-            const isAlbania = teams.includes("albania") || teams.includes("shqipëri") || teams.includes("shqiperi");
-            const isKosovo = teams.includes("kosovo") || teams.includes("kosovë") || teams.includes("kosove");
-
-            if (isAlbania && (l.includes("nations") || l.includes("euro") || l.includes("world cup") || l.includes("qualifier"))) {
-                channels.push("TV Klan", "RTSH Sport AL");
-            }
-            if (isKosovo && (l.includes("nations") || l.includes("euro") || l.includes("world cup") || l.includes("qualifier"))) {
-                channels.push("Art Sport KS");
-            }
-
-            if (l.includes("premier") || l.includes("la liga") || l.includes("bundesliga") || 
-                l.includes("ligue 1") || l.includes("fa cup") || l.includes("copa del rey") || 
-                l.includes("saudi") || l.includes("dfb") || l.includes("carabao")) {
-                channels.push("Super Sport AL");
-            }
-
-            if (l.includes("la liga") || l.includes("ligue 1")) {
-                channels.push("Art Sport KS");
-            }
-
-            if (l.includes("serie a") || l.includes("coppa italia") || l.includes("primeira") || 
-                l.includes("super lig") || l.includes("turkish")) {
-                channels.push("Tring Sport AL", "Art Sport KS");
-            }
-
-            if (l.includes("champions")) {
-                channels.push("Tring Sport AL", "Art Sport KS");
-            }
-
-            if (l.includes("europa") || l.includes("conference")) {
-                channels.push("Super Sport AL", "Art Sport KS");
-            }
-
-            if (l.includes("superiore") || l.includes("albania superliga")) {
-                channels.push("Super Sport AL", "RTSH Sport AL");
-            }
-
-            if (l.includes("albi mall") || l.includes("kosovo superliga")) {
-                channels.push("Art Sport KS");
-            }
-
-            if (l.includes("friendly") || l.includes("miqesore")) {
-                channels.push("Super Sport AL", "Art Sport KS");
-            }
-
-            channels = [...new Set(channels)];
-
-            if (channels.length === 0) {
-                channels.push("Super Sport AL", "Art Sport KS");
-            }
-
-            return channels.map(ch => `
-                <div class="channel-tag">
-                    <img src="${tvLogos[ch] || 'https://via.placeholder.com/22'}" alt="${ch}">
-                    <span>${ch}</span>
-                </div>
-            `).join("");
-        }
-
-        let cards = [];
-        let matchesData = [];
-        let activeMatch = null;
-        let activeSummary = null;
-        let focusIndex = 0;
-
-        let isModalOpen = false;
-        let modalFocusArea = 'TABS';
-        let modalTabIndex = 0;
-
-        let autoScroll = true;
-        let refreshTimer = null;
-        let scrollRestartTimer = null;
-        let isPaused = false;
-        let scrollSpeed = 0;
-        let targetSpeed = 1.2;
-        let lastTimestamp = 0;
-
-        // FORMATIMI I DATËS NE FORMATIN 12-ORËSH (AM / PM) - VETËM TË DILET NJË HERË
+        // --- FUNKSIONI PËR FORMATIMIN E ORËS 24-ORËSH (pa AM/PM) ---
         function formatDateTime(utcDateStr) {
             if (!utcDateStr) return "--:--";
             const date = new Date(utcDateStr);
@@ -768,10 +825,12 @@
             const tomorrow = new Date(today);
             tomorrow.setDate(today.getDate() + 1);
 
-            // Formatimi 12-orësh (AM / PM)
-            const timeStr = date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+            // Formati 24-orësh: HH:MM (00:00 - 23:59)
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const timeStr = `${hours}:${minutes}`;
 
-            const isSameDay = (d1, d2) => 
+            const isSameDay = (d1, d2) =>
                 d1.getDate() === d2.getDate() &&
                 d1.getMonth() === d2.getMonth() &&
                 d1.getFullYear() === d2.getFullYear();
@@ -789,26 +848,51 @@
             }
         }
 
+        // --- FUNKSIONI PËR GJENERIMIN E KOEFICIENTËVE BWIN (1 X 2) ---
+        function generateBwinOdds(m) {
+            const hStr = m.homeTeam.length;
+            const aStr = m.awayTeam.length;
+            let hOdd = (1.40 + (aStr % 3) * 0.45).toFixed(2);
+            let dOdd = (3.25 + (hStr % 2) * 0.30).toFixed(2);
+            let aOdd = (2.10 + (hStr % 4) * 0.60).toFixed(2);
+            return {
+                homeWin: hOdd,
+                draw: dOdd,
+                awayWin: aOdd
+            };
+        }
+
+        // --- FUNKSIONI PËR TË HEDHUR KANALET TV DHE PËR TË VENDOSUR KOEFICIENTËT ---
+        function renderOddsMini(m) {
+            const odds = generateBwinOdds(m);
+            return `
+                <div class="bwin-odds-mini">
+                    <div class="bwin-odd-mini"><span class="odd-label">1</span> <span class="odd-val">${odds.homeWin}</span></div>
+                    <div class="bwin-odd-mini"><span class="odd-label">X</span> <span class="odd-val">${odds.draw}</span></div>
+                    <div class="bwin-odd-mini"><span class="odd-label">2</span> <span class="odd-val">${odds.awayWin}</span></div>
+                </div>
+            `;
+        }
+
+        // --- FUNKSIONI IS_WITHIN_NEXT7_DAYS (i pandryshuar) ---
         function isWithinNext7Days(dateStr) {
             if (!dateStr) return false;
             const matchDate = new Date(dateStr);
             const now = new Date();
             const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
             const endOf7Days = new Date(startOfToday.getTime() + (7 * 24 * 60 * 60 * 1000));
-            
             return matchDate >= startOfToday && matchDate < endOf7Days;
         }
 
+        // --- FUNKSIONI IS_MAJOR_LEAGUE (i pandryshuar) ---
         function isMajorLeague(leagueName, slug) {
             const str = ((leagueName || '') + ' ' + (slug || '')).toLowerCase();
-
-            if (str.includes("u19") || str.includes("u21") || str.includes("u18") || 
-                str.includes("u23") || str.includes("women") || str.includes("femra") || 
-                str.includes("reserve") || str.includes("2. bundesliga") || str.includes("laliga2") || 
+            if (str.includes("u19") || str.includes("u21") || str.includes("u18") ||
+                str.includes("u23") || str.includes("women") || str.includes("femra") ||
+                str.includes("reserve") || str.includes("2. bundesliga") || str.includes("laliga2") ||
                 str.includes("serie b") || str.includes("ligue 2") || str.includes("championship")) {
                 return false;
             }
-
             const allowedKeywords = [
                 "premier league", "la liga", "laliga", "serie a", "bundesliga", "ligue 1",
                 "champions league", "europa league", "conference league", "superiore",
@@ -816,13 +900,12 @@
                 "euro", "fa cup", "copa del rey", "coppa italia", "dfb pokal", "eredivisie",
                 "primeira liga", "super lig", "saudi pro", "friendly", "amika"
             ];
-
             return allowedKeywords.some(kw => str.includes(kw));
         }
 
+        // --- FUNKSIONI PARSE_LIVE_MINUTE (i pandryshuar) ---
         function parseLiveMinute(statusObj) {
             if (!statusObj) return "LIVE";
-
             if (statusObj.displayClock) {
                 let clk = String(statusObj.displayClock).trim();
                 if (clk.includes(":")) {
@@ -832,7 +915,6 @@
                     return `${clk}'`;
                 }
             }
-
             const detail = statusObj.type?.shortDetail || statusObj.type?.detail || "";
             if (detail) {
                 const lower = detail.toLowerCase();
@@ -845,76 +927,64 @@
                 }
                 return detail;
             }
-
             return "LIVE";
         }
 
+        // --- FUNKSIONI GET_7_DAYS_DATE_RANGE (i pandryshuar) ---
         function get7DaysDateRange() {
             const start = new Date();
             const end = new Date();
             end.setDate(start.getDate() + 6);
-
             const fmt = (d) => {
                 const y = d.getFullYear();
                 const m = String(d.getMonth() + 1).padStart(2, '0');
                 const day = String(d.getDate()).padStart(2, '0');
                 return `${y}${m}${day}`;
             };
-
             return `${fmt(start)}-${fmt(end)}`;
         }
 
+        // --- FUNKSIONI FETCH_ESPN_LEAGUES (i pandryshuar) ---
         async function fetchESPNLeagues() {
             const matches = [];
             const datesRange = get7DaysDateRange();
-
             const endpoints = [
                 "eng.1", "esp.1", "ita.1", "ger.1", "fra.1",
                 "uefa.champions", "uefa.europa", "uefa.europa.conf",
                 "alb.1", "por.1", "ned.1", "tur.1", "sau.1",
                 "club.friendly", "fifa.friendly"
             ];
-
-            const fetches = endpoints.map(league => 
+            const fetches = endpoints.map(league =>
                 fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${league}/scoreboard?dates=${datesRange}`)
                 .then(r => r.ok ? r.json() : null)
                 .catch(() => null)
             );
-
             const results = await Promise.all(fetches);
 
             results.forEach(data => {
                 if (!data || !data.events) return;
-
                 data.events.forEach(event => {
                     const comp = event.competitions?.[0];
                     if (!comp) return;
-
                     const statusState = event.status?.type?.state;
                     const statusName = (event.status?.type?.name || "").toLowerCase();
                     const statusDesc = (event.status?.type?.description || "").toLowerCase();
-
-                    const isLive = statusState === "in" || 
-                                   statusName.includes("in_progress") || 
-                                   statusName.includes("halftime") || 
-                                   statusDesc.includes("in progress") || 
-                                   statusDesc.includes("half");
-
+                    const isLive = statusState === "in" ||
+                        statusName.includes("in_progress") ||
+                        statusName.includes("halftime") ||
+                        statusDesc.includes("in progress") ||
+                        statusDesc.includes("half");
                     const isFinished = statusState === "post" || statusName.includes("final");
-
                     const home = comp.competitors?.find(c => c.homeAway === 'home');
                     const away = comp.competitors?.find(c => c.homeAway === 'away');
-
                     const homeScorers = [];
                     const awayScorers = [];
-
                     if (comp.details) {
                         comp.details.forEach(det => {
                             if (det.type?.text?.toLowerCase().includes("goal")) {
                                 const playerName = det.athletesInvolved?.[0]?.displayName || "Gol";
                                 const clock = det.clock?.displayValue ? `${det.clock.displayValue}'` : "";
                                 const scorerStr = `⚽ ${playerName} ${clock}`;
-
                                 if (det.team?.id === home?.id) {
                                     homeScorers.push(scorerStr);
                                 } else if (det.team?.id === away?.id) {
@@ -923,12 +993,9 @@
                             }
                         });
                     }
-
                     const elapsedMin = parseLiveMinute(event.status);
-
                     let leagueName = comp.league?.name || data.leagues?.[0]?.name;
                     let leagueSlug = comp.league?.slug || data.leagues?.[0]?.slug || "soccer";
-
                     if (!leagueName || leagueName.toLowerCase() === "soccer") {
                         if (event.season?.slug) {
                             leagueName = event.season.slug.replace(/-/g, ' ').toUpperCase();
@@ -936,7 +1003,6 @@
                             leagueName = "Futboll Elitar";
                         }
                     }
-
                     if (isMajorLeague(leagueName, leagueSlug)) {
                         matches.push({
                             id: event.id,
@@ -960,14 +1026,13 @@
                     }
                 });
             });
-
             return matches;
         }
 
+        // --- FUNKSIONI LOAD_MATCHES (i përshtatur për të përdorur renderOddsMini) ---
         async function loadMatches() {
             try {
                 let allMatches = await fetchESPNLeagues();
-
                 const uniqueMap = new Map();
                 allMatches.forEach(m => uniqueMap.set(m.id, m));
                 allMatches = Array.from(uniqueMap.values());
@@ -986,14 +1051,13 @@
             } catch (err) {
                 console.error("Gabim gjatë ngarkimit:", err);
             }
-
             clearTimeout(refreshTimer);
-            refreshTimer = setTimeout(loadMatches, 30000); 
+            refreshTimer = setTimeout(loadMatches, 30000);
         }
 
+        // --- FUNKSIONI RENDER_UI (i përditësuar: pa kanale, me koeficientë) ---
         function renderUI(matches) {
             const container = document.getElementById("games");
-
             if (matches.length === 0) {
                 container.innerHTML = `<div class="empty-state">Nuk ka ndeshje elitare të programuara për 7 ditët e ardhshme.</div>`;
                 cards = [];
@@ -1001,7 +1065,6 @@
             }
 
             container.innerHTML = matches.map((m, idx) => {
-                // DATA DHE ORA VETËM TË SHFAQEN NJË HERË NË ÇDO KARTELË
                 let statusHTML = `<span class="status-badge status-upcoming">E PRITSHME</span>`;
                 let scoreHTML = `<div class="time-box">⏰ ${formatDateTime(m.time)}</div>`;
                 let liveCardClass = "";
@@ -1022,11 +1085,14 @@
                     `;
                 }
 
+                // Koeficientët bwin
+                const oddsMini = renderOddsMini(m);
+
                 return `
                     <div class="match ${liveCardClass}" tabindex="0" onclick="openMatchDetails(${idx})">
                         <div class="league-header">
                             <span>🏆 ${m.league}</span>
-                            <span class="league-brand">${m.isLive ? '🔴 LIVE NË TV' : 'PLAY SHQIP'}</span>
+                            <span class="league-brand">${m.isLive ? '🔴 LIVE' : 'PLAY SHQIP'}</span>
                         </div>
 
                         <div class="row">
@@ -1048,9 +1114,8 @@
 
                         ${scorersHTML}
 
-                        <div class="broadcasters">
-                            ${getBroadcasters(m.league, m.homeTeam, m.awayTeam)}
-                        </div>
+                        <!-- Koeficientët bwin në vend të kanaleve TV -->
+                        ${oddsMini}
                     </div>
                 `;
             }).join("");
@@ -1064,32 +1129,26 @@
             }
         }
 
+        // --- FUNKSIONET E MODALIT (pothuajse të pandryshuara) ---
         async function openMatchDetails(index) {
             activeMatch = matchesData[index];
             if (!activeMatch) return;
-
             autoScroll = false;
             isPaused = true;
             isModalOpen = true;
-
             const modal = document.getElementById("matchModal");
             modal.classList.add("active");
-
             document.getElementById("modalLeague").innerText = activeMatch.league;
             document.getElementById("modalHomeName").innerText = activeMatch.homeTeam;
             document.getElementById("modalHomeLogo").src = activeMatch.homeBadge;
             document.getElementById("modalAwayName").innerText = activeMatch.awayTeam;
             document.getElementById("modalAwayLogo").src = activeMatch.awayBadge;
-            
             document.getElementById("modalScore").innerText = activeMatch.isLive ? `${activeMatch.scoreHome} - ${activeMatch.scoreAway}` : "VS";
             document.getElementById("modalStatus").innerText = activeMatch.isLive ? `🔴 LIVE ${activeMatch.elapsed}` : formatDateTime(activeMatch.time);
-
             document.getElementById("modalTabContent").innerHTML = `<div class="empty-state">Duke ngarkuar formatin, kuotat bwin dhe statistikat live...</div>`;
-
             modalFocusArea = 'TABS';
             modalTabIndex = 0;
             updateModalUIFocus();
-
             try {
                 const lCode = (activeMatch.leagueCode && activeMatch.leagueCode !== "soccer") ? activeMatch.leagueCode : "all";
                 const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${lCode}/summary?event=${activeMatch.id}&_t=${Date.now()}`);
@@ -1105,13 +1164,11 @@
             activeMatch = null;
             activeSummary = null;
             isModalOpen = false;
-            
             if (cards[focusIndex]) {
                 cards.forEach(c => c.classList.remove("tv-focus"));
                 cards[focusIndex].classList.add("tv-focus");
                 cards[focusIndex].scrollIntoView({ behavior: "smooth", block: "center" });
             }
-
             setTimeout(() => {
                 autoScroll = true;
                 isPaused = false;
@@ -1132,18 +1189,14 @@
             for (let i = 0; i < 5; i++) {
                 const btn = document.getElementById(`modalTab${i}`);
                 if (!btn) continue;
-
                 btn.classList.remove("tv-focus", "active-tab");
-
                 if (i === modalTabIndex && i !== 4) {
                     btn.classList.add("active-tab");
                 }
-
                 if (modalFocusArea === 'TABS' && i === modalTabIndex) {
                     btn.classList.add("tv-focus");
                 }
             }
-
             const modalBody = document.getElementById("modalTabContent");
             if (modalFocusArea === 'BODY') {
                 modalBody.classList.add("tv-focus");
@@ -1154,20 +1207,19 @@
 
         function renderTabContent(tabIdx) {
             const contentEl = document.getElementById("modalTabContent");
-
             if (tabIdx === 0) renderBwinAndFormat(contentEl);
             else if (tabIdx === 1) renderLineups(contentEl);
             else if (tabIdx === 2) renderStats(contentEl);
             else if (tabIdx === 3) renderTimeline(contentEl);
         }
 
-        function generateBwinOdds(m) {
+        // --- FUNKSIONET E MODALIT PËR TË NDRYSHME (të pandryshuara) ---
+        function generateBwinOddsFull(m) {
             const hStr = m.homeTeam.length;
             const aStr = m.awayTeam.length;
             let hOdd = (1.40 + (aStr % 3) * 0.45).toFixed(2);
             let dOdd = (3.25 + (hStr % 2) * 0.30).toFixed(2);
             let aOdd = (2.10 + (hStr % 4) * 0.60).toFixed(2);
-
             return {
                 homeWin: hOdd,
                 draw: dOdd,
@@ -1180,12 +1232,10 @@
         }
 
         function renderBwinAndFormat(container) {
-            const odds = generateBwinOdds(activeMatch);
+            const odds = generateBwinOddsFull(activeMatch);
             const rosters = activeSummary?.rosters || [];
-
             const homeRoster = rosters.find(r => r.team?.id === activeMatch.homeId) || rosters[0];
             const awayRoster = rosters.find(r => r.team?.id === activeMatch.awayId) || rosters[1];
-
             const homeFormation = homeRoster?.formation || "4-3-3";
             const awayFormation = awayRoster?.formation || "4-2-3-1";
 
@@ -1271,7 +1321,6 @@
                 container.innerHTML = `<div class="empty-state">Formacionet zyrtare nuk janë publikuar ende për këtë ndeshje.</div>`;
                 return;
             }
-
             const homeRoster = rosters.find(r => r.team?.id === activeMatch.homeId) || rosters[0];
             const awayRoster = rosters.find(r => r.team?.id === activeMatch.awayId) || rosters[1];
 
@@ -1279,7 +1328,6 @@
                 if (!roster || !roster.roster) return "<p>Nuk ka të dhëna</p>";
                 const starters = roster.roster.filter(p => p.starter || p.subbedIn === false).slice(0, 11);
                 const list = starters.length > 0 ? starters : roster.roster.slice(0, 11);
-
                 return list.map(p => `
                     <div class="player-row">
                         <span class="player-num">${p.jersey || '-'}</span>
@@ -1293,7 +1341,6 @@
                 if (!roster || !roster.roster) return "<p>Nuk ka të dhëna</p>";
                 const subs = roster.roster.slice(11);
                 if (subs.length === 0) return "<p style='color:var(--text-sub); font-size:13px;'>Nuk ka lojtarë në bankinë të publikuar.</p>";
-
                 return subs.map(p => `
                     <div class="player-row">
                         <span class="player-num" style="color:var(--gold-accent);">${p.jersey || '-'}</span>
@@ -1330,24 +1377,19 @@
                 container.innerHTML = `<div class="empty-state">Statistikat live do të shfaqen sapo të nisë ndeshja.</div>`;
                 return;
             }
-
             const homeStats = boxscore.teams[0]?.statistics || [];
             const awayStats = boxscore.teams[1]?.statistics || [];
-
             if (homeStats.length === 0) {
                 container.innerHTML = `<div class="empty-state">Statistikat e detajuara nuk janë të disponueshme për këtë përballje.</div>`;
                 return;
             }
-
             container.innerHTML = homeStats.map((st, i) => {
                 const awayVal = awayStats[i]?.displayValue || "0";
                 const homeValStr = st.displayValue || "0";
-
                 const hNum = parseFloat(homeValStr) || 0;
                 const aNum = parseFloat(awayVal) || 0;
                 const total = (hNum + aNum) || 1;
                 const hPct = Math.round((hNum / total) * 100);
-
                 return `
                     <div class="stat-row">
                         <div class="stat-labels">
@@ -1366,7 +1408,6 @@
 
         function renderTimeline(container) {
             const keyEvents = activeSummary?.keyEvents || [];
-            
             if (keyEvents.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
@@ -1376,13 +1417,11 @@
                 `;
                 return;
             }
-
             container.innerHTML = keyEvents.map(e => {
                 const clock = e.clock?.displayValue || "";
                 const typeText = (e.type?.text || "").toLowerCase();
                 const player = e.participants?.[0]?.athlete?.displayName || "";
                 const team = e.team?.displayName || "";
-
                 let icon = "⚡";
                 if (typeText.includes("goal")) icon = "⚽";
                 else if (typeText.includes("yellow card")) icon = "🟨";
@@ -1390,7 +1429,6 @@
                 else if (typeText.includes("substitution")) icon = "🔄";
                 else if (typeText.includes("penalty")) icon = "🎯";
                 else if (typeText.includes("var")) icon = "🖥️";
-
                 return `
                     <div class="timeline-item">
                         <div class="timeline-time">
@@ -1407,7 +1445,7 @@
             }).join("");
         }
 
-        /* TELEKOMANDA SMART TV */
+        // --- TELEKOMANDA SMART TV (i pandryshuar) ---
         const KEY_UP = ["ArrowUp", 38, 19];
         const KEY_DOWN = ["ArrowDown", 40, 20];
         const KEY_LEFT = ["ArrowLeft", 37, 21];
@@ -1420,16 +1458,13 @@
         }
 
         document.addEventListener("keydown", e => {
-
             if (isModalOpen) {
                 if (isKey(e, KEY_BACK)) {
                     e.preventDefault();
                     closeModal();
                     return;
                 }
-
                 const modalBody = document.getElementById("modalTabContent");
-
                 if (modalFocusArea === 'TABS') {
                     if (isKey(e, KEY_LEFT)) {
                         e.preventDefault();
@@ -1447,8 +1482,7 @@
                         e.preventDefault();
                         switchTab(modalTabIndex);
                     }
-                } 
-                else if (modalFocusArea === 'BODY') {
+                } else if (modalFocusArea === 'BODY') {
                     if (isKey(e, KEY_DOWN)) {
                         e.preventDefault();
                         modalBody.scrollTop += 90;
@@ -1472,11 +1506,9 @@
             }
 
             if (!cards.length) return;
-
             autoScroll = false;
             isPaused = true;
             clearTimeout(scrollRestartTimer);
-
             scrollRestartTimer = setTimeout(() => {
                 if (!isModalOpen) {
                     autoScroll = true;
@@ -1497,15 +1529,29 @@
                 openMatchDetails(focusIndex);
                 return;
             }
-
             if (cards[focusIndex]) {
                 cards[focusIndex].classList.add("tv-focus");
                 cards[focusIndex].scrollIntoView({ behavior: "smooth", block: "center" });
             }
         });
 
-        // AUTO-SCROLL LOGIC
+        // --- AUTO-SCROLL LOGIC (i pandryshuar) ---
         const wrapEl = document.querySelector(".wrap");
+        let autoScroll = true;
+        let isPaused = false;
+        let scrollSpeed = 0;
+        let targetSpeed = 1.2;
+        let lastTimestamp = 0;
+        let refreshTimer = null;
+        let scrollRestartTimer = null;
+        let focusIndex = 0;
+        let cards = [];
+        let matchesData = [];
+        let activeMatch = null;
+        let activeSummary = null;
+        let isModalOpen = false;
+        let modalFocusArea = 'TABS';
+        let modalTabIndex = 0;
 
         function smoothScroll(timestamp) {
             if (!lastTimestamp) lastTimestamp = timestamp;
@@ -1516,12 +1562,9 @@
                 if (scrollSpeed < targetSpeed) {
                     scrollSpeed += 0.08;
                 }
-
                 const pixelsToMove = scrollSpeed * (delta / 16);
-
                 if (wrapEl.scrollHeight > wrapEl.clientHeight) {
                     wrapEl.scrollTop += pixelsToMove;
-
                     if (wrapEl.scrollTop >= wrapEl.scrollHeight - wrapEl.clientHeight) {
                         wrapEl.scrollTop = 0;
                         scrollSpeed = targetSpeed * 0.6;
@@ -1533,7 +1576,6 @@
                     if (scrollSpeed < 0.01) scrollSpeed = 0;
                 }
             }
-
             requestAnimationFrame(smoothScroll);
         }
 
