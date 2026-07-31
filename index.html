@@ -122,7 +122,6 @@
         }
         .wrap::-webkit-scrollbar { display: none; }
 
-        /* Spinner ngarkimi */
         .loader {
             display: inline-block;
             width: 40px;
@@ -272,13 +271,6 @@
             animation: pulse 1.5s infinite;
         }
 
-        .venue-info {
-            font-size: 11px;
-            color: var(--text-sub);
-            margin-top: 2px;
-            text-align: center;
-        }
-
         .bwin-odds-mini {
             display: flex;
             justify-content: center;
@@ -406,12 +398,6 @@
             border-radius: 12px;
             border: 2px solid var(--accent-red);
             letter-spacing: 2px;
-        }
-
-        .modal-venue {
-            font-size: 14px;
-            color: var(--text-sub);
-            margin-top: 2px;
         }
 
         .modal-tabs {
@@ -674,7 +660,7 @@
             <img class="play-logo" src="https://i.ibb.co/Kpd6bW8X/logo-256.png" alt="Play Shqip Logo" onerror="this.src='https://via.placeholder.com/56?text=PS'">
             <div class="logo-text">
                 <span>PLAY SHQIP</span>
-                <small>Ndeshjet Dhe Keoficentat</small>
+                <small>LIGAT ELITARE & LIVE</small>
             </div>
         </div>
         <div class="live-indicator">
@@ -703,7 +689,6 @@
                     <div>
                         <div class="modal-score" id="modalScore">- : -</div>
                         <div id="modalStatus" style="margin-top: 6px; font-weight: bold; color: var(--accent-red); font-size: 17px;">--</div>
-                        <div class="modal-venue" id="modalVenue"></div>
                     </div>
                     <div class="modal-team">
                         <img id="modalAwayLogo" src="" alt="">
@@ -724,14 +709,14 @@
 
     <script>
         // --- KONFIGURIMI ---
-        const CACHE_DURATION = 60000; // 60 sekonda
+        const CACHE_DURATION = 60000;
         let cachedMatches = null;
         let cacheTimestamp = 0;
         let refreshTimer = null;
         let cards = [];
         let matchesData = [];
         let focusIndex = 0;
-        let focusedMatchId = null; // ruaj ID për rikthim fokusi
+        let focusedMatchId = null;
         let autoScroll = true;
         let isPaused = false;
         let scrollSpeed = 0;
@@ -818,12 +803,10 @@
 
         function parseLiveMinute(statusObj) {
             if (!statusObj) return "LIVE";
-            // Kontrollo për minutat shtesë (stoppage time)
             const detail = statusObj.type?.shortDetail || statusObj.type?.detail || "";
             if (detail) {
                 const lower = detail.toLowerCase();
                 if (lower.includes("ht") || lower.includes("half") || lower.includes("pushim")) return "HT";
-                // P.sh. "45+2'"
                 const matchMin = detail.match(/(\d+\+?\d*)/);
                 if (matchMin) return `${matchMin[1]}'`;
                 if (detail.includes("'")) {
@@ -901,9 +884,6 @@
                     else leagueName = "Futboll Elitar";
                 }
 
-                // Merr stadiumin (venue) nëse ekziston
-                const venue = comp.venue?.fullName || comp.venue?.name || "";
-
                 if (isMajorLeague(leagueName, leagueSlug)) {
                     matches.push({
                         id: event.id,
@@ -922,8 +902,7 @@
                         scoreHome: home.score !== undefined ? home.score : 0,
                         scoreAway: away.score !== undefined ? away.score : 0,
                         homeScorers,
-                        awayScorers,
-                        venue: venue
+                        awayScorers
                     });
                 }
             });
@@ -940,7 +919,6 @@
                 return;
             }
 
-            // Shfaq spinner nëse nuk ka të dhëna
             if (!cachedMatches) {
                 document.getElementById("games").innerHTML = `<div class="empty-state"><div class="loader"></div><br>Duke ngarkuar ndeshjet elitare...</div>`;
             }
@@ -982,7 +960,7 @@
             refreshTimer = setTimeout(() => loadMatches(false), 60000);
         }
 
-        // --- RENDER UI (me ruajtje fokusi) ---
+        // --- RENDER UI (pa stadiume) ---
         function renderUI(matches) {
             const container = document.getElementById("games");
             if (!matches || matches.length === 0) {
@@ -1011,7 +989,6 @@
                     `;
                 }
                 const oddsMini = renderOddsMini(m);
-                const venueHTML = m.venue ? `<div class="venue-info">🏟️ ${m.venue}</div>` : "";
                 html += `
                     <div class="match ${liveCardClass}" data-id="${m.id}" data-index="${idx}" tabindex="0" onclick="openMatchDetails(${idx})">
                         <div class="league-header">
@@ -1026,7 +1003,6 @@
                             <div class="center">
                                 ${scoreHTML}
                                 ${statusHTML}
-                                ${venueHTML}
                             </div>
                             <div class="team away">
                                 <span>${m.awayTeam}</span>
@@ -1039,20 +1015,17 @@
                 `;
             });
             html += `</div>`;
-            // Shto timestamp-in e përditësimit
             const timeStr = new Date(cacheTimestamp).toLocaleTimeString('sq-AL', { hour: '2-digit', minute: '2-digit' });
             html += `<div class="update-timestamp">🔄 Përditësuar: ${timeStr}</div>`;
             container.innerHTML = html;
 
             cards = [...document.querySelectorAll(".match")];
 
-            // Rikthe fokusin te ID-ja e ruajtur ose te indeksi i fundit
             let targetIndex = focusIndex;
             if (focusedMatchId) {
                 const found = cards.findIndex(el => el.dataset.id === focusedMatchId);
                 if (found !== -1) targetIndex = found;
             }
-            // Sigurohu që targetIndex është brenda kufijve
             if (targetIndex >= cards.length) targetIndex = cards.length - 1;
             if (targetIndex < 0) targetIndex = 0;
             focusIndex = targetIndex;
@@ -1083,7 +1056,6 @@
             document.getElementById("modalAwayLogo").src = activeMatch.awayBadge;
             document.getElementById("modalScore").innerText = activeMatch.isLive ? `${activeMatch.scoreHome} - ${activeMatch.scoreAway}` : "VS";
             document.getElementById("modalStatus").innerText = activeMatch.isLive ? `🔴 LIVE ${activeMatch.elapsed}` : formatDateTime(activeMatch.time);
-            document.getElementById("modalVenue").innerText = activeMatch.venue ? `🏟️ ${activeMatch.venue}` : "";
             document.getElementById("modalTabContent").innerHTML = `<div class="empty-state"><div class="loader"></div><br>Duke ngarkuar...</div>`;
             modalFocusArea = 'TABS';
             modalTabIndex = 0;
@@ -1104,7 +1076,6 @@
             activeMatch = null;
             activeSummary = null;
             isModalOpen = false;
-            // Ruaj ID-në e ndeshjes së fundit të fokusuar
             if (cards[focusIndex]) {
                 focusedMatchId = cards[focusIndex].dataset.id;
                 cards.forEach(c => c.classList.remove("tv-focus"));
@@ -1360,7 +1331,6 @@
                 focusIndex = (focusIndex - 1 + cards.length) % cards.length;
             } else if (isKey(e, KEY_ENTER)) {
                 e.preventDefault();
-                // Ruaj ID për rikthim fokusi
                 if (cards[focusIndex]) focusedMatchId = cards[focusIndex].dataset.id;
                 openMatchDetails(focusIndex);
                 return;
@@ -1398,7 +1368,6 @@
         document.body.setAttribute('tabindex', '0');
         document.body.focus();
 
-        // Nisja e parë
         loadMatches(true);
     </script>
 </body>
