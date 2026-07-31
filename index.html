@@ -16,8 +16,6 @@
             --text-main: #ffffff;
             --text-sub: #a0a8bc;
             --gold-accent: #ffb700;
-
-            /* BWIN THEME COLORS */
             --bwin-black: #000000;
             --bwin-dark: #121212;
             --bwin-yellow: #ffcc00;
@@ -276,12 +274,6 @@
             color: #fff;
             animation: pulse 1.5s infinite;
             letter-spacing: 1px;
-        }
-
-        .status-upcoming {
-            background: #1d0f11;
-            color: #ff8a80;
-            border: 1px solid #521c20;
         }
 
         .bwin-odds-mini {
@@ -825,7 +817,6 @@
             const tomorrow = new Date(today);
             tomorrow.setDate(today.getDate() + 1);
 
-            // Formati 24-orësh: HH:MM (00:00 - 23:59)
             const hours = String(date.getHours()).padStart(2, '0');
             const minutes = String(date.getMinutes()).padStart(2, '0');
             const timeStr = `${hours}:${minutes}`;
@@ -862,7 +853,6 @@
             };
         }
 
-        // --- FUNKSIONI PËR TË HEDHUR KANALET TV DHE PËR TË VENDOSUR KOEFICIENTËT ---
         function renderOddsMini(m) {
             const odds = generateBwinOdds(m);
             return `
@@ -874,7 +864,6 @@
             `;
         }
 
-        // --- FUNKSIONI IS_WITHIN_NEXT7_DAYS (i pandryshuar) ---
         function isWithinNext7Days(dateStr) {
             if (!dateStr) return false;
             const matchDate = new Date(dateStr);
@@ -884,7 +873,6 @@
             return matchDate >= startOfToday && matchDate < endOf7Days;
         }
 
-        // --- FUNKSIONI IS_MAJOR_LEAGUE (i pandryshuar) ---
         function isMajorLeague(leagueName, slug) {
             const str = ((leagueName || '') + ' ' + (slug || '')).toLowerCase();
             if (str.includes("u19") || str.includes("u21") || str.includes("u18") ||
@@ -903,7 +891,6 @@
             return allowedKeywords.some(kw => str.includes(kw));
         }
 
-        // --- FUNKSIONI PARSE_LIVE_MINUTE (i pandryshuar) ---
         function parseLiveMinute(statusObj) {
             if (!statusObj) return "LIVE";
             if (statusObj.displayClock) {
@@ -930,7 +917,6 @@
             return "LIVE";
         }
 
-        // --- FUNKSIONI GET_7_DAYS_DATE_RANGE (i pandryshuar) ---
         function get7DaysDateRange() {
             const start = new Date();
             const end = new Date();
@@ -944,7 +930,6 @@
             return `${fmt(start)}-${fmt(end)}`;
         }
 
-        // --- FUNKSIONI FETCH_ESPN_LEAGUES (i pandryshuar) ---
         async function fetchESPNLeagues() {
             const matches = [];
             const datesRange = get7DaysDateRange();
@@ -1029,7 +1014,6 @@
             return matches;
         }
 
-        // --- FUNKSIONI LOAD_MATCHES (i përshtatur për të përdorur renderOddsMini) ---
         async function loadMatches() {
             try {
                 let allMatches = await fetchESPNLeagues();
@@ -1055,7 +1039,7 @@
             refreshTimer = setTimeout(loadMatches, 30000);
         }
 
-        // --- FUNKSIONI RENDER_UI (i përditësuar: pa kanale, me koeficientë) ---
+        // --- RENDER_UI: HEQUR STATUSIN "E PRITSHME" ---
         function renderUI(matches) {
             const container = document.getElementById("games");
             if (matches.length === 0) {
@@ -1065,7 +1049,8 @@
             }
 
             container.innerHTML = matches.map((m, idx) => {
-                let statusHTML = `<span class="status-badge status-upcoming">E PRITSHME</span>`;
+                // Statusi shfaqet VETËM për ndeshjet LIVE
+                let statusHTML = "";
                 let scoreHTML = `<div class="time-box">⏰ ${formatDateTime(m.time)}</div>`;
                 let liveCardClass = "";
 
@@ -1085,7 +1070,6 @@
                     `;
                 }
 
-                // Koeficientët bwin
                 const oddsMini = renderOddsMini(m);
 
                 return `
@@ -1113,8 +1097,6 @@
                         </div>
 
                         ${scorersHTML}
-
-                        <!-- Koeficientët bwin në vend të kanaleve TV -->
                         ${oddsMini}
                     </div>
                 `;
@@ -1129,7 +1111,7 @@
             }
         }
 
-        // --- FUNKSIONET E MODALIT (pothuajse të pandryshuara) ---
+        // --- FUNKSIONET E MODALIT (të pandryshuara) ---
         async function openMatchDetails(index) {
             activeMatch = matchesData[index];
             if (!activeMatch) return;
@@ -1213,7 +1195,6 @@
             else if (tabIdx === 3) renderTimeline(contentEl);
         }
 
-        // --- FUNKSIONET E MODALIT PËR TË NDRYSHME (të pandryshuara) ---
         function generateBwinOddsFull(m) {
             const hStr = m.homeTeam.length;
             const aStr = m.awayTeam.length;
@@ -1445,7 +1426,7 @@
             }).join("");
         }
 
-        // --- TELEKOMANDA SMART TV (i pandryshuar) ---
+        // --- TELEKOMANDA SMART TV ---
         const KEY_UP = ["ArrowUp", 38, 19];
         const KEY_DOWN = ["ArrowDown", 40, 20];
         const KEY_LEFT = ["ArrowLeft", 37, 21];
@@ -1535,7 +1516,7 @@
             }
         });
 
-        // --- AUTO-SCROLL LOGIC (i pandryshuar) ---
+        // --- AUTO-SCROLL LOGIC ---
         const wrapEl = document.querySelector(".wrap");
         let autoScroll = true;
         let isPaused = false;
