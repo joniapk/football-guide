@@ -1107,11 +1107,17 @@
         let matchesData = [];
         let focusIndex = 0;
         let focusedMatchId = null;
+        
+        // --- AUTO-SCROLL SMART ---
         let autoScroll = true;
         let isPaused = false;
         let scrollSpeed = 0;
-        let targetSpeed = 1.0;
+        let targetSpeed = 0.6; // Më e ngadalshme (nga 1.2 në 0.6)
         let lastTimestamp = 0;
+        let userInteracted = false;
+        let interactionTimeout = null;
+        const AUTO_SCROLL_DELAY = 8000; // 8 sekonda pasiviteti para se të rifillojë
+        
         let isModalOpen = false;
         let modalFocusArea = 'TABS';
         let modalTabIndex = 0;
@@ -1388,7 +1394,6 @@
             const league = data.leagues[0];
             const leaders = league.leaders || [];
 
-            // Kërkojmë "goals" në leaders
             let scorersData = null;
             for (const leader of leaders) {
                 if (leader.displayName && leader.displayName.toLowerCase() === 'goals') {
@@ -1419,7 +1424,6 @@
                 const teamName = item.team?.displayName || 'N/A';
                 const goals = item.value || 0;
 
-                // Medalje për 3 të parët
                 let medal = '';
                 if (rank === 1) medal = '🥇';
                 else if (rank === 2) medal = '🥈';
@@ -1825,7 +1829,11 @@
                 cards[focusIndex].classList.add("tv-focus");
                 cards[focusIndex].scrollIntoView({ behavior: "smooth", block: "center" });
             }
-            setTimeout(() => { autoScroll = true; isPaused = false; }, 3000);
+            setTimeout(() => { 
+                autoScroll = true; 
+                isPaused = false; 
+                userInteracted = false; 
+            }, 3000);
         }
 
         function switchTab(index) {
@@ -2196,6 +2204,15 @@
         }
 
         document.addEventListener("keydown", e => {
+            // Kur përdoruesi shtyp telekomandën, ndal auto-scroll-in për 8 sekonda
+            if (!isModalOpen) {
+                userInteracted = true;
+                clearTimeout(interactionTimeout);
+                interactionTimeout = setTimeout(() => {
+                    userInteracted = false;
+                }, AUTO_SCROLL_DELAY);
+            }
+
             if (isModalOpen) {
                 if (isKey(e, KEY_BACK)) { e.preventDefault(); closeModal(); return; }
                 const body = document.getElementById("modalTabContent");
@@ -2248,29 +2265,51 @@
             }
         });
 
-        // --- AUTO-SCROLL ---
+        // --- AUTO-SCROLL I PËRMIRËSUAR ---
         const wrapEl = document.querySelector(".wrap");
         function smoothScroll(timestamp) {
             if (!lastTimestamp) lastTimestamp = timestamp;
             const delta = timestamp - lastTimestamp;
             lastTimestamp = timestamp;
-            if (autoScroll && !isPaused && !isModalOpen && wrapEl) {
-                if (scrollSpeed < targetSpeed) scrollSpeed += 0.08;
-                const pixels = scrollSpeed * (delta / 16);
+
+            // Auto-scroll vetëm nëse:
+            // 1. autoScroll = true
+            // 2. Nuk është paused
+            // 3. Nuk është modal i hapur
+            // 4. Përdoruesi nuk ka ndërvepruar (userInteracted = false)
+            // 5. Ka përmbajtje më të madhe se ekrani
+            if (autoScroll && !isPaused && !isModalOpen && !userInteracted && wrapEl) {
+                if (scrollSpeed < targetSpeed) {
+                    scrollSpeed += 0.04; // Rritje më e butë
+                }
+                
+                const pixelsToMove = scrollSpeed * (delta / 16);
+                
+                // Nëse ka më shumë përmbajtje se sa ekrani
                 if (wrapEl.scrollHeight > wrapEl.clientHeight) {
-                    wrapEl.scrollTop += pixels;
-                    if (wrapEl.scrollTop >= wrapEl.scrollHeight - wrapEl.clientHeight) {
-                        wrapEl.scrollTop = 0;
-                        scrollSpeed = targetSpeed * 0.6;
+                    // Lëviz poshtë
+                    wrapEl.scrollTop += pixelsToMove;
+                    
+                    // Nëse arrin fundin, ndalo (mos kthe mbrapa)
+                    if (wrapEl.scrollTop >= wrapEl.scrollHeight - wrapEl.clientHeight - 10) {
+                        wrapEl.scrollTop = wrapEl.scrollHeight - wrapEl.clientHeight;
+                        scrollSpeed = 0; // Ndal
                     }
                 }
             } else {
-                if (scrollSpeed > 0) { scrollSpeed *= 0.97; if (scrollSpeed < 0.01) scrollSpeed = 0; }
+                // Fshi shpejtësinë gradualisht kur ndalon
+                if (scrollSpeed > 0) {
+                    scrollSpeed *= 0.98;
+                    if (scrollSpeed < 0.01) scrollSpeed = 0;
+                }
             }
+            
             requestAnimationFrame(smoothScroll);
         }
 
+        // Nis auto-scroll-in
         requestAnimationFrame(smoothScroll);
+
         window.focus();
         document.body.setAttribute('tabindex', '0');
         document.body.focus();
