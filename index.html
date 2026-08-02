@@ -306,8 +306,6 @@
         .broadcaster-badge .b-icon {
             width: 16px;
             height: 16px;
-            border-radius: 50%;
-            object-fit: cover;
             flex-shrink: 0;
         }
 
@@ -551,8 +549,6 @@
         .broadcaster-card .b-name .b-icon {
             width: 20px;
             height: 20px;
-            border-radius: 50%;
-            object-fit: cover;
             vertical-align: middle;
             margin-right: 4px;
         }
@@ -1654,7 +1650,7 @@
                 const broadcasterHTML = `
                     <div class="broadcaster-mini">
                         <div class="broadcaster-badge ${broadcaster.css}">
-                            <img class="b-icon" src="https://cdn.countryflags.com/thumbs/albania/flag-round-250.png" alt="AL">
+                            <span class="b-icon">📺</span>
                             ${broadcaster.label}
                         </div>
                     </div>
@@ -1855,7 +1851,7 @@
                         <div class="broadcaster-card" style="grid-column: 1 / -1;">
                             <div class="b-title">📡 Kjo ndeshje transmetohet nga:</div>
                             <div class="b-name ${broadcaster.css}">
-                                <img class="b-icon" src="https://cdn.countryflags.com/thumbs/albania/flag-round-250.png" alt="AL">
+                                <span class="b-icon">📺</span>
                                 ${broadcaster.label}
                             </div>
                         </div>
