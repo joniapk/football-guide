@@ -141,7 +141,6 @@
             gap: 8px;
         }
 
-        /* ===== NDESHJA E DITËS - RRETHIM I VERDHË ===== */
         .match-of-day {
             grid-column: 1 / -1;
             border: 3px solid var(--gold-accent) !important;
@@ -333,7 +332,6 @@
             box-shadow: inset 0 0 6px rgba(0,0,0,0.8), 0 0 10px rgba(225,6,0,0.25);
         }
 
-        /* Data e zmadhuar */
         .match .time-box {
             font-size: 13px !important;
             color: #ff8a80;
@@ -345,7 +343,6 @@
             white-space: nowrap;
         }
 
-        /* Ndeshja e ditës - data edhe më e madhe */
         .match-of-day .time-box {
             font-size: 15px !important;
             padding: 4px 12px !important;
@@ -422,7 +419,6 @@
             opacity: 0.6;
         }
 
-        /* MODAL FULL SCREEN */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -446,7 +442,8 @@
         .modal-content {
             background: #0d0f17;
             border: 3px solid var(--accent-red);
-            width: 100vw; height: 100vh;
+            width: 100vw;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -483,7 +480,11 @@
             font-weight: bold;
         }
 
-        .modal-team img { width: 40px; height: 40px; object-fit: contain; }
+        .modal-team img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
 
         .modal-score {
             font-size: 30px;
@@ -532,7 +533,6 @@
             box-shadow: 0 0 20px #fff !important;
         }
 
-        /* Butoni Mbyll - me i madh dhe ne fillim */
         .close-tab-btn {
             background: #cc0000 !important;
             border-color: #ff3333 !important;
@@ -566,10 +566,14 @@
 
         .modal-body.tv-focus {
             outline: 2px solid var(--accent-red);
-            background: rgba(255,17,0,0.02);
+            background: rgba(255, 17, 0, 0.02);
         }
 
-        .play-container { display: flex; flex-direction: column; gap: 12px; }
+        .play-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
         .play-badge-header {
             background: var(--play-header);
             border: 2px solid var(--play-yellow);
@@ -626,13 +630,13 @@
             border-radius: 12px;
             padding: 12px;
             margin-top: 6px;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
         }
         .pitch-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             padding-bottom: 4px;
             margin-bottom: 8px;
         }
@@ -648,7 +652,7 @@
         }
         .lineup-column h4 {
             color: var(--gold-accent);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 3px;
             margin-top: 0;
             font-size: 15px;
@@ -659,7 +663,7 @@
             font-weight: bold;
             margin: 6px 0 3px 0;
             text-transform: uppercase;
-            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
             padding-bottom: 2px;
         }
         .player-row {
@@ -667,7 +671,7 @@
             align-items: center;
             gap: 8px;
             padding: 3px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
             font-size: 12px;
         }
         .player-num {
@@ -682,14 +686,14 @@
             gap: 12px;
         }
         .top-player-team {
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 8px;
             padding: 10px;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
         .top-player-team h3 {
             color: var(--gold-accent);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 4px;
             margin-top: 0;
             font-size: 15px;
@@ -708,7 +712,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 4px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
         .top-player-item .player-name {
             font-weight: 600;
@@ -721,14 +725,18 @@
             color: var(--text-sub);
         }
 
-        .roster-container { padding: 6px 0; }
+        .roster-container {
+            padding: 6px 0;
+        }
         .roster-title {
             color: var(--gold-accent);
             text-align: center;
             font-size: 17px;
             margin-bottom: 10px;
         }
-        .roster-position-group { margin-top: 10px; }
+        .roster-position-group {
+            margin-top: 10px;
+        }
         .roster-position-label {
             color: var(--play-yellow);
             font-weight: bold;
@@ -747,7 +755,7 @@
             align-items: center;
             gap: 5px;
             padding: 2px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
             font-size: 11px;
         }
         .roster-player-item .num {
@@ -755,7 +763,9 @@
             font-weight: bold;
             width: 22px;
         }
-        .roster-player-item .name { font-weight: 500; }
+        .roster-player-item .name {
+            font-weight: 500;
+        }
         .roster-total {
             text-align: center;
             margin-top: 10px;
@@ -764,7 +774,9 @@
             opacity: 0.6;
         }
 
-        .scorers-container { padding: 6px 0; }
+        .scorers-container {
+            padding: 6px 0;
+        }
         .scorers-title {
             color: var(--gold-accent);
             text-align: center;
@@ -772,7 +784,7 @@
             margin-bottom: 10px;
         }
         .scorers-table {
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 8px;
             padding: 10px;
             margin-top: 6px;
@@ -782,7 +794,7 @@
             grid-template-columns: 25px 1fr 1fr 40px;
             gap: 4px;
             padding: 4px 0;
-            border-bottom: 2px solid rgba(255,255,255,0.1);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
             font-weight: bold;
             color: var(--text-sub);
             font-size: 10px;
@@ -792,13 +804,20 @@
             grid-template-columns: 25px 1fr 1fr 40px;
             gap: 4px;
             padding: 4px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
             align-items: center;
             font-size: 11px;
         }
-        .scorers-row .rank { font-weight: bold; color: var(--gold-accent); }
-        .scorers-row .player-name { font-weight: 600; }
-        .scorers-row .team-name { color: var(--text-sub); }
+        .scorers-row .rank {
+            font-weight: bold;
+            color: var(--gold-accent);
+        }
+        .scorers-row .player-name {
+            font-weight: 600;
+        }
+        .scorers-row .team-name {
+            color: var(--text-sub);
+        }
         .scorers-row .goals {
             text-align: right;
             font-weight: 900;
@@ -806,7 +825,9 @@
             font-size: 13px;
         }
 
-        .stat-row { margin-bottom: 10px; }
+        .stat-row {
+            margin-bottom: 10px;
+        }
         .stat-labels {
             display: flex;
             justify-content: space-between;
@@ -821,16 +842,22 @@
             display: flex;
             overflow: hidden;
         }
-        .stat-bar-home { background: var(--accent-red); height: 100%; }
-        .stat-bar-away { background: var(--gold-accent); height: 100%; }
+        .stat-bar-home {
+            background: var(--accent-red);
+            height: 100%;
+        }
+        .stat-bar-away {
+            background: var(--gold-accent);
+            height: 100%;
+        }
 
         .timeline-item {
             display: flex;
             align-items: center;
             padding: 6px 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             font-size: 12px;
-            background: rgba(255,255,255,0.02);
+            background: rgba(255, 255, 255, 0.02);
             border-radius: 4px;
             margin-bottom: 4px;
         }
@@ -852,7 +879,9 @@
             font-weight: bold;
         }
 
-        .standings-container { padding: 6px 0; }
+        .standings-container {
+            padding: 6px 0;
+        }
         .standings-title {
             color: var(--gold-accent);
             text-align: center;
@@ -860,7 +889,7 @@
             margin-bottom: 10px;
         }
         .standings-table {
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 8px;
             padding: 10px;
             margin-top: 6px;
@@ -870,7 +899,7 @@
             grid-template-columns: 20px 1fr 35px 35px 35px 40px;
             gap: 4px;
             padding: 4px 0;
-            border-bottom: 2px solid rgba(255,255,255,0.1);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
             font-weight: bold;
             color: var(--text-sub);
             font-size: 10px;
@@ -880,12 +909,16 @@
             grid-template-columns: 20px 1fr 35px 35px 35px 40px;
             gap: 4px;
             padding: 4px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
             align-items: center;
             font-size: 11px;
         }
-        .standings-row .pos { font-weight: bold; }
-        .standings-row .pos.top4 { color: var(--gold-accent); }
+        .standings-row .pos {
+            font-weight: bold;
+        }
+        .standings-row .pos.top4 {
+            color: var(--gold-accent);
+        }
         .standings-row .team-name {
             display: flex;
             align-items: center;
@@ -898,9 +931,15 @@
             object-fit: contain;
             border-radius: 50%;
         }
-        .standings-row .gd { font-weight: 600; }
-        .standings-row .gd.positive { color: #4caf50; }
-        .standings-row .gd.negative { color: #ff5252; }
+        .standings-row .gd {
+            font-weight: 600;
+        }
+        .standings-row .gd.positive {
+            color: #4caf50;
+        }
+        .standings-row .gd.negative {
+            color: #ff5252;
+        }
         .standings-row .points {
             text-align: right;
             font-weight: 900;
@@ -918,50 +957,170 @@
         }
 
         @media (max-width: 820px) {
-            .header { padding: 0 10px; height: 48px; }
-            .play-logo { width: 28px; height: 28px; }
-            .logo-text span { font-size: 14px; }
-            .logo-text small { font-size: 7px; }
-            .live-indicator { font-size: 10px; padding: 3px 10px; }
-            .team { font-size: 11px; }
-            .team img { width: 20px; height: 20px; }
-            .center { min-width: 70px; }
-            .score-box { font-size: 15px; padding: 1px 6px; }
-            .match .time-box { font-size: 12px !important; padding: 2px 8px !important; }
-            .match-of-day .time-box { font-size: 14px !important; padding: 3px 10px !important; }
-            .play-odd-mini { font-size: 9px; padding: 1px 6px; }
-            .play-odd-mini .odd-val { font-size: 11px; }
-            .match-of-day .team { font-size: 13px !important; }
-            .match-of-day .team img { width: 28px !important; height: 28px !important; }
-            .match-of-day .score-box { font-size: 18px !important; padding: 2px 10px !important; }
-            .match-of-day::before { font-size: 9px; padding: 2px 10px; top: -8px; right: 12px; }
-            .modal-team { font-size: 14px; }
-            .modal-team img { width: 36px; height: 36px; }
-            .modal-score { font-size: 24px; padding: 2px 12px; }
-            .tab-btn { font-size: 10px; padding: 4px 10px; min-width: 60px; }
-            .close-tab-btn { font-size: 12px !important; padding: 4px 12px !important; min-width: 70px !important; }
-            .modal-body { padding: 10px 14px; font-size: 12px; }
+            .header {
+                padding: 0 10px;
+                height: 48px;
+            }
+            .play-logo {
+                width: 28px;
+                height: 28px;
+            }
+            .logo-text span {
+                font-size: 14px;
+            }
+            .logo-text small {
+                font-size: 7px;
+            }
+            .live-indicator {
+                font-size: 10px;
+                padding: 3px 10px;
+            }
+            .team {
+                font-size: 11px;
+            }
+            .team img {
+                width: 20px;
+                height: 20px;
+            }
+            .center {
+                min-width: 70px;
+            }
+            .score-box {
+                font-size: 15px;
+                padding: 1px 6px;
+            }
+            .match .time-box {
+                font-size: 12px !important;
+                padding: 2px 8px !important;
+            }
+            .match-of-day .time-box {
+                font-size: 14px !important;
+                padding: 3px 10px !important;
+            }
+            .play-odd-mini {
+                font-size: 9px;
+                padding: 1px 6px;
+            }
+            .play-odd-mini .odd-val {
+                font-size: 11px;
+            }
+            .match-of-day .team {
+                font-size: 13px !important;
+            }
+            .match-of-day .team img {
+                width: 28px !important;
+                height: 28px !important;
+            }
+            .match-of-day .score-box {
+                font-size: 18px !important;
+                padding: 2px 10px !important;
+            }
+            .match-of-day::before {
+                font-size: 9px;
+                padding: 2px 10px;
+                top: -8px;
+                right: 12px;
+            }
+            .modal-team {
+                font-size: 14px;
+            }
+            .modal-team img {
+                width: 36px;
+                height: 36px;
+            }
+            .modal-score {
+                font-size: 24px;
+                padding: 2px 12px;
+            }
+            .tab-btn {
+                font-size: 10px;
+                padding: 4px 10px;
+                min-width: 60px;
+            }
+            .close-tab-btn {
+                font-size: 12px !important;
+                padding: 4px 12px !important;
+                min-width: 70px !important;
+            }
+            .modal-body {
+                padding: 10px 14px;
+                font-size: 12px;
+            }
         }
 
         @media (max-width: 480px) {
-            .team { font-size: 10px; gap: 3px; }
-            .team img { width: 18px; height: 18px; }
-            .center { min-width: 60px; }
-            .score-box { font-size: 13px; padding: 1px 5px; }
-            .match .time-box { font-size: 11px !important; padding: 2px 6px !important; }
-            .match-of-day .time-box { font-size: 13px !important; padding: 3px 8px !important; }
-            .play-odd-mini { font-size: 8px; padding: 1px 5px; }
-            .play-odd-mini .odd-val { font-size: 10px; }
-            .match-of-day .team { font-size: 11px !important; }
-            .match-of-day .team img { width: 22px !important; height: 22px !important; }
-            .match-of-day .score-box { font-size: 15px !important; padding: 1px 8px !important; }
-            .match-of-day::before { font-size: 8px; padding: 1px 8px; top: -7px; right: 10px; }
-            .modal-team { font-size: 12px; }
-            .modal-team img { width: 30px; height: 30px; }
-            .modal-score { font-size: 20px; padding: 2px 10px; }
-            .tab-btn { font-size: 9px; padding: 3px 6px; min-width: 45px; }
-            .close-tab-btn { font-size: 11px !important; padding: 3px 10px !important; min-width: 60px !important; }
-            .modal-body { padding: 8px 10px; font-size: 11px; }
+            .team {
+                font-size: 10px;
+                gap: 3px;
+            }
+            .team img {
+                width: 18px;
+                height: 18px;
+            }
+            .center {
+                min-width: 60px;
+            }
+            .score-box {
+                font-size: 13px;
+                padding: 1px 5px;
+            }
+            .match .time-box {
+                font-size: 11px !important;
+                padding: 2px 6px !important;
+            }
+            .match-of-day .time-box {
+                font-size: 13px !important;
+                padding: 3px 8px !important;
+            }
+            .play-odd-mini {
+                font-size: 8px;
+                padding: 1px 5px;
+            }
+            .play-odd-mini .odd-val {
+                font-size: 10px;
+            }
+            .match-of-day .team {
+                font-size: 11px !important;
+            }
+            .match-of-day .team img {
+                width: 22px !important;
+                height: 22px !important;
+            }
+            .match-of-day .score-box {
+                font-size: 15px !important;
+                padding: 1px 8px !important;
+            }
+            .match-of-day::before {
+                font-size: 8px;
+                padding: 1px 8px;
+                top: -7px;
+                right: 10px;
+            }
+            .modal-team {
+                font-size: 12px;
+            }
+            .modal-team img {
+                width: 30px;
+                height: 30px;
+            }
+            .modal-score {
+                font-size: 20px;
+                padding: 2px 10px;
+            }
+            .tab-btn {
+                font-size: 9px;
+                padding: 3px 6px;
+                min-width: 45px;
+            }
+            .close-tab-btn {
+                font-size: 11px !important;
+                padding: 3px 10px !important;
+                min-width: 60px !important;
+            }
+            .modal-body {
+                padding: 8px 10px;
+                font-size: 11px;
+            }
         }
     </style>
 </head>
@@ -1034,14 +1193,13 @@
         let matchesData = [];
         let focusIndex = 0;
         let focusedMatchId = null;
-        
+
         let isModalOpen = false;
         let modalFocusArea = 'TABS';
         let modalTabIndex = 0;
         let activeMatch = null;
         let activeSummary = null;
 
-        // --- PRIORITETI I LIGAVE PËR NDESHJEN E DITËS ---
         const LEAGUE_PRIORITY = {
             "uefa.champions": 10,
             "uefa.europa": 9,
@@ -1060,7 +1218,6 @@
             "fifa.friendly": 1
         };
 
-        // --- FORMATIMI I PLOTË I DATËS DHE ORËS ---
         function formatDateTime(utcDateStr) {
             if (!utcDateStr) return "--:--";
             const date = new Date(utcDateStr);
@@ -1074,7 +1231,6 @@
             return `${dayName} ${dayNum}/${monthNum} ${timeStr}`;
         }
 
-        // --- GENERATE ODDS (lokale) ---
         function generateOdds(m) {
             const hStr = m.homeTeam.length;
             const aStr = m.awayTeam.length;
@@ -1095,7 +1251,6 @@
             `;
         }
 
-        // --- FUNKSIONE NDIHMËSE ---
         function isWithinNext7Days(dateStr) {
             if (!dateStr) return false;
             const matchDate = new Date(dateStr);
@@ -1145,12 +1300,12 @@
             return "LIVE";
         }
 
-        // --- FETCH ME NJË KËRKESË PËR TË GJITHA LIGAT ---
         async function fetchAllMatches() {
             const now = new Date();
             const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
             const end = new Date(start.getTime() + (7 * 24 * 60 * 60 * 1000) - 1);
-            const url = `https://site.api.espn.com/apis/site/v2/sports/soccer/all/scoreboard?dates=${start.getFullYear()}${String(start.getMonth()+1).padStart(2,'0')}${String(start.getDate()).padStart(2,'0')}-${end.getFullYear()}${String(end.getMonth()+1).padStart(2,'0')}${String(end.getDate()).padStart(2,'0')}`;
+            const url =
+                `https://site.api.espn.com/apis/site/v2/sports/soccer/all/scoreboard?dates=${start.getFullYear()}${String(start.getMonth()+1).padStart(2,'0')}${String(start.getDate()).padStart(2,'0')}-${end.getFullYear()}${String(end.getMonth()+1).padStart(2,'0')}${String(end.getDate()).padStart(2,'0')}`;
             try {
                 const resp = await fetch(url);
                 if (!resp.ok) throw new Error("ESPN returned " + resp.status);
@@ -1162,7 +1317,6 @@
             }
         }
 
-        // --- PËRPUNO TË DHËNAT ---
         function processMatches(data) {
             const matches = [];
             if (!data || !data.events) return matches;
@@ -1232,7 +1386,6 @@
             return matches;
         }
 
-        // --- FUNKSIONI PËR TË ZGJEDHUR NDESHJEN E DITËS ---
         function getMatchOfDay(matches) {
             if (!matches || matches.length === 0) return null;
 
@@ -1250,7 +1403,6 @@
             return sorted[0] || null;
         }
 
-        // --- FUNKSIONI PËR TË MARRË RENDITJEN E LIGËS ---
         async function getStandings(leagueCode) {
             try {
                 const url = `https://site.api.espn.com/apis/v2/sports/soccer/${leagueCode}/standings`;
@@ -1264,7 +1416,6 @@
             }
         }
 
-        // --- FUNKSIONI PËR TË MARRË ROSTER-IN E SKUADRËS ---
         async function getTeamRoster(leagueCode, teamId) {
             try {
                 const url = `https://site.api.espn.com/apis/site/v2/sports/soccer/${leagueCode}/teams/${teamId}/roster`;
@@ -1278,7 +1429,6 @@
             }
         }
 
-        // --- FUNKSIONI PËR TË MARRË GOLASHËNUESIT MË TË MIRË ---
         async function getTopScorers(leagueCode) {
             try {
                 const url = `https://site.api.espn.com/apis/site/v2/sports/soccer/${leagueCode}/leaders`;
@@ -1292,7 +1442,6 @@
             }
         }
 
-        // --- FUNKSIONI PËR TË RENDERUAR GOLASHËNUESIT ---
         function renderTopScorers(data) {
             if (!data || !data.leagues || data.leagues.length === 0) {
                 return `<div class="empty-state">Golashënuesit nuk janë të disponueshëm për këtë ligë.</div>`;
@@ -1357,7 +1506,6 @@
             return html;
         }
 
-        // --- FUNKSIONI PËR TË RENDERUAR ROSTER-IN ---
         function renderRoster(rosterData, teamName) {
             if (!rosterData) {
                 return `<div class="empty-state">Roster-i nuk është i disponueshëm për këtë skuadër.</div>`;
@@ -1423,7 +1571,6 @@
             return html;
         }
 
-        // --- FUNKSIONI PËR TË RENDERUAR RENDITJEN ---
         function renderStandings(standings) {
             if (!standings || !standings.leagues || standings.leagues.length === 0) {
                 return `<div class="empty-state">Renditja nuk është e disponueshme për këtë ligë.</div>`;
@@ -1503,7 +1650,6 @@
             return html;
         }
 
-        // --- NGARKIMI ME CACHE ---
         async function loadMatches(force = false) {
             const now = Date.now();
             if (!force && cachedMatches && (now - cacheTimestamp) < CACHE_DURATION) {
@@ -1513,7 +1659,8 @@
             }
 
             if (!cachedMatches) {
-                document.getElementById("games").innerHTML = `<div class="empty-state"><div class="loader"></div><br>Duke ngarkuar ndeshjet elitare...</div>`;
+                document.getElementById("games").innerHTML =
+                    `<div class="empty-state"><div class="loader"></div><br>Duke ngarkuar ndeshjet elitare...</div>`;
             }
 
             try {
@@ -1536,7 +1683,8 @@
                         matchesData = cachedMatches;
                         renderUI(matchesData);
                     } else {
-                        document.getElementById("games").innerHTML = `<div class="empty-state">Nuk u arrit të ngarkoheshin ndeshjet. Kontrollo lidhjen.</div>`;
+                        document.getElementById("games").innerHTML =
+                            `<div class="empty-state">Nuk u arrit të ngarkoheshin ndeshjet. Kontrollo lidhjen.</div>`;
                     }
                 }
             } catch (e) {
@@ -1545,7 +1693,8 @@
                     matchesData = cachedMatches;
                     renderUI(matchesData);
                 } else {
-                    document.getElementById("games").innerHTML = `<div class="empty-state">Gabim gjatë ngarkimit. Provoni përsëri.</div>`;
+                    document.getElementById("games").innerHTML =
+                        `<div class="empty-state">Gabim gjatë ngarkimit. Provoni përsëri.</div>`;
                 }
             }
 
@@ -1553,11 +1702,11 @@
             refreshTimer = setTimeout(() => loadMatches(false), 60000);
         }
 
-        // --- RENDER UI (ME NDESHJEN E DITËS) ---
         function renderUI(matches) {
             const container = document.getElementById("games");
             if (!matches || matches.length === 0) {
-                container.innerHTML = `<div class="empty-state">Nuk ka ndeshje elitare të programuara për 7 ditët e ardhshme.</div>`;
+                container.innerHTML =
+                    `<div class="empty-state">Nuk ka ndeshje elitare të programuara për 7 ditët e ardhshme.</div>`;
                 cards = [];
                 return;
             }
@@ -1685,6 +1834,15 @@
             });
         }
 
+        // ============================================
+        // FUNKSIONET E MODALIT ME MENAXHIMIN E HISTORISË
+        // ============================================
+
+        function pushModalHistory() {
+            // Shton një hyrje në historik për të kapur butonin BACK
+            history.pushState({ modalOpen: true }, '', '#modal');
+        }
+
         function openMatchDetailsByIndex(index) {
             const match = matchesData[index];
             if (!match) return;
@@ -1694,28 +1852,37 @@
             }
         }
 
-        // --- MODAL FUNKSIONET ---
         async function openMatchDetails(index) {
             activeMatch = matchesData[index];
             if (!activeMatch) return;
             isModalOpen = true;
             const modal = document.getElementById("matchModal");
             modal.classList.add("active");
+            
+            // SHTON HYRJE NË HISTORIK - KAP BUTONIN BACK
+            pushModalHistory();
+            
             document.getElementById("modalLeague").innerText = activeMatch.league;
             document.getElementById("modalHomeName").innerText = activeMatch.homeTeam;
             document.getElementById("modalHomeLogo").src = activeMatch.homeBadge;
             document.getElementById("modalAwayName").innerText = activeMatch.awayTeam;
             document.getElementById("modalAwayLogo").src = activeMatch.awayBadge;
-            document.getElementById("modalScore").innerText = activeMatch.isLive ? `${activeMatch.scoreHome} - ${activeMatch.scoreAway}` : "VS";
-            document.getElementById("modalStatus").innerText = activeMatch.isLive ? `🔴 LIVE ${activeMatch.elapsed}` : formatDateTime(activeMatch.time);
-            document.getElementById("modalTabContent").innerHTML = `<div class="empty-state"><div class="loader"></div><br>Duke ngarkuar...</div>`;
+            document.getElementById("modalScore").innerText = activeMatch.isLive ? `${activeMatch.scoreHome} - ${activeMatch.scoreAway}` :
+                "VS";
+            document.getElementById("modalStatus").innerText = activeMatch.isLive ? `🔴 LIVE ${activeMatch.elapsed}` :
+                formatDateTime(activeMatch.time);
+            document.getElementById("modalTabContent").innerHTML =
+                `<div class="empty-state"><div class="loader"></div><br>Duke ngarkuar...</div>`;
             modalFocusArea = 'TABS';
             modalTabIndex = 0;
             updateModalUIFocus();
 
             try {
-                const lCode = (activeMatch.leagueCode && activeMatch.leagueCode !== "soccer") ? activeMatch.leagueCode : "all";
-                const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${lCode}/summary?event=${activeMatch.id}&_t=${Date.now()}`);
+                const lCode = (activeMatch.leagueCode && activeMatch.leagueCode !== "soccer") ? activeMatch.leagueCode :
+                "all";
+                const res = await fetch(
+                    `https://site.api.espn.com/apis/site/v2/sports/soccer/${lCode}/summary?event=${activeMatch.id}&_t=${Date.now()}`
+                    );
                 activeSummary = await res.json();
                 renderTabContent(0);
             } catch (e) {
@@ -1728,6 +1895,12 @@
             activeMatch = null;
             activeSummary = null;
             isModalOpen = false;
+            
+            // ZËVENDËSON HYRJEN NË HISTORIK, QË TË MOS DALE JASHTË APLIKACIONIT
+            if (window.history.state?.modalOpen) {
+                history.replaceState({}, '', window.location.pathname);
+            }
+            
             if (cards[focusIndex]) {
                 focusedMatchId = cards[focusIndex].dataset.id;
                 cards.forEach(c => c.classList.remove("tv-focus"));
@@ -1736,6 +1909,20 @@
             }
         }
 
+        // EVENT LISTENER PËR BUTONIN BACK - KAP KUR SHTYPET DHE MBYLL MODAL-IN
+        window.addEventListener('popstate', function(e) {
+            if (isModalOpen) {
+                // Nëse modal-i është i hapur dhe shtypet BACK, mbylle modal-in
+                closeModal();
+                // MOS LEJO TË DALËSH JASHTË - historia menaxhohet nga ne
+                e.preventDefault();
+            }
+        });
+
+        // ============================================
+        // FUNDI I MENAXHIMIT TË HISTORISË
+        // ============================================
+
         function switchTab(index) {
             modalTabIndex = index;
             renderTabContent(index);
@@ -1743,9 +1930,8 @@
         }
 
         function updateModalUIFocus() {
-            const btnClose = document.getElementById("modalTabClose");
             const tabs = document.querySelectorAll(".modal-tabs .tab-btn");
-            
+
             tabs.forEach((btn, i) => {
                 btn.classList.remove("tv-focus", "active-tab");
                 if (btn.id === "modalTabClose") {
@@ -1762,7 +1948,7 @@
                     btn.classList.add("active-tab");
                 }
             });
-            
+
             const body = document.getElementById("modalTabContent");
             if (modalFocusArea === 'BODY') body.classList.add("tv-focus");
             else body.classList.remove("tv-focus");
@@ -1780,7 +1966,6 @@
             else if (tabIdx === 7) renderTopScorersTab(el);
         }
 
-        // --- GOLASHËNUESIT TAB ---
         async function renderTopScorersTab(container) {
             container.innerHTML = `<div class="empty-state"><div class="loader"></div><br>Duke ngarkuar golashënuesit...</div>`;
 
@@ -1791,14 +1976,14 @@
                 if (data) {
                     container.innerHTML = renderTopScorers(data);
                 } else {
-                    container.innerHTML = `<div class="empty-state">Golashënuesit nuk janë të disponueshëm për këtë ligë.</div>`;
+                    container.innerHTML =
+                        `<div class="empty-state">Golashënuesit nuk janë të disponueshëm për këtë ligë.</div>`;
                 }
             } catch (e) {
                 container.innerHTML = `<div class="empty-state">Gabim gjatë ngarkimit të golashënuesve.</div>`;
             }
         }
 
-        // --- ROSTER TAB ---
         async function renderRosterTab(container) {
             container.innerHTML = `<div class="empty-state"><div class="loader"></div><br>Duke ngarkuar roster-in...</div>`;
 
@@ -1832,7 +2017,6 @@
             }
         }
 
-        // --- RENDITJA TAB ---
         async function renderStandingsTab(container) {
             container.innerHTML = `<div class="empty-state"><div class="loader"></div><br>Duke ngarkuar renditjen...</div>`;
 
@@ -1850,11 +2034,11 @@
             }
         }
 
-        // --- FUNKSIONI: Lojtarët më të mirë ---
         function renderTopPlayers(container) {
             const boxscore = activeSummary?.boxscore;
             if (!boxscore || !boxscore.teams || !boxscore.teams[0]?.statistics) {
-                container.innerHTML = `<div class="empty-state">Statistikat individuale do të shfaqen gjatë ndeshjes.</div>`;
+                container.innerHTML =
+                    `<div class="empty-state">Statistikat individuale do të shfaqen gjatë ndeshjes.</div>`;
                 return;
             }
 
@@ -1865,7 +2049,8 @@
             const awayPlayers = awayTeam.statistics?.find(s => s.label === "Players")?.players || [];
 
             if (homePlayers.length === 0 && awayPlayers.length === 0) {
-                container.innerHTML = `<div class="empty-state">Statistikat individuale nuk janë të disponueshme për këtë ndeshje.</div>`;
+                container.innerHTML =
+                    `<div class="empty-state">Statistikat individuale nuk janë të disponueshme për këtë ndeshje.</div>`;
                 return;
             }
 
@@ -1888,7 +2073,13 @@
                         name: p.athlete?.displayName || p.athlete?.name || "Lojtar",
                         jersey: p.jersey || "",
                         position: p.position?.abbreviation || "",
-                        goals, assists, shots, saves, tackles, passAccuracy, score
+                        goals,
+                        assists,
+                        shots,
+                        saves,
+                        tackles,
+                        passAccuracy,
+                        score
                     };
                 });
                 return playerStats.sort((a, b) => b.score - a.score).slice(0, 5);
@@ -1943,7 +2134,8 @@
             let hOdd = (1.40 + (aStr % 3) * 0.45).toFixed(2);
             let dOdd = (3.25 + (hStr % 2) * 0.30).toFixed(2);
             let aOdd = (2.10 + (hStr % 4) * 0.60).toFixed(2);
-            return { homeWin: hOdd, draw: dOdd, awayWin: aOdd, over25: "1.85", under25: "1.95", bttsYes: "1.75", bttsNo: "2.05" };
+            return { homeWin: hOdd, draw: dOdd, awayWin: aOdd, over25: "1.85", under25: "1.95", bttsYes: "1.75",
+                bttsNo: "2.05" };
         }
 
         function renderOddsAndFormat(container) {
@@ -2012,7 +2204,8 @@
             const awayRoster = rosters.find(r => r.team?.id === activeMatch.awayId) || rosters[1];
             const renderPlayers = (roster, type) => {
                 if (!roster || !roster.roster) return "<p>Nuk ka të dhëna</p>";
-                let list = type === 'starter' ? roster.roster.filter(p => p.starter || p.subbedIn === false).slice(0, 11) : roster.roster.slice(11);
+                let list = type === 'starter' ? roster.roster.filter(p => p.starter || p.subbedIn === false).slice(0,
+                    11) : roster.roster.slice(11);
                 if (type === 'starter' && list.length === 0) list = roster.roster.slice(0, 11);
                 if (list.length === 0) return "<p style='color:var(--text-sub);'>-</p>";
                 return list.map(p => `
@@ -2047,7 +2240,8 @@
         function renderStats(container) {
             const boxscore = activeSummary?.boxscore;
             if (!boxscore || !boxscore.teams) {
-                container.innerHTML = `<div class="empty-state">Statistikat live do të shfaqen sapo të nisë ndeshja.</div>`;
+                container.innerHTML =
+                    `<div class="empty-state">Statistikat live do të shfaqen sapo të nisë ndeshja.</div>`;
                 return;
             }
             const homeStats = boxscore.teams[0]?.statistics || [];
@@ -2103,45 +2297,35 @@
             }).join("");
         }
 
-        // --- TELEKOMANDA ---
-        const KEY_UP = ["ArrowUp", 38, 19];
-        const KEY_DOWN = ["ArrowDown", 40, 20];
-        const KEY_LEFT = ["ArrowLeft", 37, 21];
-        const KEY_RIGHT = ["ArrowRight", 39, 22];
-        const KEY_ENTER = ["Enter", 13, 23, 29443];
-        const KEY_BACK = ["Escape", "Back", 27, 8, 4, 10009, 461, "Backspace"];
-
-        function isKey(e, keyArray) {
-            return keyArray.includes(e.key) || keyArray.includes(e.keyCode) || keyArray.includes(e.code);
-        }
-
-        document.addEventListener("keydown", e => {
-            // Në modal - BACK gjithmonë e mbyll
+        // --- KONTROLLI I TELEKOMANDES ---
+        document.addEventListener("keydown", function(e) {
+            // NESE MODALI ESHTE I HAPUR
             if (isModalOpen) {
-                // BACK BUTTON - çdo kod i mundshëm
-                if (isKey(e, KEY_BACK) || e.key === "Back" || e.key === "Escape" || e.keyCode === 27 || e.keyCode === 8 || e.code === "Escape" || e.code === "Backspace") {
+                // BACK BUTTON - KAPET NGA EVENTI 'popstate' POR E MBYLLIM KETU PER SIGURI
+                if (e.key === "Back" || e.key === "Escape" || e.keyCode === 27 || e.keyCode === 8 || e.key ===
+                    "Backspace") {
                     e.preventDefault();
+                    e.stopPropagation();
                     closeModal();
                     return;
                 }
-                
+
                 const body = document.getElementById("modalTabContent");
-                
-                // Nëse fokusi është te butoni Mbyll (indeksi 8)
+
                 if (modalFocusArea === 'TABS') {
-                    if (isKey(e, KEY_LEFT)) {
+                    if (e.key === "ArrowLeft" || e.keyCode === 37) {
                         e.preventDefault();
                         modalTabIndex = (modalTabIndex - 1 + 9) % 9;
                         updateModalUIFocus();
-                    } else if (isKey(e, KEY_RIGHT)) {
+                    } else if (e.key === "ArrowRight" || e.keyCode === 39) {
                         e.preventDefault();
                         modalTabIndex = (modalTabIndex + 1) % 9;
                         updateModalUIFocus();
-                    } else if (isKey(e, KEY_DOWN)) {
+                    } else if (e.key === "ArrowDown" || e.keyCode === 40) {
                         e.preventDefault();
                         modalFocusArea = 'BODY';
                         updateModalUIFocus();
-                    } else if (isKey(e, KEY_ENTER)) {
+                    } else if (e.key === "Enter" || e.keyCode === 13) {
                         e.preventDefault();
                         if (modalTabIndex === 8) {
                             closeModal();
@@ -2150,10 +2334,10 @@
                         }
                     }
                 } else if (modalFocusArea === 'BODY') {
-                    if (isKey(e, KEY_DOWN)) {
+                    if (e.key === "ArrowDown" || e.keyCode === 40) {
                         e.preventDefault();
                         body.scrollTop += 70;
-                    } else if (isKey(e, KEY_UP)) {
+                    } else if (e.key === "ArrowUp" || e.keyCode === 38) {
                         e.preventDefault();
                         if (body.scrollTop <= 10) {
                             modalFocusArea = 'TABS';
@@ -2161,31 +2345,31 @@
                         } else {
                             body.scrollTop -= 70;
                         }
-                    } else if (isKey(e, KEY_LEFT) || isKey(e, KEY_RIGHT)) {
+                    } else if (e.key === "ArrowLeft" || e.keyCode === 37 || e.key === "ArrowRight" || e.keyCode === 39) {
                         e.preventDefault();
                         modalFocusArea = 'TABS';
-                        if (isKey(e, KEY_LEFT)) modalTabIndex = (modalTabIndex - 1 + 9) % 9;
-                        if (isKey(e, KEY_RIGHT)) modalTabIndex = (modalTabIndex + 1) % 9;
+                        if (e.key === "ArrowLeft" || e.keyCode === 37) modalTabIndex = (modalTabIndex - 1 + 9) % 9;
+                        if (e.key === "ArrowRight" || e.keyCode === 39) modalTabIndex = (modalTabIndex + 1) % 9;
                         updateModalUIFocus();
                     }
                 }
                 return;
             }
 
-            // Jashtë modalit - lëvizje me telekomandë
+            // NESE MODALI NUK ESHTE I HAPUR - KONTROLLO LISTEN E NDESHJEVE
             if (!cards.length) return;
 
             cards.forEach(c => c.classList.remove("tv-focus"));
-            
-            if (isKey(e, KEY_DOWN) || isKey(e, KEY_RIGHT)) {
+
+            if (e.key === "ArrowDown" || e.keyCode === 40 || e.key === "ArrowRight" || e.keyCode === 39) {
                 e.preventDefault();
                 focusIndex = (focusIndex + 1) % cards.length;
                 scrollToCard(focusIndex);
-            } else if (isKey(e, KEY_UP) || isKey(e, KEY_LEFT)) {
+            } else if (e.key === "ArrowUp" || e.keyCode === 38 || e.key === "ArrowLeft" || e.keyCode === 37) {
                 e.preventDefault();
                 focusIndex = (focusIndex - 1 + cards.length) % cards.length;
                 scrollToCard(focusIndex);
-            } else if (isKey(e, KEY_ENTER)) {
+            } else if (e.key === "Enter" || e.keyCode === 13) {
                 e.preventDefault();
                 if (cards[focusIndex]) {
                     focusedMatchId = cards[focusIndex].dataset.id;
@@ -2197,15 +2381,26 @@
             }
         });
 
-        // Funksion për scroll të shpejtë dhe të qetë në kartelë
+        // KEYUP - PER FIRE STICK DHE TELEKOMANDA TE TJERA
+        document.addEventListener("keyup", function(e) {
+            if (isModalOpen) {
+                if (e.key === "Back" || e.key === "Escape" || e.keyCode === 27 || e.keyCode === 8 || e.key ===
+                    "Backspace") {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    closeModal();
+                    return;
+                }
+            }
+        });
+
         function scrollToCard(index) {
             if (!cards[index]) return;
-            
+
             cards[index].classList.add("tv-focus");
-            
-            // Scroll i qetë dhe i shpejtë direkt në kartelë
-            cards[index].scrollIntoView({ 
-                behavior: "smooth", 
+
+            cards[index].scrollIntoView({
+                behavior: "smooth",
                 block: "center",
                 inline: "center"
             });
