@@ -134,9 +134,13 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+        /* 
+           NDRYSHIMI KRYESOR: Grid-i tani ka VETËM NJË KOLONË 
+           Kjo siguron që të gjitha ndeshjet të jenë njëra poshtë tjetrës në Android TV.
+        */
         .games-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 14px;
         }
 
@@ -921,7 +925,6 @@
 
         /* Responsive */
         @media (max-width: 820px) {
-            .games-grid { grid-template-columns: 1fr; }
             .header { padding: 0 12px; height: 62px; }
             .play-logo { width: 36px; height: 36px; }
             .logo-text span { font-size: 18px; }
@@ -1112,7 +1115,7 @@
         let autoScroll = true;
         let isPaused = false;
         let scrollSpeed = 0;
-        let targetSpeed = 0.6; // Më e ngadalshme (nga 1.2 në 0.6)
+        let targetSpeed = 0.8; // Rritur pak për ndjesi më të qetë në një kolonë
         let lastTimestamp = 0;
         let userInteracted = false;
         let interactionTimeout = null;
@@ -2265,39 +2268,30 @@
             }
         });
 
-        // --- AUTO-SCROLL I PËRMIRËSUAR ---
+        // --- AUTO-SCROLL I PËRMIRËSUAR PËR NJË KOLONË ---
         const wrapEl = document.querySelector(".wrap");
         function smoothScroll(timestamp) {
             if (!lastTimestamp) lastTimestamp = timestamp;
             const delta = timestamp - lastTimestamp;
             lastTimestamp = timestamp;
 
-            // Auto-scroll vetëm nëse:
-            // 1. autoScroll = true
-            // 2. Nuk është paused
-            // 3. Nuk është modal i hapur
-            // 4. Përdoruesi nuk ka ndërvepruar (userInteracted = false)
-            // 5. Ka përmbajtje më të madhe se ekrani
             if (autoScroll && !isPaused && !isModalOpen && !userInteracted && wrapEl) {
                 if (scrollSpeed < targetSpeed) {
-                    scrollSpeed += 0.04; // Rritje më e butë
+                    scrollSpeed += 0.02; // Rritje më e butë dhe e graduale
                 }
                 
                 const pixelsToMove = scrollSpeed * (delta / 16);
                 
-                // Nëse ka më shumë përmbajtje se sa ekrani
                 if (wrapEl.scrollHeight > wrapEl.clientHeight) {
-                    // Lëviz poshtë
                     wrapEl.scrollTop += pixelsToMove;
                     
-                    // Nëse arrin fundin, ndalo (mos kthe mbrapa)
-                    if (wrapEl.scrollTop >= wrapEl.scrollHeight - wrapEl.clientHeight - 10) {
+                    // Ndalim i qetë në fund të listës
+                    if (wrapEl.scrollTop >= wrapEl.scrollHeight - wrapEl.clientHeight - 5) {
                         wrapEl.scrollTop = wrapEl.scrollHeight - wrapEl.clientHeight;
-                        scrollSpeed = 0; // Ndal
+                        scrollSpeed = 0;
                     }
                 }
             } else {
-                // Fshi shpejtësinë gradualisht kur ndalon
                 if (scrollSpeed > 0) {
                     scrollSpeed *= 0.98;
                     if (scrollSpeed < 0.01) scrollSpeed = 0;
