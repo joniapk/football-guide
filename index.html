@@ -141,82 +141,6 @@
             gap: 8px;
         }
 
-        .match-of-day {
-            grid-column: 1 / -1;
-            border: 3px solid var(--gold-accent) !important;
-            background: linear-gradient(135deg, #1a1208 0%, #0c0e14 100%) !important;
-            box-shadow: 0 0 30px var(--gold-glow) !important;
-            position: relative;
-            padding: 10px 12px !important;
-            border-radius: 14px !important;
-        }
-
-        .match-of-day::before {
-            content: "⭐ NDESHJA E DITËS";
-            position: absolute;
-            top: -10px;
-            right: 14px;
-            background: var(--gold-accent);
-            color: #000;
-            font-weight: 800;
-            font-size: 10px;
-            padding: 2px 12px;
-            border-radius: 14px;
-            letter-spacing: 0.5px;
-            box-shadow: 0 0 15px var(--gold-glow);
-            z-index: 2;
-        }
-
-        .match-of-day.is-live-card {
-            border-color: var(--gold-accent) !important;
-            box-shadow: 0 0 30px var(--gold-glow) !important;
-        }
-
-        .match-of-day.is-live-card::before {
-            content: "🔴 LIVE - NDESHJA E DITËS";
-            background: var(--accent-red);
-            color: #fff;
-            font-size: 9px;
-        }
-
-        .match-of-day .league-header .league-brand {
-            background: rgba(255, 183, 0, 0.25);
-            border-color: var(--gold-accent);
-            color: var(--gold-accent);
-            font-size: 9px;
-            padding: 1px 8px;
-        }
-
-        .match-of-day .team {
-            font-size: 15px !important;
-        }
-
-        .match-of-day .team img {
-            width: 32px !important;
-            height: 32px !important;
-        }
-
-        .match-of-day .score-box {
-            font-size: 22px !important;
-            padding: 2px 12px !important;
-        }
-
-        .match-of-day .time-box {
-            font-size: 15px !important;
-            padding: 4px 12px !important;
-        }
-
-        .match-of-day.tv-focus {
-            transform: scale(1.02);
-            box-shadow: 0 0 40px var(--gold-glow) !important;
-            border-color: var(--gold-accent) !important;
-        }
-
-        .match-of-day.is-live-card.tv-focus {
-            border-color: var(--gold-accent) !important;
-            box-shadow: 0 0 40px var(--gold-glow) !important;
-        }
-
         .match {
             background: var(--card-bg);
             border: 2px solid var(--card-border);
@@ -234,6 +158,7 @@
             border: 2.5px solid var(--accent-red);
             background: linear-gradient(135deg, #2b080a 0%, #0c0e14 100%);
             box-shadow: 0 0 20px rgba(255, 17, 0, 0.25);
+            /* NUK KA transform: scale() - MADHËSIA NDRYSHON */
         }
 
         .tv-focus {
@@ -245,15 +170,13 @@
             z-index: 5;
         }
 
-        .match-of-day.tv-focus {
-            transform: scale(1.02);
-            box-shadow: 0 0 40px var(--gold-glow) !important;
-            border-color: var(--gold-accent) !important;
-        }
-
-        .match-of-day.is-live-card.tv-focus {
-            border-color: var(--gold-accent) !important;
-            box-shadow: 0 0 40px var(--gold-glow) !important;
+        /* Heqim zmadhimin për live card kur është në fokus - e njëjtë si të tjerat */
+        .match.is-live-card.tv-focus {
+            border: 3px solid var(--accent-red) !important;
+            transform: scale(1.03); /* Ruhet vetëm për fokus, si të tjerat */
+            box-shadow: 0 0 30px var(--accent-glow) !important;
+            background: linear-gradient(135deg, #380d10 0%, #121620 100%);
+            z-index: 5;
         }
 
         .league-header {
@@ -341,11 +264,6 @@
             border-radius: 4px;
             border: 1px solid rgba(255,138,128,0.2);
             white-space: nowrap;
-        }
-
-        .match-of-day .time-box {
-            font-size: 15px !important;
-            padding: 4px 12px !important;
         }
 
         .status-badge {
@@ -1008,10 +926,6 @@
                 font-size: 12px !important;
                 padding: 2px 8px !important;
             }
-            .match-of-day .time-box {
-                font-size: 14px !important;
-                padding: 3px 10px !important;
-            }
             .broadcaster-badge {
                 font-size: 9px;
                 padding: 1px 10px;
@@ -1019,23 +933,6 @@
             .broadcaster-badge .b-icon {
                 width: 14px;
                 height: 14px;
-            }
-            .match-of-day .team {
-                font-size: 13px !important;
-            }
-            .match-of-day .team img {
-                width: 28px !important;
-                height: 28px !important;
-            }
-            .match-of-day .score-box {
-                font-size: 18px !important;
-                padding: 2px 10px !important;
-            }
-            .match-of-day::before {
-                font-size: 9px;
-                padding: 2px 10px;
-                top: -8px;
-                right: 12px;
             }
             .modal-team {
                 font-size: 14px;
@@ -1084,10 +981,6 @@
                 font-size: 11px !important;
                 padding: 2px 6px !important;
             }
-            .match-of-day .time-box {
-                font-size: 13px !important;
-                padding: 3px 8px !important;
-            }
             .broadcaster-badge {
                 font-size: 8px;
                 padding: 1px 8px;
@@ -1095,23 +988,6 @@
             .broadcaster-badge .b-icon {
                 width: 12px;
                 height: 12px;
-            }
-            .match-of-day .team {
-                font-size: 11px !important;
-            }
-            .match-of-day .team img {
-                width: 22px !important;
-                height: 22px !important;
-            }
-            .match-of-day .score-box {
-                font-size: 15px !important;
-                padding: 1px 8px !important;
-            }
-            .match-of-day::before {
-                font-size: 8px;
-                padding: 1px 8px;
-                top: -7px;
-                right: 10px;
             }
             .modal-team {
                 font-size: 12px;
@@ -1747,13 +1623,16 @@
                 return;
             }
 
-            const matchOfDay = getMatchOfDay(matches);
-            const otherMatches = matchOfDay ? matches.filter(m => m.id !== matchOfDay.id) : matches;
+            // Thjesht rendit të gjitha ndeshjet sipas prioritetit (pa "Match of Day")
+            const sortedMatches = [...matches].sort((a, b) => {
+                const priorityA = LEAGUE_PRIORITY[a.leagueCode] || 0;
+                const priorityB = LEAGUE_PRIORITY[b.leagueCode] || 0;
+                return priorityB - priorityA;
+            });
 
             let html = `<div class="games-grid">`;
 
-            if (matchOfDay) {
-                const m = matchOfDay;
+            sortedMatches.forEach((m, idx) => {
                 let statusHTML = "";
                 let scoreHTML = `<div class="time-box">⏰ ${formatDateTime(m.time)}</div>`;
                 let liveCardClass = "";
@@ -1781,61 +1660,7 @@
                     </div>
                 `;
                 html += `
-                    <div class="match match-of-day ${liveCardClass}" data-id="${m.id}" data-index="0" tabindex="0" onclick="openMatchDetailsByIndex(0)">
-                        <div class="league-header">
-                            <span>🏆 ${m.league}</span>
-                            <span class="league-brand">${m.isLive ? '🔴 LIVE' : '⭐ NDESHJA E DITËS'}</span>
-                        </div>
-                        <div class="row">
-                            <div class="team home">
-                                <img src="${m.homeBadge}" alt="${m.homeTeam}" onerror="this.src='https://via.placeholder.com/40'">
-                                <span>${m.homeTeam}</span>
-                            </div>
-                            <div class="center">
-                                ${scoreHTML}
-                                ${statusHTML}
-                            </div>
-                            <div class="team away">
-                                <span>${m.awayTeam}</span>
-                                <img src="${m.awayBadge}" alt="${m.awayTeam}" onerror="this.src='https://via.placeholder.com/40'">
-                            </div>
-                        </div>
-                        ${scorersHTML}
-                        ${broadcasterHTML}
-                    </div>
-                `;
-            }
-
-            otherMatches.forEach((m, idx) => {
-                const realIndex = matchOfDay ? idx + 1 : idx;
-                let statusHTML = "";
-                let scoreHTML = `<div class="time-box">⏰ ${formatDateTime(m.time)}</div>`;
-                let liveCardClass = "";
-                if (m.isLive) {
-                    liveCardClass = "is-live-card";
-                    statusHTML = `<span class="status-badge status-live">🔴 LIVE ${m.elapsed}</span>`;
-                    scoreHTML = `<div class="score-box">${m.scoreHome} - ${m.scoreAway}</div>`;
-                }
-                let scorersHTML = "";
-                if (m.homeScorers.length > 0 || m.awayScorers.length > 0) {
-                    scorersHTML = `
-                        <div class="card-scorers">
-                            <div class="home-scorers">${m.homeScorers.map(s => `<div class="scorer-item">${s}</div>`).join('')}</div>
-                            <div class="away-scorers">${m.awayScorers.map(s => `<div class="scorer-item">${s}</div>`).join('')}</div>
-                        </div>
-                    `;
-                }
-                const broadcaster = getBroadcaster(m);
-                const broadcasterHTML = `
-                    <div class="broadcaster-mini">
-                        <div class="broadcaster-badge ${broadcaster.css}">
-                            <img class="b-icon" src="https://cdn.countryflags.com/thumbs/albania/flag-round-250.png" alt="AL">
-                            ${broadcaster.label}
-                        </div>
-                    </div>
-                `;
-                html += `
-                    <div class="match ${liveCardClass}" data-id="${m.id}" data-index="${realIndex}" tabindex="0" onclick="openMatchDetailsByIndex(${realIndex})">
+                    <div class="match ${liveCardClass}" data-id="${m.id}" data-index="${idx}" tabindex="0" onclick="openMatchDetailsByIndex(${idx})">
                         <div class="league-header">
                             <span>🏆 ${m.league}</span>
                             <span class="league-brand">${m.isLive ? '🔴 LIVE' : 'PLAY SHQIP'}</span>
