@@ -165,7 +165,7 @@
             border-radius: 14px;
             padding: 8px 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
-            transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+            transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
             cursor: pointer;
             display: flex;
             flex-direction: column;
@@ -180,17 +180,18 @@
 
         .tv-focus {
             border: 3px solid var(--accent-red) !important;
-            transform: scale(1.03);
-            box-shadow: 0 0 30px var(--accent-glow) !important;
+            transform: scale(1.04);
+            box-shadow: 0 0 35px var(--accent-glow) !important;
             outline: none;
             background: linear-gradient(135deg, #380d10 0%, #121620 100%);
             z-index: 5;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .match.is-live-card.tv-focus {
             border: 3px solid var(--accent-red) !important;
-            transform: scale(1.03);
-            box-shadow: 0 0 30px var(--accent-glow) !important;
+            transform: scale(1.04);
+            box-shadow: 0 0 35px var(--accent-glow) !important;
             background: linear-gradient(135deg, #380d10 0%, #121620 100%);
             z-index: 5;
         }
@@ -370,6 +371,54 @@
             color: var(--text-sub);
             padding: 4px 2px 0 0;
             opacity: 0.6;
+        }
+
+        /* ===== AUTO-SCROLL INDICATOR - STIL I PËRMIRËSUAR ===== */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 17, 0, 0.85);
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.3s ease;
+            pointer-events: none;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 30px rgba(255, 17, 0, 0.4);
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(4px);
+        }
+
+        .scroll-indicator.visible {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        .scroll-indicator .indicator-icon {
+            display: inline-block;
+            animation: scrollPulse 1.2s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes scrollPulse {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(6px);
+            }
+        }
+
+        .scroll-indicator.paused {
+            background: rgba(255, 183, 0, 0.85);
+            border-color: #fff;
         }
 
         .modal-overlay {
@@ -915,29 +964,6 @@
             flex-wrap: wrap;
         }
 
-        /* Auto-scroll indicator */
-        .scroll-indicator {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 17, 0, 0.8);
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            z-index: 100;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .scroll-indicator.visible {
-            opacity: 1;
-        }
-
         @media (max-width: 820px) {
             .header {
                 padding: 0 10px;
@@ -1008,6 +1034,11 @@
                 padding: 10px 14px;
                 font-size: 12px;
             }
+            .scroll-indicator {
+                font-size: 11px;
+                padding: 8px 18px;
+                bottom: 20px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1063,6 +1094,11 @@
                 padding: 8px 10px;
                 font-size: 11px;
             }
+            .scroll-indicator {
+                font-size: 10px;
+                padding: 6px 14px;
+                bottom: 15px;
+            }
         }
     </style>
 </head>
@@ -1090,8 +1126,11 @@
         </div>
     </div>
 
-    <!-- Scroll Indicator -->
-    <div class="scroll-indicator" id="scrollIndicator">▶ Duke lëvizur automatikisht</div>
+    <!-- AUTO-SCROLL INDICATOR I PËRMIRËSUAR -->
+    <div class="scroll-indicator" id="scrollIndicator">
+        <span class="indicator-icon">▶</span>
+        <span id="indicatorText">Auto-scroll aktiv</span>
+    </div>
 
     <!-- MODAL -->
     <div class="modal-overlay" id="matchModal">
@@ -1145,12 +1184,16 @@
         let activeMatch = null;
         let activeSummary = null;
 
-        // --- AUTO-SCROLL KONFIGURIMI ---
-        const AUTO_SCROLL_INTERVAL = 3000; // 3 sekonda
+        // ============================================
+        // AUTO-SCROLL KONFIGURIM I PËRMIRËSUAR PËR TV
+        // ============================================
+        const AUTO_SCROLL_INTERVAL = 3500; // 3.5 sekonda - ritëm më i rehatshëm për TV
+        const SCROLL_DURATION = 600; // ms - kohëzgjatja e animacionit të scroll-it
         let autoScrollTimer = null;
         let isAutoScrolling = true;
         let userInteracted = false;
         let interactionTimeout = null;
+        let isScrollingInProgress = false;
 
         // ============================================
         // PRIORITETI - KATEGORIA SUPERIORE E PARA
@@ -1184,7 +1227,7 @@
             if (fullText.includes('bundesliga') || fullText.includes('ger.1')) return { label: 'TRING SPORT AL',
                 css: 'tring' };
             if (fullText.includes('serie a') || fullText.includes('ita.1') || fullText.includes('ita.cup') || fullText
-                .includes('coppa italia')) {
+                    .includes('coppa italia')) {
                 return { label: 'TRING SPORT AL', css: 'tring' };
             }
             if (fullText.includes('europa league') || fullText.includes('uefa.europa')) return { label: 'TRING SPORT AL',
@@ -1610,33 +1653,71 @@
             return html;
         }
 
-        // --- FUNKSIONET E AUTO-SCROLL ---
+        // ============================================
+        // FUNKSIONET E AUTO-SCROLL - TË PËRMIRËSUARA
+        // ============================================
+        function getIndicator() {
+            return document.getElementById('scrollIndicator');
+        }
+
+        function getIndicatorText() {
+            return document.getElementById('indicatorText');
+        }
+
+        function showIndicator(text, isPaused = false) {
+            const indicator = getIndicator();
+            const textEl = getIndicatorText();
+            if (text) textEl.textContent = text;
+            if (isPaused) {
+                indicator.classList.add('paused');
+            } else {
+                indicator.classList.remove('paused');
+            }
+            indicator.classList.add('visible');
+            clearTimeout(indicator._hideTimeout);
+            // Fshihet automatikisht pas 2.5 sekondash
+            indicator._hideTimeout = setTimeout(() => {
+                indicator.classList.remove('visible');
+            }, 2500);
+        }
+
+        function hideIndicator() {
+            const indicator = getIndicator();
+            indicator.classList.remove('visible');
+            clearTimeout(indicator._hideTimeout);
+        }
+
         function startAutoScroll() {
             stopAutoScroll();
-            if (!isAutoScrolling) return;
+            if (!isAutoScrolling || cards.length < 2) return;
 
-            const indicator = document.getElementById('scrollIndicator');
+            // Trego që auto-scroll ka filluar
+            showIndicator('▶ Auto-scroll aktiv');
 
             autoScrollTimer = setInterval(() => {
-                if (isModalOpen || cards.length === 0) return;
+                if (isModalOpen || isScrollingInProgress || cards.length < 2) return;
 
                 // Kalo te karta tjetër
                 cards.forEach(c => c.classList.remove('tv-focus'));
                 focusIndex = (focusIndex + 1) % cards.length;
+
+                // Apliko fokusin
                 cards[focusIndex].classList.add('tv-focus');
 
-                // Scroll te karta
+                // Scroll i butë me animacion
+                isScrollingInProgress = true;
                 cards[focusIndex].scrollIntoView({
                     behavior: 'smooth',
                     block: 'center'
                 });
 
-                // Trego indikatorin
-                indicator.classList.add('visible');
-                clearTimeout(indicator._hideTimeout);
-                indicator._hideTimeout = setTimeout(() => {
-                    indicator.classList.remove('visible');
-                }, 1500);
+                // Pas përfundimit të animacionit
+                setTimeout(() => {
+                    isScrollingInProgress = false;
+                }, SCROLL_DURATION);
+
+                // Trego indikatorin shkurt
+                showIndicator(`▶ Ndeshja ${focusIndex + 1} nga ${cards.length}`);
 
             }, AUTO_SCROLL_INTERVAL);
         }
@@ -1646,52 +1727,42 @@
                 clearInterval(autoScrollTimer);
                 autoScrollTimer = null;
             }
-            const indicator = document.getElementById('scrollIndicator');
-            indicator.classList.remove('visible');
+            hideIndicator();
         }
 
-        function resetAutoScrollTimer() {
+        function pauseAutoScroll(message = '⏸ Auto-scroll i ndaluar') {
             if (!isAutoScrolling) return;
+            isAutoScrolling = false;
             stopAutoScroll();
+            showIndicator(message, true);
+
+            // Rifillo pas 12 sekondash pasiviteti (më i shpejtë se më parë)
+            clearTimeout(interactionTimeout);
+            interactionTimeout = setTimeout(() => {
+                if (!isModalOpen && cards.length > 0) {
+                    isAutoScrolling = true;
+                    startAutoScroll();
+                    showIndicator('▶ Auto-scroll rifillon', false);
+                }
+            }, 12000);
+        }
+
+        function resumeAutoScroll() {
+            if (isAutoScrolling) return;
+            isAutoScrolling = true;
             startAutoScroll();
+            showIndicator('▶ Auto-scroll rifillon', false);
         }
 
         function handleUserInteraction() {
             if (!isAutoScrolling) return;
-
-            userInteracted = true;
-            isAutoScrolling = false;
-            stopAutoScroll();
-
-            // Trego që auto-scroll u ndal
-            const indicator = document.getElementById('scrollIndicator');
-            indicator.textContent = '⏸ Auto-scroll i ndaluar';
-            indicator.classList.add('visible');
-            clearTimeout(indicator._hideTimeout);
-            indicator._hideTimeout = setTimeout(() => {
-                indicator.classList.remove('visible');
-                indicator.textContent = '▶ Duke lëvizur automatikisht';
-            }, 3000);
-
-            // Rifillo auto-scroll pas 15 sekonda pasiviteti
-            clearTimeout(interactionTimeout);
-            interactionTimeout = setTimeout(() => {
-                if (!isModalOpen) {
-                    isAutoScrolling = true;
-                    userInteracted = false;
-                    startAutoScroll();
-                    const ind = document.getElementById('scrollIndicator');
-                    ind.textContent = '▶ Duke lëvizur automatikisht';
-                    ind.classList.add('visible');
-                    clearTimeout(ind._hideTimeout);
-                    ind._hideTimeout = setTimeout(() => {
-                        ind.classList.remove('visible');
-                    }, 2000);
-                }
-            }, 15000);
+            if (cards.length < 2) return;
+            pauseAutoScroll('⏸ Auto-scroll i ndaluar');
         }
 
-        // --- FUNKSIONET PËR LOADIM DHE RENDER ---
+        // ============================================
+        // FUNKSIONET PËR LOADIM DHE RENDER
+        // ============================================
         async function loadMatches(force = false) {
             const now = Date.now();
             if (!force && cachedMatches && (now - cacheTimestamp) < CACHE_DURATION) {
@@ -1840,9 +1911,9 @@
                 }
             });
 
-            // Nis auto-scroll nëse nuk është ndalur nga përdoruesi
-            if (isAutoScrolling && !userInteracted) {
-                startAutoScroll();
+            // Nis auto-scroll nëse ka më shumë se 1 kartë
+            if (isAutoScrolling && cards.length > 1) {
+                setTimeout(startAutoScroll, 1500);
             }
         }
 
@@ -1917,9 +1988,9 @@
                 cards[focusIndex].scrollIntoView({ behavior: "smooth", block: "center" });
             }
 
-            // Rifillo auto-scroll nëse është aktiv
-            if (isAutoScrolling && !userInteracted) {
-                setTimeout(startAutoScroll, 1000);
+            // Rifillo auto-scroll nëse është aktiv dhe ka më shumë se 1 kartë
+            if (isAutoScrolling && cards.length > 1) {
+                setTimeout(startAutoScroll, 1200);
             }
         }
 
@@ -2354,43 +2425,34 @@
 
             if (!cards.length) return;
 
-            // Nëse përdoruesi përdor tastierën, ndal auto-scroll dhe trajto manualisht
+            // Nëse përdoruesi përdor tastierën, trajto si ndërveprim
             if (e.key === "ArrowDown" || e.keyCode === 40 || e.key === "ArrowRight" || e.keyCode === 39 ||
                 e.key === "ArrowUp" || e.keyCode === 38 || e.key === "ArrowLeft" || e.keyCode === 37 ||
                 e.key === "Enter" || e.keyCode === 13) {
 
-                handleUserInteraction();
-            }
-
-            cards.forEach(c => c.classList.remove("tv-focus"));
-
-            if (e.key === "ArrowDown" || e.keyCode === 40 || e.key === "ArrowRight" || e.keyCode === 39) {
-                e.preventDefault();
-                focusIndex = (focusIndex + 1) % cards.length;
-                scrollToCard(focusIndex);
-            } else if (e.key === "ArrowUp" || e.keyCode === 38 || e.key === "ArrowLeft" || e.keyCode === 37) {
-                e.preventDefault();
-                focusIndex = (focusIndex - 1 + cards.length) % cards.length;
-                scrollToCard(focusIndex);
-            } else if (e.key === "Enter" || e.keyCode === 13) {
-                e.preventDefault();
-                if (cards[focusIndex]) {
-                    focusedMatchId = cards[focusIndex].dataset.id;
-                    const matchId = cards[focusIndex].dataset.id;
-                    const realIndex = matchesData.findIndex(m => m.id === matchId);
-                    if (realIndex !== -1) openMatchDetails(realIndex);
+                // Ndal auto-scroll-in
+                if (isAutoScrolling) {
+                    pauseAutoScroll('⏸ Auto-scroll i ndaluar');
                 }
-                return;
-            }
-        });
 
-        document.addEventListener("keyup", function(e) {
-            if (isModalOpen) {
-                if (e.key === "Back" || e.key === "Escape" || e.keyCode === 27 || e.keyCode === 8 || e.key ===
-                    "Backspace") {
+                cards.forEach(c => c.classList.remove("tv-focus"));
+
+                if (e.key === "ArrowDown" || e.keyCode === 40 || e.key === "ArrowRight" || e.keyCode === 39) {
                     e.preventDefault();
-                    e.stopPropagation();
-                    closeModal();
+                    focusIndex = (focusIndex + 1) % cards.length;
+                    scrollToCard(focusIndex);
+                } else if (e.key === "ArrowUp" || e.keyCode === 38 || e.key === "ArrowLeft" || e.keyCode === 37) {
+                    e.preventDefault();
+                    focusIndex = (focusIndex - 1 + cards.length) % cards.length;
+                    scrollToCard(focusIndex);
+                } else if (e.key === "Enter" || e.keyCode === 13) {
+                    e.preventDefault();
+                    if (cards[focusIndex]) {
+                        focusedMatchId = cards[focusIndex].dataset.id;
+                        const matchId = cards[focusIndex].dataset.id;
+                        const realIndex = matchesData.findIndex(m => m.id === matchId);
+                        if (realIndex !== -1) openMatchDetails(realIndex);
+                    }
                     return;
                 }
             }
@@ -2398,15 +2460,19 @@
 
         // Kap eventet e klikimit për të ndaluar auto-scroll
         document.addEventListener('click', function(e) {
-            if (!isModalOpen && !e.target.closest('.match')) {
-                handleUserInteraction();
+            if (!isModalOpen && !e.target.closest('.match') && !e.target.closest('.scroll-indicator')) {
+                if (isAutoScrolling) {
+                    pauseAutoScroll('⏸ Auto-scroll i ndaluar');
+                }
             }
         });
 
         // Kap eventet e prekjes për pajisjet mobile
         document.addEventListener('touchstart', function(e) {
-            if (!isModalOpen && !e.target.closest('.match')) {
-                handleUserInteraction();
+            if (!isModalOpen && !e.target.closest('.match') && !e.target.closest('.scroll-indicator')) {
+                if (isAutoScrolling) {
+                    pauseAutoScroll('⏸ Auto-scroll i ndaluar');
+                }
             }
         });
 
@@ -2422,11 +2488,19 @@
             });
         }
 
+        // Nis aplikacionin
         window.focus();
         document.body.setAttribute('tabindex', '0');
         document.body.focus();
 
         loadMatches(true);
+
+        // Rinis auto-scroll nëse faqja bëhet aktive përsëri
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden && !isModalOpen && isAutoScrolling && cards.length > 1) {
+                startAutoScroll();
+            }
+        });
     </script>
 </body>
 
