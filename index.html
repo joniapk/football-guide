@@ -114,7 +114,7 @@
         .wrap {
             height: calc(100vh - 56px);
             overflow-y: auto;
-            padding: 12px 16px;
+            padding: 10px 14px;
             scroll-behavior: auto;
             scrollbar-width: none;
             flex: 1;
@@ -137,17 +137,17 @@
         .games-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 10px;
+            gap: 8px;
         }
 
-        /* ===== NDESHJA E DITËS (më kompakte) ===== */
+        /* ===== NDESHJA E DITËS ===== */
         .match-of-day {
             grid-column: 1 / -1;
-            border: 2.5px solid var(--gold-accent) !important;
+            border: 2.5px solid var(--accent-red) !important;
             background: linear-gradient(135deg, #1a1208 0%, #0c0e14 100%) !important;
-            box-shadow: 0 0 30px rgba(255, 183, 0, 0.2) !important;
+            box-shadow: 0 0 30px rgba(255, 17, 0, 0.25) !important;
             position: relative;
-            padding: 12px 14px !important;
+            padding: 10px 12px !important;
             border-radius: 14px !important;
         }
 
@@ -156,20 +156,20 @@
             position: absolute;
             top: -10px;
             right: 14px;
-            background: var(--gold-accent);
-            color: #000;
+            background: var(--accent-red);
+            color: #fff;
             font-weight: 800;
             font-size: 10px;
             padding: 2px 12px;
             border-radius: 14px;
             letter-spacing: 0.5px;
-            box-shadow: 0 0 15px rgba(255, 183, 0, 0.3);
+            box-shadow: 0 0 15px rgba(255, 17, 0, 0.4);
             z-index: 2;
         }
 
         .match-of-day.is-live-card {
             border-color: var(--accent-red) !important;
-            box-shadow: 0 0 30px rgba(255, 17, 0, 0.3) !important;
+            box-shadow: 0 0 30px rgba(255, 17, 0, 0.35) !important;
         }
 
         .match-of-day.is-live-card::before {
@@ -180,9 +180,9 @@
         }
 
         .match-of-day .league-header .league-brand {
-            background: rgba(255, 183, 0, 0.2);
-            border-color: var(--gold-accent);
-            color: var(--gold-accent);
+            background: rgba(255, 17, 0, 0.25);
+            border-color: var(--accent-red);
+            color: var(--accent-red);
             font-size: 9px;
             padding: 1px 8px;
         }
@@ -211,12 +211,12 @@
             box-shadow: 0 0 40px var(--accent-glow) !important;
         }
 
-        /* Kartelat normale (më kompakte) */
+        /* Kartelat normale */
         .match {
             background: var(--card-bg);
             border: 2px solid var(--card-border);
             border-radius: 14px;
-            padding: 10px 12px;
+            padding: 8px 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
             transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
             cursor: pointer;
@@ -242,8 +242,8 @@
 
         .match-of-day.tv-focus {
             transform: scale(1.02);
-            box-shadow: 0 0 40px rgba(255, 183, 0, 0.4) !important;
-            border-color: var(--gold-accent) !important;
+            box-shadow: 0 0 40px var(--accent-glow) !important;
+            border-color: var(--accent-red) !important;
         }
 
         .match-of-day.is-live-card.tv-focus {
@@ -256,20 +256,20 @@
             align-items: center;
             justify-content: space-between;
             color: var(--gold-accent);
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             border-bottom: 1px dashed rgba(255, 183, 0, 0.2);
-            padding-bottom: 3px;
+            padding-bottom: 2px;
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
 
         .league-brand {
             color: #fff;
-            font-size: 9px;
+            font-size: 8px;
             background: rgba(225, 6, 0, 0.25);
-            padding: 1px 8px;
+            padding: 1px 6px;
             border-radius: 4px;
             border: 1px solid var(--accent-red);
         }
@@ -285,8 +285,8 @@
             width: 34%;
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 13px;
+            gap: 5px;
+            font-size: 12px;
             font-weight: 700;
             color: #fff;
             text-shadow: 0 1px 3px rgba(0,0,0,0.8);
@@ -296,8 +296,8 @@
         .team.away { justify-content: flex-end; }
 
         .team img {
-            width: 26px;
-            height: 26px;
+            width: 24px;
+            height: 24px;
             object-fit: contain;
             background: rgba(255,255,255,0.04);
             border-radius: 50%;
@@ -308,7 +308,7 @@
 
         .center {
             text-align: center;
-            min-width: 90px;
+            min-width: 80px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -316,33 +316,33 @@
         }
 
         .score-box {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 900;
             color: #fff;
             letter-spacing: 1px;
             background: #2b0305;
-            padding: 2px 10px;
-            border-radius: 8px;
+            padding: 1px 8px;
+            border-radius: 6px;
             border: 1.5px solid #821013;
-            box-shadow: inset 0 0 8px rgba(0,0,0,0.8), 0 0 12px rgba(225,6,0,0.3);
+            box-shadow: inset 0 0 6px rgba(0,0,0,0.8), 0 0 10px rgba(225,6,0,0.25);
         }
 
         .time-box {
-            font-size: 11px;
+            font-size: 10px;
             color: #ff8a80;
             font-weight: 700;
             background: rgba(0,0,0,0.4);
-            padding: 1px 8px;
-            border-radius: 6px;
+            padding: 1px 6px;
+            border-radius: 4px;
             border: 1px solid rgba(255,138,128,0.2);
             white-space: nowrap;
         }
 
         .status-badge {
             display: inline-block;
-            padding: 1px 8px;
-            border-radius: 12px;
-            font-size: 9px;
+            padding: 1px 6px;
+            border-radius: 10px;
+            font-size: 8px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.3px;
@@ -357,43 +357,43 @@
         .play-odds-mini {
             display: flex;
             justify-content: center;
-            gap: 8px;
-            margin-top: 5px;
-            padding-top: 4px;
+            gap: 6px;
+            margin-top: 4px;
+            padding-top: 3px;
             border-top: 1px solid rgba(255,255,255,0.05);
         }
 
         .play-odd-mini {
             background: #111215;
             border: 1px solid #282a30;
-            border-radius: 6px;
-            padding: 2px 10px;
+            border-radius: 4px;
+            padding: 1px 8px;
             display: flex;
             align-items: center;
-            gap: 4px;
-            font-size: 11px;
+            gap: 3px;
+            font-size: 10px;
             font-weight: 600;
         }
 
         .play-odd-mini .odd-label {
             color: var(--text-sub);
             font-weight: 400;
-            font-size: 10px;
+            font-size: 9px;
         }
 
         .play-odd-mini .odd-val {
             color: var(--play-yellow);
             font-weight: 800;
-            font-size: 13px;
+            font-size: 12px;
         }
 
         .card-scorers {
             display: flex;
             justify-content: space-between;
-            margin-top: 4px;
-            padding-top: 3px;
-            border-top: 1px solid rgba(255,255,255,0.06);
-            font-size: 10px;
+            margin-top: 3px;
+            padding-top: 2px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 9px;
             color: var(--text-sub);
         }
 
@@ -409,7 +409,7 @@
             opacity: 0.6;
         }
 
-        /* MODAL FULL SCREEN - i njëjtë */
+        /* MODAL FULL SCREEN */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -447,7 +447,7 @@
 
         .modal-header {
             background: linear-gradient(180deg, #240a0b 0%, #0d0f17 100%);
-            padding: 12px 20px;
+            padding: 10px 16px;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             text-align: center;
             flex-shrink: 0;
@@ -466,19 +466,19 @@
             align-items: center;
             gap: 4px;
             width: 35%;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
         }
 
-        .modal-team img { width: 48px; height: 48px; object-fit: contain; }
+        .modal-team img { width: 40px; height: 40px; object-fit: contain; }
 
         .modal-score {
-            font-size: 34px;
+            font-size: 30px;
             font-weight: 900;
             color: #fff;
             background: #000;
-            padding: 2px 18px;
-            border-radius: 10px;
+            padding: 2px 14px;
+            border-radius: 8px;
             border: 2px solid var(--accent-red);
             letter-spacing: 1px;
         }
@@ -486,9 +486,9 @@
         .modal-tabs {
             display: flex;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             background: #05070a;
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-bottom: 1px solid rgba(255,255,255,0.08);
             flex-wrap: wrap;
             flex-shrink: 0;
@@ -498,13 +498,13 @@
             background: rgba(255,255,255,0.05);
             border: 2px solid rgba(255,255,255,0.15);
             color: #fff;
-            padding: 8px 16px;
-            border-radius: 10px;
+            padding: 6px 12px;
+            border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 12px;
             transition: all 0.15s ease;
-            min-width: 90px;
+            min-width: 70px;
         }
 
         .tab-btn.active-tab {
@@ -515,17 +515,17 @@
 
         .tab-btn.tv-focus {
             border-color: #fff !important;
-            transform: scale(1.06);
+            transform: scale(1.05);
             box-shadow: 0 0 20px #fff !important;
         }
 
         .close-tab-btn { background: #4a0d0e; border-color: #ff3333; }
 
         .modal-body {
-            padding: 16px 24px;
+            padding: 14px 20px;
             overflow-y: auto;
             flex: 1;
-            font-size: 15px;
+            font-size: 14px;
             scroll-behavior: smooth;
         }
 
@@ -534,12 +534,12 @@
             background: rgba(255,17,0,0.02);
         }
 
-        .play-container { display: flex; flex-direction: column; gap: 14px; }
+        .play-container { display: flex; flex-direction: column; gap: 12px; }
         .play-badge-header {
             background: var(--play-header);
             border: 2px solid var(--play-yellow);
-            padding: 10px 18px;
-            border-radius: 10px;
+            padding: 8px 14px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -547,11 +547,11 @@
         }
         .play-logo-badge {
             font-weight: 900;
-            font-size: 24px;
+            font-size: 20px;
             color: #fff;
             background: #000;
-            padding: 2px 14px;
-            border-radius: 6px;
+            padding: 2px 12px;
+            border-radius: 4px;
             font-style: italic;
             border: 1px solid var(--play-yellow);
             letter-spacing: 1px;
@@ -559,38 +559,38 @@
         .play-odds-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            gap: 8px;
             margin-top: 4px;
         }
         .play-odd-card {
             background: #111215;
             border: 1px solid #282a30;
-            border-radius: 10px;
-            padding: 10px;
+            border-radius: 8px;
+            padding: 8px;
             text-align: center;
         }
         .play-odd-card .odd-title {
-            font-size: 13px;
+            font-size: 11px;
             color: var(--text-sub);
             margin-bottom: 2px;
             font-weight: bold;
         }
         .play-odd-card .odd-val {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 900;
             color: var(--play-yellow);
             background: #000;
-            padding: 4px;
-            border-radius: 6px;
+            padding: 3px;
+            border-radius: 4px;
             border: 1px solid rgba(255, 204, 0, 0.2);
         }
 
         .pitch-container {
             background: linear-gradient(180deg, #184e2a 0%, #0d321a 100%);
             border: 3px solid #2e8b46;
-            border-radius: 14px;
-            padding: 16px;
-            margin-top: 8px;
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 6px;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
         }
         .pitch-header {
@@ -598,73 +598,73 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid rgba(255,255,255,0.15);
-            padding-bottom: 6px;
-            margin-bottom: 10px;
+            padding-bottom: 4px;
+            margin-bottom: 8px;
         }
         .formation-title {
             color: var(--play-yellow);
             font-weight: 800;
-            font-size: 16px;
+            font-size: 14px;
         }
         .lineups-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 18px;
+            gap: 14px;
         }
         .lineup-column h4 {
             color: var(--gold-accent);
             border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 4px;
+            padding-bottom: 3px;
             margin-top: 0;
-            font-size: 18px;
+            font-size: 15px;
         }
         .section-sub-header {
             color: #ff8a80;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
-            margin: 8px 0 4px 0;
+            margin: 6px 0 3px 0;
             text-transform: uppercase;
             border-bottom: 1px dashed rgba(255,255,255,0.1);
-            padding-bottom: 3px;
+            padding-bottom: 2px;
         }
         .player-row {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 4px 0;
+            gap: 8px;
+            padding: 3px 0;
             border-bottom: 1px solid rgba(255,255,255,0.03);
-            font-size: 14px;
+            font-size: 12px;
         }
         .player-num {
             color: var(--accent-red);
             font-weight: bold;
-            width: 26px;
+            width: 22px;
         }
 
         .top-players-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
+            gap: 12px;
         }
         .top-player-team {
             background: rgba(255,255,255,0.03);
-            border-radius: 10px;
-            padding: 12px;
+            border-radius: 8px;
+            padding: 10px;
             border: 1px solid rgba(255,255,255,0.05);
         }
         .top-player-team h3 {
             color: var(--gold-accent);
             border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 6px;
+            padding-bottom: 4px;
             margin-top: 0;
-            font-size: 17px;
+            font-size: 15px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         .top-player-team h3 img {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             object-fit: contain;
             border-radius: 50%;
         }
@@ -672,94 +672,94 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 5px 0;
+            padding: 4px 0;
             border-bottom: 1px solid rgba(255,255,255,0.03);
         }
         .top-player-item .player-name {
             font-weight: 600;
-            font-size: 14px;
+            font-size: 12px;
         }
         .top-player-item .player-stats {
             display: flex;
-            gap: 10px;
-            font-size: 12px;
+            gap: 8px;
+            font-size: 10px;
             color: var(--text-sub);
         }
 
-        .roster-container { padding: 8px 0; }
+        .roster-container { padding: 6px 0; }
         .roster-title {
             color: var(--gold-accent);
             text-align: center;
-            font-size: 20px;
-            margin-bottom: 12px;
+            font-size: 17px;
+            margin-bottom: 10px;
         }
-        .roster-position-group { margin-top: 12px; }
+        .roster-position-group { margin-top: 10px; }
         .roster-position-label {
             color: var(--play-yellow);
             font-weight: bold;
-            font-size: 15px;
+            font-size: 13px;
             border-bottom: 2px solid rgba(255, 204, 0, 0.2);
-            padding-bottom: 4px;
-            margin-bottom: 6px;
+            padding-bottom: 3px;
+            margin-bottom: 4px;
         }
         .roster-players-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2px 16px;
+            gap: 2px 12px;
         }
         .roster-player-item {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 3px 0;
+            gap: 5px;
+            padding: 2px 0;
             border-bottom: 1px solid rgba(255,255,255,0.03);
-            font-size: 13px;
+            font-size: 11px;
         }
         .roster-player-item .num {
             color: var(--accent-red);
             font-weight: bold;
-            width: 26px;
+            width: 22px;
         }
         .roster-player-item .name { font-weight: 500; }
         .roster-total {
             text-align: center;
-            margin-top: 12px;
-            font-size: 12px;
+            margin-top: 10px;
+            font-size: 10px;
             color: var(--text-sub);
             opacity: 0.6;
         }
 
-        .scorers-container { padding: 8px 0; }
+        .scorers-container { padding: 6px 0; }
         .scorers-title {
             color: var(--gold-accent);
             text-align: center;
-            font-size: 20px;
-            margin-bottom: 12px;
+            font-size: 17px;
+            margin-bottom: 10px;
         }
         .scorers-table {
             background: rgba(255,255,255,0.03);
-            border-radius: 10px;
-            padding: 12px;
-            margin-top: 8px;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 6px;
         }
         .scorers-header {
             display: grid;
-            grid-template-columns: 30px 1fr 1fr 50px;
-            gap: 6px;
-            padding: 6px 0;
+            grid-template-columns: 25px 1fr 1fr 40px;
+            gap: 4px;
+            padding: 4px 0;
             border-bottom: 2px solid rgba(255,255,255,0.1);
             font-weight: bold;
             color: var(--text-sub);
-            font-size: 12px;
+            font-size: 10px;
         }
         .scorers-row {
             display: grid;
-            grid-template-columns: 30px 1fr 1fr 50px;
-            gap: 6px;
-            padding: 5px 0;
+            grid-template-columns: 25px 1fr 1fr 40px;
+            gap: 4px;
+            padding: 4px 0;
             border-bottom: 1px solid rgba(255,255,255,0.03);
             align-items: center;
-            font-size: 13px;
+            font-size: 11px;
         }
         .scorers-row .rank { font-weight: bold; color: var(--gold-accent); }
         .scorers-row .player-name { font-weight: 600; }
@@ -768,21 +768,21 @@
             text-align: right;
             font-weight: 900;
             color: var(--play-yellow);
-            font-size: 15px;
+            font-size: 13px;
         }
 
-        .stat-row { margin-bottom: 12px; }
+        .stat-row { margin-bottom: 10px; }
         .stat-labels {
             display: flex;
             justify-content: space-between;
             font-weight: bold;
-            font-size: 14px;
-            margin-bottom: 3px;
+            font-size: 12px;
+            margin-bottom: 2px;
         }
         .stat-bar-bg {
-            height: 12px;
+            height: 10px;
             background: #1a1d28;
-            border-radius: 6px;
+            border-radius: 5px;
             display: flex;
             overflow: hidden;
         }
@@ -792,74 +792,74 @@
         .timeline-item {
             display: flex;
             align-items: center;
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-size: 14px;
+            font-size: 12px;
             background: rgba(255,255,255,0.02);
-            border-radius: 6px;
-            margin-bottom: 6px;
+            border-radius: 4px;
+            margin-bottom: 4px;
         }
         .timeline-time {
-            width: 70px;
+            width: 60px;
             font-weight: bold;
             color: var(--gold-accent);
-            font-size: 18px;
+            font-size: 15px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
         }
 
         .empty-state {
             text-align: center;
-            padding: 30px 16px;
+            padding: 25px 14px;
             color: var(--text-sub);
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
         }
 
-        .standings-container { padding: 8px 0; }
+        .standings-container { padding: 6px 0; }
         .standings-title {
             color: var(--gold-accent);
             text-align: center;
-            font-size: 20px;
-            margin-bottom: 12px;
+            font-size: 17px;
+            margin-bottom: 10px;
         }
         .standings-table {
             background: rgba(255,255,255,0.03);
-            border-radius: 10px;
-            padding: 12px;
-            margin-top: 8px;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 6px;
         }
         .standings-header {
             display: grid;
-            grid-template-columns: 25px 1fr 40px 40px 40px 50px;
-            gap: 6px;
-            padding: 6px 0;
+            grid-template-columns: 20px 1fr 35px 35px 35px 40px;
+            gap: 4px;
+            padding: 4px 0;
             border-bottom: 2px solid rgba(255,255,255,0.1);
             font-weight: bold;
             color: var(--text-sub);
-            font-size: 12px;
+            font-size: 10px;
         }
         .standings-row {
             display: grid;
-            grid-template-columns: 25px 1fr 40px 40px 40px 50px;
-            gap: 6px;
-            padding: 5px 0;
+            grid-template-columns: 20px 1fr 35px 35px 35px 40px;
+            gap: 4px;
+            padding: 4px 0;
             border-bottom: 1px solid rgba(255,255,255,0.03);
             align-items: center;
-            font-size: 13px;
+            font-size: 11px;
         }
         .standings-row .pos { font-weight: bold; }
         .standings-row .pos.top4 { color: var(--gold-accent); }
         .standings-row .team-name {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             font-weight: 600;
         }
         .standings-row .team-name img {
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             object-fit: contain;
             border-radius: 50%;
         }
@@ -870,62 +870,61 @@
             text-align: right;
             font-weight: 900;
             color: var(--gold-accent);
-            font-size: 15px;
+            font-size: 13px;
         }
         .standings-legend {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            margin-top: 10px;
-            font-size: 11px;
+            gap: 10px;
+            margin-top: 8px;
+            font-size: 9px;
             color: var(--text-sub);
             flex-wrap: wrap;
         }
 
-        /* Responsive për ekrane të vogla */
         @media (max-width: 820px) {
-            .header { padding: 0 12px; height: 48px; }
+            .header { padding: 0 10px; height: 48px; }
             .play-logo { width: 28px; height: 28px; }
             .logo-text span { font-size: 14px; }
             .logo-text small { font-size: 7px; }
             .live-indicator { font-size: 10px; padding: 3px 10px; }
-            .team { font-size: 12px; }
-            .team img { width: 22px; height: 22px; }
-            .center { min-width: 80px; }
-            .score-box { font-size: 17px; padding: 2px 8px; }
-            .time-box { font-size: 10px; padding: 1px 6px; }
-            .play-odd-mini { font-size: 10px; padding: 2px 8px; }
-            .play-odd-mini .odd-val { font-size: 12px; }
-            .match-of-day .team { font-size: 13px !important; }
-            .match-of-day .team img { width: 28px !important; height: 28px !important; }
-            .match-of-day .score-box { font-size: 18px !important; padding: 2px 10px !important; }
-            .match-of-day .time-box { font-size: 11px !important; }
-            .match-of-day::before { font-size: 9px; padding: 2px 10px; top: -8px; right: 12px; }
-            .modal-team { font-size: 16px; }
-            .modal-team img { width: 40px; height: 40px; }
-            .modal-score { font-size: 28px; padding: 2px 14px; }
-            .tab-btn { font-size: 12px; padding: 6px 12px; min-width: 70px; }
-            .modal-body { padding: 12px 16px; font-size: 14px; }
-        }
-
-        @media (max-width: 480px) {
-            .team { font-size: 11px; gap: 3px; }
+            .team { font-size: 11px; }
             .team img { width: 20px; height: 20px; }
             .center { min-width: 70px; }
             .score-box { font-size: 15px; padding: 1px 6px; }
             .time-box { font-size: 9px; padding: 1px 5px; }
             .play-odd-mini { font-size: 9px; padding: 1px 6px; }
             .play-odd-mini .odd-val { font-size: 11px; }
-            .match-of-day .team { font-size: 12px !important; }
-            .match-of-day .team img { width: 24px !important; height: 24px !important; }
-            .match-of-day .score-box { font-size: 16px !important; padding: 1px 8px !important; }
+            .match-of-day .team { font-size: 13px !important; }
+            .match-of-day .team img { width: 28px !important; height: 28px !important; }
+            .match-of-day .score-box { font-size: 18px !important; padding: 2px 10px !important; }
+            .match-of-day .time-box { font-size: 11px !important; }
+            .match-of-day::before { font-size: 9px; padding: 2px 10px; top: -8px; right: 12px; }
+            .modal-team { font-size: 14px; }
+            .modal-team img { width: 36px; height: 36px; }
+            .modal-score { font-size: 24px; padding: 2px 12px; }
+            .tab-btn { font-size: 10px; padding: 4px 10px; min-width: 60px; }
+            .modal-body { padding: 10px 14px; font-size: 12px; }
+        }
+
+        @media (max-width: 480px) {
+            .team { font-size: 10px; gap: 3px; }
+            .team img { width: 18px; height: 18px; }
+            .center { min-width: 60px; }
+            .score-box { font-size: 13px; padding: 1px 5px; }
+            .time-box { font-size: 8px; padding: 1px 4px; }
+            .play-odd-mini { font-size: 8px; padding: 1px 5px; }
+            .play-odd-mini .odd-val { font-size: 10px; }
+            .match-of-day .team { font-size: 11px !important; }
+            .match-of-day .team img { width: 22px !important; height: 22px !important; }
+            .match-of-day .score-box { font-size: 15px !important; padding: 1px 8px !important; }
             .match-of-day .time-box { font-size: 10px !important; }
             .match-of-day::before { font-size: 8px; padding: 1px 8px; top: -7px; right: 10px; }
-            .modal-team { font-size: 14px; }
-            .modal-team img { width: 34px; height: 34px; }
-            .modal-score { font-size: 24px; padding: 2px 12px; }
-            .tab-btn { font-size: 10px; padding: 4px 8px; min-width: 50px; }
-            .modal-body { padding: 10px 12px; font-size: 13px; }
+            .modal-team { font-size: 12px; }
+            .modal-team img { width: 30px; height: 30px; }
+            .modal-score { font-size: 20px; padding: 2px 10px; }
+            .tab-btn { font-size: 9px; padding: 3px 6px; min-width: 45px; }
+            .modal-body { padding: 8px 10px; font-size: 11px; }
         }
     </style>
 </head>
@@ -957,7 +956,7 @@
     <div class="modal-overlay" id="matchModal">
         <div class="modal-content">
             <div class="modal-header">
-                <div id="modalLeague" style="color: var(--gold-accent); font-weight: bold; font-size: 15px; text-transform: uppercase;">--</div>
+                <div id="modalLeague" style="color: var(--gold-accent); font-weight: bold; font-size: 13px; text-transform: uppercase;">--</div>
                 <div class="modal-teams">
                     <div class="modal-team">
                         <img id="modalHomeLogo" src="" alt="">
@@ -965,7 +964,7 @@
                     </div>
                     <div>
                         <div class="modal-score" id="modalScore">- : -</div>
-                        <div id="modalStatus" style="margin-top: 4px; font-weight: bold; color: var(--accent-red); font-size: 14px;">--</div>
+                        <div id="modalStatus" style="margin-top: 3px; font-weight: bold; color: var(--accent-red); font-size: 12px;">--</div>
                     </div>
                     <div class="modal-team">
                         <img id="modalAwayLogo" src="" alt="">
@@ -1002,15 +1001,10 @@
         // --- AUTO-SCROLL I QETË (PA DRIDHJE) ---
         let autoScroll = true;
         let isPaused = false;
-        let scrollPosition = 0;
-        let targetScroll = 0;
-        let isScrolling = false;
-        let lastTimestamp = 0;
         let userInteracted = false;
         let interactionTimeout = null;
         const AUTO_SCROLL_DELAY = 8000;
-        const SCROLL_SPEED = 0.15; // Faktor i qetësisë (lerp)
-        const SCROLL_STEP = 0.6; // Pixel për frame (më i ulët për lëvizje të qetë)
+        const SCROLL_STEP = 0.4; // Pixel për frame - shumë i ulët për lëvizje të qetë
         
         let isModalOpen = false;
         let modalFocusArea = 'TABS';
@@ -1335,7 +1329,7 @@
 
             html += `
                     </div>
-                    <div style="text-align:center; margin-top:8px; font-size:12px; color:var(--text-sub); opacity:0.6;">
+                    <div style="text-align:center; margin-top:8px; font-size:10px; color:var(--text-sub); opacity:0.6;">
                         📊 ${scorersData.leaders.length} golashënuesit më të mirë
                     </div>
                 </div>
@@ -1466,7 +1460,7 @@
                         <span class="team-name">
                             <img src="${team.team?.logo || ''}" alt="" onerror="this.style.display='none'">
                             ${team.team?.displayName || 'N/A'}
-                            <span style="font-size:10px; margin-left:auto; color:var(--text-sub);">${getPosIcon(pos)}</span>
+                            <span style="font-size:9px; margin-left:auto; color:var(--text-sub);">${getPosIcon(pos)}</span>
                         </span>
                         <span>${totalGames}</span>
                         <span class="${gdClass}">${goalDiff > 0 ? '+' : ''}${goalDiff}</span>
@@ -1670,13 +1664,6 @@
                     c.classList.remove("tv-focus");
                 }
             });
-            
-            // Reset scroll position për auto-scroll të qetë
-            if (cards.length > 0 && !isModalOpen) {
-                setTimeout(() => {
-                    targetScroll = wrapEl.scrollTop || 0;
-                }, 200);
-            }
         }
 
         function openMatchDetailsByIndex(index) {
@@ -1734,7 +1721,6 @@
                 autoScroll = true; 
                 isPaused = false; 
                 userInteracted = false; 
-                targetScroll = wrapEl.scrollTop || 0;
             }, 3000);
         }
 
@@ -1800,7 +1786,7 @@
                 const homeRoster = await getTeamRoster(leagueCode, homeId);
                 const awayRoster = await getTeamRoster(leagueCode, awayId);
 
-                let html = `<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">`;
+                let html = `<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">`;
 
                 if (homeRoster) {
                     html += `<div>${renderRoster(homeRoster, activeMatch.homeTeam)}</div>`;
@@ -1900,7 +1886,7 @@
 
             const renderTeamPlayers = (players) => {
                 if (players.length === 0) {
-                    return `<div style="color:var(--text-sub); padding:8px 0;">Nuk ka statistika për këtë ekip.</div>`;
+                    return `<div style="color:var(--text-sub); padding:6px 0;">Nuk ka statistika për këtë ekip.</div>`;
                 }
                 return players.map(p => `
                     <div class="top-player-item">
@@ -1921,7 +1907,7 @@
                         ${renderTeamPlayers(awayTop)}
                     </div>
                 </div>
-                <div style="text-align:center; margin-top:8px; font-size:12px; color:var(--text-sub); opacity:0.6;">
+                <div style="text-align:center; margin-top:6px; font-size:10px; color:var(--text-sub); opacity:0.6;">
                     📊 Bazuar në statistikat individuale të ndeshjes
                 </div>
             `;
@@ -1948,7 +1934,7 @@
                 <div class="play-container">
                     <div class="play-badge-header">
                         <div class="play-logo-badge">PLAY SHQIP</div>
-                        <div style="font-weight: bold; color: #fff; font-size: 15px;">KOEFICIENTËT & FORMATI</div>
+                        <div style="font-weight: bold; color: #fff; font-size: 13px;">KOEFICIENTËT & FORMATI</div>
                     </div>
                     <div class="play-odds-grid">
                         <div class="play-odd-card"><div class="odd-title">1 (Fiton ${activeMatch.homeTeam})</div><div class="odd-val">${odds.homeWin}</div></div>
@@ -1961,7 +1947,7 @@
                     <div class="pitch-container">
                         <div class="pitch-header">
                             <span class="formation-title">📋 SKEMA: ${activeMatch.homeTeam} (${homeFormation}) vs ${activeMatch.awayTeam} (${awayFormation})</span>
-                            <span style="color:#000; font-weight:900; font-size:12px; background:var(--play-yellow); padding:3px 10px; border-radius:4px;">PLAY SHQIP</span>
+                            <span style="color:#000; font-weight:900; font-size:10px; background:var(--play-yellow); padding:2px 8px; border-radius:4px;">PLAY SHQIP</span>
                         </div>
                         ${rosters.length > 0 ? `
                             <div class="lineups-grid">
@@ -1986,7 +1972,7 @@
                                     `).join('')}
                                 </div>
                             </div>
-                        ` : `<div class="empty-state" style="padding:16px 0;">Formacionet do të konfirmohen 45 minuta para ndeshjes.</div>`}
+                        ` : `<div class="empty-state" style="padding:12px 0;">Formacionet do të konfirmohen 45 minuta para ndeshjes.</div>`}
                     </div>
                 </div>
             `;
@@ -2123,11 +2109,11 @@
                     else if (isKey(e, KEY_DOWN)) { e.preventDefault(); modalFocusArea = 'BODY'; updateModalUIFocus(); }
                     else if (isKey(e, KEY_ENTER)) { e.preventDefault(); switchTab(modalTabIndex); }
                 } else if (modalFocusArea === 'BODY') {
-                    if (isKey(e, KEY_DOWN)) { e.preventDefault(); body.scrollTop += 90; }
+                    if (isKey(e, KEY_DOWN)) { e.preventDefault(); body.scrollTop += 70; }
                     else if (isKey(e, KEY_UP)) {
                         e.preventDefault();
                         if (body.scrollTop <= 10) { modalFocusArea = 'TABS'; updateModalUIFocus(); }
-                        else body.scrollTop -= 90;
+                        else body.scrollTop -= 70;
                     } else if (isKey(e, KEY_LEFT) || isKey(e, KEY_RIGHT)) {
                         e.preventDefault();
                         modalFocusArea = 'TABS';
@@ -2149,11 +2135,9 @@
             if (isKey(e, KEY_DOWN) || isKey(e, KEY_RIGHT)) {
                 e.preventDefault();
                 focusIndex = (focusIndex + 1) % cards.length;
-                targetScroll = 0;
             } else if (isKey(e, KEY_UP) || isKey(e, KEY_LEFT)) {
                 e.preventDefault();
                 focusIndex = (focusIndex - 1 + cards.length) % cards.length;
-                targetScroll = 0;
             } else if (isKey(e, KEY_ENTER)) {
                 e.preventDefault();
                 if (cards[focusIndex]) focusedMatchId = cards[focusIndex].dataset.id;
@@ -2165,48 +2149,40 @@
             if (cards[focusIndex]) {
                 cards[focusIndex].classList.add("tv-focus");
                 cards[focusIndex].scrollIntoView({ behavior: "smooth", block: "center" });
-                setTimeout(() => {
-                    targetScroll = wrapEl.scrollTop || 0;
-                }, 100);
             }
         });
 
         // --- AUTO-SCROLL I QETË (PA DRIDHJE) ---
         const wrapEl = document.querySelector(".wrap");
+        let currentScroll = 0;
+        let targetScroll = 0;
         
         function smoothScroll(timestamp) {
-            if (!lastTimestamp) lastTimestamp = timestamp;
-            const delta = timestamp - lastTimestamp;
-            lastTimestamp = timestamp;
-
-            // Përditëso pozicionin e synuar vetëm nëse auto-scroll është aktiv
+            if (!wrapEl) return;
+            
+            // Përditëso pozicionin aktual
+            currentScroll = wrapEl.scrollTop;
+            
+            // Nëse auto-scroll është aktiv dhe nuk ka ndërprerje
             if (autoScroll && !isPaused && !isModalOpen && !userInteracted && wrapEl) {
-                // Llogarit pozicionin e synuar: lëviz nga pozicioni aktual në fund
                 const maxScroll = wrapEl.scrollHeight - wrapEl.clientHeight;
-                if (maxScroll > 0) {
-                    // Përdor lerp për lëvizje të qetë dhe pa dridhje
-                    const currentPos = wrapEl.scrollTop;
-                    // Synojmë të lëvizim ngadalë poshtë
-                    const targetPos = Math.min(currentPos + SCROLL_STEP, maxScroll);
+                
+                if (maxScroll > 0 && currentScroll < maxScroll - 5) {
+                    // Lëvizje shumë e qetë dhe e ngadaltë
+                    targetScroll = currentScroll + SCROLL_STEP;
                     
-                    // Aplikojmë lerp për tranzicion të qetë
-                    const smoothTarget = currentPos + (targetPos - currentPos) * SCROLL_SPEED;
-                    
-                    // Nëse jemi shumë afër fundit, mos lëviz më
-                    if (maxScroll - currentPos > 2) {
-                        wrapEl.scrollTop = smoothTarget;
-                        // Ruaj pozicionin për referencë
-                        scrollPosition = wrapEl.scrollTop;
-                    } else {
-                        // Nëse jemi në fund, qëndrojmë aty
-                        wrapEl.scrollTop = maxScroll;
-                        scrollPosition = maxScroll;
+                    // Kufizo në maxScroll
+                    if (targetScroll > maxScroll) {
+                        targetScroll = maxScroll;
                     }
-                }
-            } else {
-                // Kur nuk lëviz, përditëso pozicionin aktual
-                if (wrapEl) {
-                    scrollPosition = wrapEl.scrollTop;
+                    
+                    // Apliko lëvizjen
+                    wrapEl.scrollTop = targetScroll;
+                } else {
+                    // Nëse jemi në fund, qëndro
+                    if (currentScroll >= maxScroll - 2) {
+                        // Në fund, mos lëviz më
+                    }
                 }
             }
             
