@@ -107,9 +107,18 @@
         }
 
         @keyframes pulse {
-            0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255,17,0,0.8); }
-            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(255,17,0,0); }
-            100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255,17,0,0); }
+            0% {
+                transform: scale(0.9);
+                box-shadow: 0 0 0 0 rgba(255, 17, 0, 0.8);
+            }
+            70% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 10px rgba(255, 17, 0, 0);
+            }
+            100% {
+                transform: scale(0.9);
+                box-shadow: 0 0 0 0 rgba(255, 17, 0, 0);
+            }
         }
 
         .wrap {
@@ -121,19 +130,28 @@
             position: relative;
             scroll-behavior: smooth;
         }
-        .wrap::-webkit-scrollbar { display: none; }
+        .wrap::-webkit-scrollbar {
+            display: none;
+        }
 
         .loader {
             display: inline-block;
             width: 30px;
             height: 30px;
-            border: 3px solid rgba(255,255,255,0.1);
+            border: 3px solid rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             border-top: 3px solid var(--accent-red);
             animation: spin 1s linear infinite;
             margin: 15px auto;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
         .games-grid {
             display: grid;
@@ -158,7 +176,6 @@
             border: 2.5px solid var(--accent-red);
             background: linear-gradient(135deg, #2b080a 0%, #0c0e14 100%);
             box-shadow: 0 0 20px rgba(255, 17, 0, 0.25);
-            /* NUK KA transform: scale() - MADHËSIA NDRYSHON */
         }
 
         .tv-focus {
@@ -170,10 +187,9 @@
             z-index: 5;
         }
 
-        /* Heqim zmadhimin për live card kur është në fokus - e njëjtë si të tjerat */
         .match.is-live-card.tv-focus {
             border: 3px solid var(--accent-red) !important;
-            transform: scale(1.03); /* Ruhet vetëm për fokus, si të tjerat */
+            transform: scale(1.03);
             box-shadow: 0 0 30px var(--accent-glow) !important;
             background: linear-gradient(135deg, #380d10 0%, #121620 100%);
             z-index: 5;
@@ -217,20 +233,24 @@
             font-size: 12px;
             font-weight: 700;
             color: #fff;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         }
 
-        .team.home { justify-content: flex-start; }
-        .team.away { justify-content: flex-end; }
+        .team.home {
+            justify-content: flex-start;
+        }
+        .team.away {
+            justify-content: flex-end;
+        }
 
         .team img {
             width: 24px;
             height: 24px;
             object-fit: contain;
-            background: rgba(255,255,255,0.04);
+            background: rgba(255, 255, 255, 0.04);
             border-radius: 50%;
             padding: 2px;
-            border: 1.5px solid rgba(255,255,255,0.1);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
             flex-shrink: 0;
         }
 
@@ -252,17 +272,17 @@
             padding: 1px 8px;
             border-radius: 6px;
             border: 1.5px solid #821013;
-            box-shadow: inset 0 0 6px rgba(0,0,0,0.8), 0 0 10px rgba(225,6,0,0.25);
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.8), 0 0 10px rgba(225, 6, 0, 0.25);
         }
 
         .match .time-box {
             font-size: 13px !important;
             color: #ff8a80;
             font-weight: 700;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0, 0, 0, 0.4);
             padding: 3px 10px !important;
             border-radius: 4px;
-            border: 1px solid rgba(255,138,128,0.2);
+            border: 1px solid rgba(255, 138, 128, 0.2);
             white-space: nowrap;
         }
 
@@ -287,7 +307,7 @@
             justify-content: center;
             margin-top: 4px;
             padding-top: 3px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .broadcaster-badge {
@@ -327,14 +347,22 @@
             justify-content: space-between;
             margin-top: 3px;
             padding-top: 2px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             font-size: 9px;
             color: var(--text-sub);
         }
 
-        .card-scorers .home-scorers { text-align: left; width: 45%; }
-        .card-scorers .away-scorers { text-align: right; width: 45%; }
-        .scorer-item { margin-bottom: 1px; }
+        .card-scorers .home-scorers {
+            text-align: left;
+            width: 45%;
+        }
+        .card-scorers .away-scorers {
+            text-align: right;
+            width: 45%;
+        }
+        .scorer-item {
+            margin-bottom: 1px;
+        }
 
         .update-timestamp {
             text-align: right;
@@ -346,9 +374,11 @@
 
         .modal-overlay {
             position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.96);
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.96);
             backdrop-filter: blur(8px);
             z-index: 999;
             display: none;
@@ -383,7 +413,7 @@
         .modal-header {
             background: linear-gradient(180deg, #240a0b 0%, #0d0f17 100%);
             padding: 10px 16px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
             flex-shrink: 0;
         }
@@ -428,14 +458,14 @@
             gap: 6px;
             background: #05070a;
             padding: 6px 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             flex-wrap: wrap;
             flex-shrink: 0;
         }
 
         .tab-btn {
-            background: rgba(255,255,255,0.05);
-            border: 2px solid rgba(255,255,255,0.15);
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.15);
             color: #fff;
             padding: 6px 12px;
             border-radius: 8px;
@@ -885,6 +915,29 @@
             flex-wrap: wrap;
         }
 
+        /* Auto-scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 17, 0, 0.8);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .scroll-indicator.visible {
+            opacity: 1;
+        }
+
         @media (max-width: 820px) {
             .header {
                 padding: 0 10px;
@@ -1037,6 +1090,9 @@
         </div>
     </div>
 
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" id="scrollIndicator">▶ Duke lëvizur automatikisht</div>
+
     <!-- MODAL -->
     <div class="modal-overlay" id="matchModal">
         <div class="modal-content">
@@ -1089,11 +1145,18 @@
         let activeMatch = null;
         let activeSummary = null;
 
+        // --- AUTO-SCROLL KONFIGURIMI ---
+        const AUTO_SCROLL_INTERVAL = 3000; // 3 sekonda
+        let autoScrollTimer = null;
+        let isAutoScrolling = true;
+        let userInteracted = false;
+        let interactionTimeout = null;
+
         // ============================================
         // PRIORITETI - KATEGORIA SUPERIORE E PARA
         // ============================================
         const LEAGUE_PRIORITY = {
-            "alb.1": 20,              // ← KATEGORIA SUPERIORE E PARA
+            "alb.1": 20,
             "uefa.champions": 10,
             "uefa.europa": 9,
             "uefa.europa.conf": 8,
@@ -1115,33 +1178,39 @@
             const code = (m.leagueCode || '').toLowerCase();
             const name = (m.league || '').toLowerCase();
             const fullText = name + ' ' + code;
-            
-            // Tring Sport
-            if (fullText.includes('champions') || fullText.includes('uefa.champions')) return { label: 'TRING SPORT AL', css: 'tring' };
-            if (fullText.includes('bundesliga') || fullText.includes('ger.1')) return { label: 'TRING SPORT AL', css: 'tring' };
-            if (fullText.includes('serie a') || fullText.includes('ita.1') || fullText.includes('ita.cup') || fullText.includes('coppa italia')) {
+
+            if (fullText.includes('champions') || fullText.includes('uefa.champions')) return { label: 'TRING SPORT AL',
+                css: 'tring' };
+            if (fullText.includes('bundesliga') || fullText.includes('ger.1')) return { label: 'TRING SPORT AL',
+                css: 'tring' };
+            if (fullText.includes('serie a') || fullText.includes('ita.1') || fullText.includes('ita.cup') || fullText
+                .includes('coppa italia')) {
                 return { label: 'TRING SPORT AL', css: 'tring' };
             }
-            if (fullText.includes('europa league') || fullText.includes('uefa.europa')) return { label: 'TRING SPORT AL', css: 'tring' };
-            if (fullText.includes('conference league') || fullText.includes('uefa.europa.conf')) return { label: 'TRING SPORT AL', css: 'tring' };
-            
-            // SuperSport (DigitAlb)
-            if (fullText.includes('premier league') || fullText.includes('eng.1')) return { label: 'SUPER SPORT AL', css: 'supersport' };
-            if (fullText.includes('la liga') || fullText.includes('esp.1') || fullText.includes('laliga')) return { label: 'SUPER SPORT AL', css: 'supersport' };
-            if (fullText.includes('ligue 1') || fullText.includes('fra.1')) return { label: 'SUPER SPORT AL', css: 'supersport' };
-            if (fullText.includes('eredivisie') || fullText.includes('ned.1')) return { label: 'SUPER SPORT AL', css: 'supersport' };
+            if (fullText.includes('europa league') || fullText.includes('uefa.europa')) return { label: 'TRING SPORT AL',
+                css: 'tring' };
+            if (fullText.includes('conference league') || fullText.includes('uefa.europa.conf')) return { label: 'TRING SPORT AL',
+                css: 'tring' };
+
+            if (fullText.includes('premier league') || fullText.includes('eng.1')) return { label: 'SUPER SPORT AL',
+                css: 'supersport' };
+            if (fullText.includes('la liga') || fullText.includes('esp.1') || fullText.includes('laliga')) return { label: 'SUPER SPORT AL',
+                css: 'supersport' };
+            if (fullText.includes('ligue 1') || fullText.includes('fra.1')) return { label: 'SUPER SPORT AL',
+                css: 'supersport' };
+            if (fullText.includes('eredivisie') || fullText.includes('ned.1')) return { label: 'SUPER SPORT AL',
+                css: 'supersport' };
             if (fullText.includes('fa cup')) return { label: 'SUPER SPORT AL', css: 'supersport' };
             if (fullText.includes('copa del rey')) return { label: 'SUPER SPORT AL', css: 'supersport' };
-            
-            // RTSH Sport
-            if (fullText.includes('superiore') || 
-                fullText.includes('kategoria') || 
-                fullText.includes('abissnet') || 
+
+            if (fullText.includes('superiore') ||
+                fullText.includes('kategoria') ||
+                fullText.includes('abissnet') ||
                 fullText.includes('superliga') ||
                 fullText.includes('alb.1')) {
                 return { label: 'RTSH SPORT AL', css: 'rtsh' };
             }
-            
+
             return { label: 'SUPER SPORT AL', css: 'supersport' };
         }
 
@@ -1294,23 +1363,6 @@
             return matches;
         }
 
-        function getMatchOfDay(matches) {
-            if (!matches || matches.length === 0) return null;
-
-            const liveMatches = matches.filter(m => m.isLive);
-            if (liveMatches.length > 0) {
-                return liveMatches[0];
-            }
-
-            const sorted = [...matches].sort((a, b) => {
-                const priorityA = LEAGUE_PRIORITY[a.leagueCode] || 0;
-                const priorityB = LEAGUE_PRIORITY[b.leagueCode] || 0;
-                return priorityB - priorityA;
-            });
-
-            return sorted[0] || null;
-        }
-
         async function getStandings(leagueCode) {
             try {
                 const url = `https://site.api.espn.com/apis/v2/sports/soccer/${leagueCode}/standings`;
@@ -1371,16 +1423,16 @@
             }
 
             let html = `
-                <div class="scorers-container">
-                    <h2 class="scorers-title">⚽ GOLASHËNUESIT MË TË MIRË - ${league.name}</h2>
-                    <div class="scorers-table">
-                        <div class="scorers-header">
-                            <span>#</span>
-                            <span>Lojtari</span>
-                            <span>Skuadra</span>
-                            <span style="text-align:right;">Gola</span>
-                        </div>
-            `;
+                    <div class="scorers-container">
+                        <h2 class="scorers-title">⚽ GOLASHËNUESIT MË TË MIRË - ${league.name}</h2>
+                        <div class="scorers-table">
+                            <div class="scorers-header">
+                                <span>#</span>
+                                <span>Lojtari</span>
+                                <span>Skuadra</span>
+                                <span style="text-align:right;">Gola</span>
+                            </div>
+                `;
 
             scorersData.leaders.forEach((item, idx) => {
                 const rank = idx + 1;
@@ -1394,22 +1446,22 @@
                 else if (rank === 3) medal = '🥉';
 
                 html += `
-                    <div class="scorers-row">
-                        <span class="rank">${medal || rank}</span>
-                        <span class="player-name">${playerName}</span>
-                        <span class="team-name">${teamName}</span>
-                        <span class="goals">${goals}</span>
-                    </div>
-                `;
+                        <div class="scorers-row">
+                            <span class="rank">${medal || rank}</span>
+                            <span class="player-name">${playerName}</span>
+                            <span class="team-name">${teamName}</span>
+                            <span class="goals">${goals}</span>
+                        </div>
+                    `;
             });
 
             html += `
+                        </div>
+                        <div style="text-align:center; margin-top:8px; font-size:10px; color:var(--text-sub); opacity:0.6;">
+                            📊 ${scorersData.leaders.length} golashënuesit më të mirë
+                        </div>
                     </div>
-                    <div style="text-align:center; margin-top:8px; font-size:10px; color:var(--text-sub); opacity:0.6;">
-                        📊 ${scorersData.leaders.length} golashënuesit më të mirë
-                    </div>
-                </div>
-            `;
+                `;
 
             return html;
         }
@@ -1442,9 +1494,9 @@
             });
 
             let html = `
-                <div class="roster-container">
-                    <h2 class="roster-title">👥 ROSTER - ${teamName}</h2>
-            `;
+                    <div class="roster-container">
+                        <h2 class="roster-title">👥 ROSTER - ${teamName}</h2>
+                `;
 
             const order = ['Goalkeeper', 'Defender', 'Midfielder', 'Forward'];
             order.forEach(pos => {
@@ -1452,29 +1504,29 @@
                 if (!group || group.players.length === 0) return;
 
                 html += `
-                    <div class="roster-position-group">
-                        <div class="roster-position-label">${group.icon} ${group.label} (${group.players.length})</div>
-                        <div class="roster-players-grid">
-                `;
+                        <div class="roster-position-group">
+                            <div class="roster-position-label">${group.icon} ${group.label} (${group.players.length})</div>
+                            <div class="roster-players-grid">
+                    `;
 
                 group.players.forEach(p => {
                     const name = p.athlete?.displayName || p.displayName || 'Lojtar';
                     const jersey = p.jersey || p.athlete?.jersey || '-';
                     html += `
-                        <div class="roster-player-item">
-                            <span class="num">${jersey}</span>
-                            <span class="name">${name}</span>
-                        </div>
-                    `;
+                            <div class="roster-player-item">
+                                <span class="num">${jersey}</span>
+                                <span class="name">${name}</span>
+                            </div>
+                        `;
                 });
 
                 html += `</div></div>`;
             });
 
             html += `
-                <div class="roster-total">📋 ${athletes.length} lojtarë në total</div>
-                </div>
-            `;
+                    <div class="roster-total">📋 ${athletes.length} lojtarë në total</div>
+                    </div>
+                `;
 
             return html;
         }
@@ -1501,18 +1553,18 @@
             };
 
             let html = `
-                <div class="standings-container">
-                    <h2 class="standings-title">🏆 ${league.name}</h2>
-                    <div class="standings-table">
-                        <div class="standings-header">
-                            <span>#</span>
-                            <span>Skuadra</span>
-                            <span>N</span>
-                            <span>G</span>
-                            <span>P</span>
-                            <span style="text-align:right;">Pikë</span>
-                        </div>
-            `;
+                    <div class="standings-container">
+                        <h2 class="standings-title">🏆 ${league.name}</h2>
+                        <div class="standings-table">
+                            <div class="standings-header">
+                                <span>#</span>
+                                <span>Skuadra</span>
+                                <span>N</span>
+                                <span>G</span>
+                                <span>P</span>
+                                <span style="text-align:right;">Pikë</span>
+                            </div>
+                `;
 
             teams.forEach((team, idx) => {
                 const pos = idx + 1;
@@ -1529,35 +1581,117 @@
                 const gdClass = goalDiff >= 0 ? 'gd positive' : 'gd negative';
 
                 html += `
-                    <div class="standings-row">
-                        <span class="${posClass}">${pos}</span>
-                        <span class="team-name">
-                            <img src="${team.team?.logo || ''}" alt="" onerror="this.style.display='none'">
-                            ${team.team?.displayName || 'N/A'}
-                            <span style="font-size:9px; margin-left:auto; color:var(--text-sub);">${getPosIcon(pos)}</span>
-                        </span>
-                        <span>${totalGames}</span>
-                        <span class="${gdClass}">${goalDiff > 0 ? '+' : ''}${goalDiff}</span>
-                        <span>${goals}</span>
-                        <span class="points">${points}</span>
-                    </div>
-                `;
+                        <div class="standings-row">
+                            <span class="${posClass}">${pos}</span>
+                            <span class="team-name">
+                                <img src="${team.team?.logo || ''}" alt="" onerror="this.style.display='none'">
+                                ${team.team?.displayName || 'N/A'}
+                                <span style="font-size:9px; margin-left:auto; color:var(--text-sub);">${getPosIcon(pos)}</span>
+                            </span>
+                            <span>${totalGames}</span>
+                            <span class="${gdClass}">${goalDiff > 0 ? '+' : ''}${goalDiff}</span>
+                            <span>${goals}</span>
+                            <span class="points">${points}</span>
+                        </div>
+                    `;
             });
 
             html += `
+                        </div>
+                        <div class="standings-legend">
+                            <span>🟢 Champions League</span>
+                            <span>🔵 Europa League</span>
+                            <span>🟡 Conference League</span>
+                            <span>🔴 Relegation</span>
+                        </div>
                     </div>
-                    <div class="standings-legend">
-                        <span>🟢 Champions League</span>
-                        <span>🔵 Europa League</span>
-                        <span>🟡 Conference League</span>
-                        <span>🔴 Relegation</span>
-                    </div>
-                </div>
-            `;
+                `;
 
             return html;
         }
 
+        // --- FUNKSIONET E AUTO-SCROLL ---
+        function startAutoScroll() {
+            stopAutoScroll();
+            if (!isAutoScrolling) return;
+
+            const indicator = document.getElementById('scrollIndicator');
+
+            autoScrollTimer = setInterval(() => {
+                if (isModalOpen || cards.length === 0) return;
+
+                // Kalo te karta tjetër
+                cards.forEach(c => c.classList.remove('tv-focus'));
+                focusIndex = (focusIndex + 1) % cards.length;
+                cards[focusIndex].classList.add('tv-focus');
+
+                // Scroll te karta
+                cards[focusIndex].scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+
+                // Trego indikatorin
+                indicator.classList.add('visible');
+                clearTimeout(indicator._hideTimeout);
+                indicator._hideTimeout = setTimeout(() => {
+                    indicator.classList.remove('visible');
+                }, 1500);
+
+            }, AUTO_SCROLL_INTERVAL);
+        }
+
+        function stopAutoScroll() {
+            if (autoScrollTimer) {
+                clearInterval(autoScrollTimer);
+                autoScrollTimer = null;
+            }
+            const indicator = document.getElementById('scrollIndicator');
+            indicator.classList.remove('visible');
+        }
+
+        function resetAutoScrollTimer() {
+            if (!isAutoScrolling) return;
+            stopAutoScroll();
+            startAutoScroll();
+        }
+
+        function handleUserInteraction() {
+            if (!isAutoScrolling) return;
+
+            userInteracted = true;
+            isAutoScrolling = false;
+            stopAutoScroll();
+
+            // Trego që auto-scroll u ndal
+            const indicator = document.getElementById('scrollIndicator');
+            indicator.textContent = '⏸ Auto-scroll i ndaluar';
+            indicator.classList.add('visible');
+            clearTimeout(indicator._hideTimeout);
+            indicator._hideTimeout = setTimeout(() => {
+                indicator.classList.remove('visible');
+                indicator.textContent = '▶ Duke lëvizur automatikisht';
+            }, 3000);
+
+            // Rifillo auto-scroll pas 15 sekonda pasiviteti
+            clearTimeout(interactionTimeout);
+            interactionTimeout = setTimeout(() => {
+                if (!isModalOpen) {
+                    isAutoScrolling = true;
+                    userInteracted = false;
+                    startAutoScroll();
+                    const ind = document.getElementById('scrollIndicator');
+                    ind.textContent = '▶ Duke lëvizur automatikisht';
+                    ind.classList.add('visible');
+                    clearTimeout(ind._hideTimeout);
+                    ind._hideTimeout = setTimeout(() => {
+                        ind.classList.remove('visible');
+                    }, 2000);
+                }
+            }, 15000);
+        }
+
+        // --- FUNKSIONET PËR LOADIM DHE RENDER ---
         async function loadMatches(force = false) {
             const now = Date.now();
             if (!force && cachedMatches && (now - cacheTimestamp) < CACHE_DURATION) {
@@ -1616,10 +1750,10 @@
                 container.innerHTML =
                     `<div class="empty-state">Nuk ka ndeshje elitare të programuara për 7 ditët e ardhshme.</div>`;
                 cards = [];
+                stopAutoScroll();
                 return;
             }
 
-            // Thjesht rendit të gjitha ndeshjet sipas prioritetit (pa "Match of Day")
             const sortedMatches = [...matches].sort((a, b) => {
                 const priorityA = LEAGUE_PRIORITY[a.leagueCode] || 0;
                 const priorityB = LEAGUE_PRIORITY[b.leagueCode] || 0;
@@ -1640,45 +1774,45 @@
                 let scorersHTML = "";
                 if (m.homeScorers.length > 0 || m.awayScorers.length > 0) {
                     scorersHTML = `
-                        <div class="card-scorers">
-                            <div class="home-scorers">${m.homeScorers.map(s => `<div class="scorer-item">${s}</div>`).join('')}</div>
-                            <div class="away-scorers">${m.awayScorers.map(s => `<div class="scorer-item">${s}</div>`).join('')}</div>
-                        </div>
-                    `;
+                            <div class="card-scorers">
+                                <div class="home-scorers">${m.homeScorers.map(s => `<div class="scorer-item">${s}</div>`).join('')}</div>
+                                <div class="away-scorers">${m.awayScorers.map(s => `<div class="scorer-item">${s}</div>`).join('')}</div>
+                            </div>
+                        `;
                 }
                 const broadcaster = getBroadcaster(m);
                 const broadcasterHTML = `
-                    <div class="broadcaster-mini">
-                        <div class="broadcaster-badge ${broadcaster.css}">
-                            <span class="b-icon">📺</span>
-                            ${broadcaster.label}
+                        <div class="broadcaster-mini">
+                            <div class="broadcaster-badge ${broadcaster.css}">
+                                <span class="b-icon">📺</span>
+                                ${broadcaster.label}
+                            </div>
                         </div>
-                    </div>
-                `;
+                    `;
                 html += `
-                    <div class="match ${liveCardClass}" data-id="${m.id}" data-index="${idx}" tabindex="0" onclick="openMatchDetailsByIndex(${idx})">
-                        <div class="league-header">
-                            <span>🏆 ${m.league}</span>
-                            <span class="league-brand">${m.isLive ? '🔴 LIVE' : 'PLAY SHQIP'}</span>
+                        <div class="match ${liveCardClass}" data-id="${m.id}" data-index="${idx}" tabindex="0" onclick="openMatchDetailsByIndex(${idx})">
+                            <div class="league-header">
+                                <span>🏆 ${m.league}</span>
+                                <span class="league-brand">${m.isLive ? '🔴 LIVE' : 'PLAY SHQIP'}</span>
+                            </div>
+                            <div class="row">
+                                <div class="team home">
+                                    <img src="${m.homeBadge}" alt="${m.homeTeam}" onerror="this.src='https://via.placeholder.com/40'">
+                                    <span>${m.homeTeam}</span>
+                                </div>
+                                <div class="center">
+                                    ${scoreHTML}
+                                    ${statusHTML}
+                                </div>
+                                <div class="team away">
+                                    <span>${m.awayTeam}</span>
+                                    <img src="${m.awayBadge}" alt="${m.awayTeam}" onerror="this.src='https://via.placeholder.com/40'">
+                                </div>
+                            </div>
+                            ${scorersHTML}
+                            ${broadcasterHTML}
                         </div>
-                        <div class="row">
-                            <div class="team home">
-                                <img src="${m.homeBadge}" alt="${m.homeTeam}" onerror="this.src='https://via.placeholder.com/40'">
-                                <span>${m.homeTeam}</span>
-                            </div>
-                            <div class="center">
-                                ${scoreHTML}
-                                ${statusHTML}
-                            </div>
-                            <div class="team away">
-                                <span>${m.awayTeam}</span>
-                                <img src="${m.awayBadge}" alt="${m.awayTeam}" onerror="this.src='https://via.placeholder.com/40'">
-                            </div>
-                        </div>
-                        ${scorersHTML}
-                        ${broadcasterHTML}
-                    </div>
-                `;
+                    `;
             });
 
             html += `</div>`;
@@ -1705,12 +1839,14 @@
                     c.classList.remove("tv-focus");
                 }
             });
+
+            // Nis auto-scroll nëse nuk është ndalur nga përdoruesi
+            if (isAutoScrolling && !userInteracted) {
+                startAutoScroll();
+            }
         }
 
-        // ============================================
-        // FUNKSIONET E MODALIT ME MENAXHIMIN E HISTORISË
-        // ============================================
-
+        // --- FUNKSIONET E MODALIT ---
         function pushModalHistory() {
             history.pushState({ modalOpen: true }, '', '#modal');
         }
@@ -1725,14 +1861,17 @@
         }
 
         async function openMatchDetails(index) {
+            // Ndal auto-scroll kur hapet modal
+            stopAutoScroll();
+
             activeMatch = matchesData[index];
             if (!activeMatch) return;
             isModalOpen = true;
             const modal = document.getElementById("matchModal");
             modal.classList.add("active");
-            
+
             pushModalHistory();
-            
+
             document.getElementById("modalLeague").innerText = activeMatch.league;
             document.getElementById("modalHomeName").innerText = activeMatch.homeTeam;
             document.getElementById("modalHomeLogo").src = activeMatch.homeBadge;
@@ -1750,7 +1889,7 @@
 
             try {
                 const lCode = (activeMatch.leagueCode && activeMatch.leagueCode !== "soccer") ? activeMatch.leagueCode :
-                "all";
+                    "all";
                 const res = await fetch(
                     `https://site.api.espn.com/apis/site/v2/sports/soccer/${lCode}/summary?event=${activeMatch.id}&_t=${Date.now()}`
                     );
@@ -1766,16 +1905,21 @@
             activeMatch = null;
             activeSummary = null;
             isModalOpen = false;
-            
+
             if (window.history.state?.modalOpen) {
                 history.replaceState({}, '', window.location.pathname);
             }
-            
+
             if (cards[focusIndex]) {
                 focusedMatchId = cards[focusIndex].dataset.id;
                 cards.forEach(c => c.classList.remove("tv-focus"));
                 cards[focusIndex].classList.add("tv-focus");
                 cards[focusIndex].scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+
+            // Rifillo auto-scroll nëse është aktiv
+            if (isAutoScrolling && !userInteracted) {
+                setTimeout(startAutoScroll, 1000);
             }
         }
 
@@ -1785,10 +1929,6 @@
                 e.preventDefault();
             }
         });
-
-        // ============================================
-        // FUNDI I MENAXHIMIT TË HISTORISË
-        // ============================================
 
         function switchTab(index) {
             modalTabIndex = index;
@@ -1842,52 +1982,52 @@
             const awayFormation = awayRoster?.formation || "4-2-3-1";
 
             container.innerHTML = `
-                <div class="play-container">
-                    <div class="play-badge-header">
-                        <div class="play-logo-badge">PLAY SHQIP</div>
-                        <div style="font-weight: bold; color: #fff; font-size: 13px;">📺 TRANSMETUES ZYRTAR</div>
-                    </div>
-                    <div class="broadcaster-grid">
-                        <div class="broadcaster-card" style="grid-column: 1 / -1;">
-                            <div class="b-title">📡 Kjo ndeshje transmetohet nga:</div>
-                            <div class="b-name ${broadcaster.css}">
-                                <span class="b-icon">📺</span>
-                                ${broadcaster.label}
-                            </div>
+                    <div class="play-container">
+                        <div class="play-badge-header">
+                            <div class="play-logo-badge">PLAY SHQIP</div>
+                            <div style="font-weight: bold; color: #fff; font-size: 13px;">📺 TRANSMETUES ZYRTAR</div>
                         </div>
-                    </div>
-                    <div class="pitch-container">
-                        <div class="pitch-header">
-                            <span class="formation-title">📋 SKEMA: ${activeMatch.homeTeam} (${homeFormation}) vs ${activeMatch.awayTeam} (${awayFormation})</span>
-                            <span style="color:#000; font-weight:900; font-size:10px; background:var(--play-yellow); padding:2px 8px; border-radius:4px;">PLAY SHQIP</span>
-                        </div>
-                        ${rosters.length > 0 ? `
-                            <div class="lineups-grid">
-                                <div class="lineup-column">
-                                    <h4>🏠 ${activeMatch.homeTeam} (${homeFormation})</h4>
-                                    ${(homeRoster?.roster || []).slice(0, 11).map(p => `
-                                        <div class="player-row">
-                                            <span class="player-num">${p.jersey || '-'}</span>
-                                            <span>${p.athlete?.displayName || p.athlete?.name}</span>
-                                            <small style="color:var(--play-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || '11-sh'}</small>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                                <div class="lineup-column">
-                                    <h4>✈️ ${activeMatch.awayTeam} (${awayFormation})</h4>
-                                    ${(awayRoster?.roster || []).slice(0, 11).map(p => `
-                                        <div class="player-row">
-                                            <span class="player-num">${p.jersey || '-'}</span>
-                                            <span>${p.athlete?.displayName || p.athlete?.name}</span>
-                                            <small style="color:var(--play-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || '11-sh'}</small>
-                                        </div>
-                                    `).join('')}
+                        <div class="broadcaster-grid">
+                            <div class="broadcaster-card" style="grid-column: 1 / -1;">
+                                <div class="b-title">📡 Kjo ndeshje transmetohet nga:</div>
+                                <div class="b-name ${broadcaster.css}">
+                                    <span class="b-icon">📺</span>
+                                    ${broadcaster.label}
                                 </div>
                             </div>
-                        ` : `<div class="empty-state" style="padding:12px 0;">Formacionet do të konfirmohen 45 minuta para ndeshjes.</div>`}
+                        </div>
+                        <div class="pitch-container">
+                            <div class="pitch-header">
+                                <span class="formation-title">📋 SKEMA: ${activeMatch.homeTeam} (${homeFormation}) vs ${activeMatch.awayTeam} (${awayFormation})</span>
+                                <span style="color:#000; font-weight:900; font-size:10px; background:var(--play-yellow); padding:2px 8px; border-radius:4px;">PLAY SHQIP</span>
+                            </div>
+                            ${rosters.length > 0 ? `
+                                <div class="lineups-grid">
+                                    <div class="lineup-column">
+                                        <h4>🏠 ${activeMatch.homeTeam} (${homeFormation})</h4>
+                                        ${(homeRoster?.roster || []).slice(0, 11).map(p => `
+                                            <div class="player-row">
+                                                <span class="player-num">${p.jersey || '-'}</span>
+                                                <span>${p.athlete?.displayName || p.athlete?.name}</span>
+                                                <small style="color:var(--play-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || '11-sh'}</small>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                    <div class="lineup-column">
+                                        <h4>✈️ ${activeMatch.awayTeam} (${awayFormation})</h4>
+                                        ${(awayRoster?.roster || []).slice(0, 11).map(p => `
+                                            <div class="player-row">
+                                                <span class="player-num">${p.jersey || '-'}</span>
+                                                <span>${p.athlete?.displayName || p.athlete?.name}</span>
+                                                <small style="color:var(--play-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || '11-sh'}</small>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : `<div class="empty-state" style="padding:12px 0;">Formacionet do të konfirmohen 45 minuta para ndeshjes.</div>`}
+                        </div>
                     </div>
-                </div>
-            `;
+                `;
         }
 
         async function renderTopScorersTab(container) {
@@ -2028,28 +2168,28 @@
                     return `<div style="color:var(--text-sub); padding:6px 0;">Nuk ka statistika për këtë ekip.</div>`;
                 }
                 return players.map(p => `
-                    <div class="top-player-item">
-                        <span class="player-name">${p.jersey ? `#${p.jersey} ` : ''}${p.name} ${p.position ? `<small style="color:var(--text-sub); font-weight:400;">(${p.position})</small>` : ''}</span>
-                        <span class="player-stats">${getPlayerStatsText(p)}</span>
-                    </div>
-                `).join('');
+                        <div class="top-player-item">
+                            <span class="player-name">${p.jersey ? `#${p.jersey} ` : ''}${p.name} ${p.position ? `<small style="color:var(--text-sub); font-weight:400;">(${p.position})</small>` : ''}</span>
+                            <span class="player-stats">${getPlayerStatsText(p)}</span>
+                        </div>
+                    `).join('');
             };
 
             container.innerHTML = `
-                <div class="top-players-grid">
-                    <div class="top-player-team">
-                        <h3><img src="${activeMatch.homeBadge}" alt="${activeMatch.homeTeam}" onerror="this.style.display='none'"> ${activeMatch.homeTeam}</h3>
-                        ${renderTeamPlayers(homeTop)}
+                    <div class="top-players-grid">
+                        <div class="top-player-team">
+                            <h3><img src="${activeMatch.homeBadge}" alt="${activeMatch.homeTeam}" onerror="this.style.display='none'"> ${activeMatch.homeTeam}</h3>
+                            ${renderTeamPlayers(homeTop)}
+                        </div>
+                        <div class="top-player-team">
+                            <h3><img src="${activeMatch.awayBadge}" alt="${activeMatch.awayTeam}" onerror="this.style.display='none'"> ${activeMatch.awayTeam}</h3>
+                            ${renderTeamPlayers(awayTop)}
+                        </div>
                     </div>
-                    <div class="top-player-team">
-                        <h3><img src="${activeMatch.awayBadge}" alt="${activeMatch.awayTeam}" onerror="this.style.display='none'"> ${activeMatch.awayTeam}</h3>
-                        ${renderTeamPlayers(awayTop)}
+                    <div style="text-align:center; margin-top:6px; font-size:10px; color:var(--text-sub); opacity:0.6;">
+                        📊 Bazuar në statistikat individuale të ndeshjes
                     </div>
-                </div>
-                <div style="text-align:center; margin-top:6px; font-size:10px; color:var(--text-sub); opacity:0.6;">
-                    📊 Bazuar në statistikat individuale të ndeshjes
-                </div>
-            `;
+                `;
         }
 
         function renderLineups(container) {
@@ -2067,32 +2207,32 @@
                 if (type === 'starter' && list.length === 0) list = roster.roster.slice(0, 11);
                 if (list.length === 0) return "<p style='color:var(--text-sub);'>-</p>";
                 return list.map(p => `
-                    <div class="player-row">
-                        <span class="player-num">${p.jersey || '-'}</span>
-                        <span>${p.athlete?.displayName || p.athlete?.name}</span>
-                        <small style="color:var(--text-sub); margin-left:auto;">${type === 'starter' ? (p.position?.abbreviation || 'TITULLAR') : 'BENCH'}</small>
-                    </div>
-                `).join('');
+                        <div class="player-row">
+                            <span class="player-num">${p.jersey || '-'}</span>
+                            <span>${p.athlete?.displayName || p.athlete?.name}</span>
+                            <small style="color:var(--text-sub); margin-left:auto;">${type === 'starter' ? (p.position?.abbreviation || 'TITULLAR') : 'BENCH'}</small>
+                        </div>
+                    `).join('');
             };
 
             container.innerHTML = `
-                <div class="lineups-grid">
-                    <div class="lineup-column">
-                        <h4>🏠 ${activeMatch.homeTeam} (${homeRoster?.formation || '11-shja'})</h4>
-                        <div class="section-sub-header">🟢 11-SHJA TITULLARE</div>
-                        ${renderPlayers(homeRoster, 'starter')}
-                        <div class="section-sub-header">🟡 ZËVENDËSUESIT</div>
-                        ${renderPlayers(homeRoster, 'sub')}
+                    <div class="lineups-grid">
+                        <div class="lineup-column">
+                            <h4>🏠 ${activeMatch.homeTeam} (${homeRoster?.formation || '11-shja'})</h4>
+                            <div class="section-sub-header">🟢 11-SHJA TITULLARE</div>
+                            ${renderPlayers(homeRoster, 'starter')}
+                            <div class="section-sub-header">🟡 ZËVENDËSUESIT</div>
+                            ${renderPlayers(homeRoster, 'sub')}
+                        </div>
+                        <div class="lineup-column">
+                            <h4>✈️ ${activeMatch.awayTeam} (${awayRoster?.formation || '11-shja'})</h4>
+                            <div class="section-sub-header">🟢 11-SHJA TITULLARE</div>
+                            ${renderPlayers(awayRoster, 'starter')}
+                            <div class="section-sub-header">🟡 ZËVENDËSUESIT</div>
+                            ${renderPlayers(awayRoster, 'sub')}
+                        </div>
                     </div>
-                    <div class="lineup-column">
-                        <h4>✈️ ${activeMatch.awayTeam} (${awayRoster?.formation || '11-shja'})</h4>
-                        <div class="section-sub-header">🟢 11-SHJA TITULLARE</div>
-                        ${renderPlayers(awayRoster, 'starter')}
-                        <div class="section-sub-header">🟡 ZËVENDËSUESIT</div>
-                        ${renderPlayers(awayRoster, 'sub')}
-                    </div>
-                </div>
-            `;
+                `;
         }
 
         function renderStats(container) {
@@ -2117,14 +2257,14 @@
                 const total = (hNum + aNum) || 1;
                 const hPct = Math.round((hNum / total) * 100);
                 return `
-                    <div class="stat-row">
-                        <div class="stat-labels"><span>${homeValStr}</span><span>${st.label}</span><span>${awayVal}</span></div>
-                        <div class="stat-bar-bg">
-                            <div class="stat-bar-home" style="width:${hPct}%"></div>
-                            <div class="stat-bar-away" style="width:${100-hPct}%"></div>
+                        <div class="stat-row">
+                            <div class="stat-labels"><span>${homeValStr}</span><span>${st.label}</span><span>${awayVal}</span></div>
+                            <div class="stat-bar-bg">
+                                <div class="stat-bar-home" style="width:${hPct}%"></div>
+                                <div class="stat-bar-away" style="width:${100-hPct}%"></div>
+                            </div>
                         </div>
-                    </div>
-                `;
+                    `;
             }).join("");
         }
 
@@ -2147,11 +2287,11 @@
                 else if (typeText.includes("penalty")) icon = "🎯";
                 else if (typeText.includes("var")) icon = "🖥️";
                 return `
-                    <div class="timeline-item">
-                        <div class="timeline-time"><span>${clock}'</span><span>${icon}</span></div>
-                        <div><strong style="color:#fff;">${team}</strong>: <span style="color:var(--gold-accent); font-weight:bold;">${e.type?.text || 'Ngjarje'}</span> ${player ? `- <span style="color:#ff8a80;">${player}</span>` : ''}</div>
-                    </div>
-                `;
+                        <div class="timeline-item">
+                            <div class="timeline-time"><span>${clock}'</span><span>${icon}</span></div>
+                            <div><strong style="color:#fff;">${team}</strong>: <span style="color:var(--gold-accent); font-weight:bold;">${e.type?.text || 'Ngjarje'}</span> ${player ? `- <span style="color:#ff8a80;">${player}</span>` : ''}</div>
+                        </div>
+                    `;
             }).join("");
         }
 
@@ -2214,6 +2354,14 @@
 
             if (!cards.length) return;
 
+            // Nëse përdoruesi përdor tastierën, ndal auto-scroll dhe trajto manualisht
+            if (e.key === "ArrowDown" || e.keyCode === 40 || e.key === "ArrowRight" || e.keyCode === 39 ||
+                e.key === "ArrowUp" || e.keyCode === 38 || e.key === "ArrowLeft" || e.keyCode === 37 ||
+                e.key === "Enter" || e.keyCode === 13) {
+
+                handleUserInteraction();
+            }
+
             cards.forEach(c => c.classList.remove("tv-focus"));
 
             if (e.key === "ArrowDown" || e.keyCode === 40 || e.key === "ArrowRight" || e.keyCode === 39) {
@@ -2245,6 +2393,20 @@
                     closeModal();
                     return;
                 }
+            }
+        });
+
+        // Kap eventet e klikimit për të ndaluar auto-scroll
+        document.addEventListener('click', function(e) {
+            if (!isModalOpen && !e.target.closest('.match')) {
+                handleUserInteraction();
+            }
+        });
+
+        // Kap eventet e prekjes për pajisjet mobile
+        document.addEventListener('touchstart', function(e) {
+            if (!isModalOpen && !e.target.closest('.match')) {
+                handleUserInteraction();
             }
         });
 
