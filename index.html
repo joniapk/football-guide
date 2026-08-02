@@ -532,7 +532,29 @@
             box-shadow: 0 0 20px #fff !important;
         }
 
-        .close-tab-btn { background: #4a0d0e; border-color: #ff3333; }
+        /* Butoni Mbyll - me i madh dhe ne fillim */
+        .close-tab-btn {
+            background: #cc0000 !important;
+            border-color: #ff3333 !important;
+            color: #fff !important;
+            font-weight: 900 !important;
+            font-size: 14px !important;
+            padding: 6px 16px !important;
+            min-width: 80px !important;
+            order: -1 !important;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3) !important;
+        }
+
+        .close-tab-btn:hover {
+            background: #ff0000 !important;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5) !important;
+        }
+
+        .close-tab-btn.tv-focus {
+            border-color: #fff !important;
+            transform: scale(1.08);
+            box-shadow: 0 0 30px #ff0000 !important;
+        }
 
         .modal-body {
             padding: 14px 20px;
@@ -917,6 +939,7 @@
             .modal-team img { width: 36px; height: 36px; }
             .modal-score { font-size: 24px; padding: 2px 12px; }
             .tab-btn { font-size: 10px; padding: 4px 10px; min-width: 60px; }
+            .close-tab-btn { font-size: 12px !important; padding: 4px 12px !important; min-width: 70px !important; }
             .modal-body { padding: 10px 14px; font-size: 12px; }
         }
 
@@ -937,6 +960,7 @@
             .modal-team img { width: 30px; height: 30px; }
             .modal-score { font-size: 20px; padding: 2px 10px; }
             .tab-btn { font-size: 9px; padding: 3px 6px; min-width: 45px; }
+            .close-tab-btn { font-size: 11px !important; padding: 3px 10px !important; min-width: 60px !important; }
             .modal-body { padding: 8px 10px; font-size: 11px; }
         }
     </style>
@@ -986,6 +1010,7 @@
                 </div>
             </div>
             <div class="modal-tabs">
+                <button class="tab-btn close-tab-btn" id="modalTabClose" onclick="closeModal()">✖ MBYLL</button>
                 <button class="tab-btn active-tab" id="modalTab0" onclick="switchTab(0)">⚽ Formati</button>
                 <button class="tab-btn" id="modalTab1" onclick="switchTab(1)">👕 Formacionet</button>
                 <button class="tab-btn" id="modalTab2" onclick="switchTab(2)">📊 Renditja</button>
@@ -994,7 +1019,6 @@
                 <button class="tab-btn" id="modalTab5" onclick="switchTab(5)">🏅 Lojtarët</button>
                 <button class="tab-btn" id="modalTab6" onclick="switchTab(6)">👥 Rosteri</button>
                 <button class="tab-btn" id="modalTab7" onclick="switchTab(7)">⚽ Golashënuesit</button>
-                <button class="tab-btn close-tab-btn" id="modalTab8" onclick="closeModal()">✖ Mbyll</button>
             </div>
             <div class="modal-body" id="modalTabContent" tabindex="0"></div>
         </div>
@@ -1714,19 +1738,31 @@
 
         function switchTab(index) {
             modalTabIndex = index;
-            if (index === 8) { closeModal(); return; }
             renderTabContent(index);
             updateModalUIFocus();
         }
 
         function updateModalUIFocus() {
-            for (let i = 0; i < 9; i++) {
-                const btn = document.getElementById(`modalTab${i}`);
-                if (!btn) continue;
+            const btnClose = document.getElementById("modalTabClose");
+            const tabs = document.querySelectorAll(".modal-tabs .tab-btn");
+            
+            tabs.forEach((btn, i) => {
                 btn.classList.remove("tv-focus", "active-tab");
-                if (i === modalTabIndex && i !== 8) btn.classList.add("active-tab");
-                if (modalFocusArea === 'TABS' && i === modalTabIndex) btn.classList.add("tv-focus");
-            }
+                if (btn.id === "modalTabClose") {
+                    if (modalFocusArea === 'TABS' && modalTabIndex === 8) {
+                        btn.classList.add("tv-focus");
+                    }
+                    return;
+                }
+                const tabIdx = parseInt(btn.id.replace("modalTab", ""));
+                if (tabIdx === modalTabIndex && modalFocusArea === 'TABS') {
+                    btn.classList.add("tv-focus");
+                }
+                if (tabIdx === modalTabIndex) {
+                    btn.classList.add("active-tab");
+                }
+            });
+            
             const body = document.getElementById("modalTabContent");
             if (modalFocusArea === 'BODY') body.classList.add("tv-focus");
             else body.classList.remove("tv-focus");
@@ -2073,28 +2109,58 @@
         const KEY_LEFT = ["ArrowLeft", 37, 21];
         const KEY_RIGHT = ["ArrowRight", 39, 22];
         const KEY_ENTER = ["Enter", 13, 23, 29443];
-        const KEY_BACK = ["Escape", "Back", 27, 8, 4, 10009, 461];
+        const KEY_BACK = ["Escape", "Back", 27, 8, 4, 10009, 461, "Backspace"];
 
         function isKey(e, keyArray) {
-            return keyArray.includes(e.key) || keyArray.includes(e.keyCode);
+            return keyArray.includes(e.key) || keyArray.includes(e.keyCode) || keyArray.includes(e.code);
         }
 
         document.addEventListener("keydown", e => {
-            // Në modal
+            // Në modal - BACK gjithmonë e mbyll
             if (isModalOpen) {
-                if (isKey(e, KEY_BACK)) { e.preventDefault(); closeModal(); return; }
+                // BACK BUTTON - çdo kod i mundshëm
+                if (isKey(e, KEY_BACK) || e.key === "Back" || e.key === "Escape" || e.keyCode === 27 || e.keyCode === 8 || e.code === "Escape" || e.code === "Backspace") {
+                    e.preventDefault();
+                    closeModal();
+                    return;
+                }
+                
                 const body = document.getElementById("modalTabContent");
+                
+                // Nëse fokusi është te butoni Mbyll (indeksi 8)
                 if (modalFocusArea === 'TABS') {
-                    if (isKey(e, KEY_LEFT)) { e.preventDefault(); modalTabIndex = (modalTabIndex - 1 + 9) % 9; updateModalUIFocus(); }
-                    else if (isKey(e, KEY_RIGHT)) { e.preventDefault(); modalTabIndex = (modalTabIndex + 1) % 9; updateModalUIFocus(); }
-                    else if (isKey(e, KEY_DOWN)) { e.preventDefault(); modalFocusArea = 'BODY'; updateModalUIFocus(); }
-                    else if (isKey(e, KEY_ENTER)) { e.preventDefault(); switchTab(modalTabIndex); }
-                } else if (modalFocusArea === 'BODY') {
-                    if (isKey(e, KEY_DOWN)) { e.preventDefault(); body.scrollTop += 70; }
-                    else if (isKey(e, KEY_UP)) {
+                    if (isKey(e, KEY_LEFT)) {
                         e.preventDefault();
-                        if (body.scrollTop <= 10) { modalFocusArea = 'TABS'; updateModalUIFocus(); }
-                        else body.scrollTop -= 70;
+                        modalTabIndex = (modalTabIndex - 1 + 9) % 9;
+                        updateModalUIFocus();
+                    } else if (isKey(e, KEY_RIGHT)) {
+                        e.preventDefault();
+                        modalTabIndex = (modalTabIndex + 1) % 9;
+                        updateModalUIFocus();
+                    } else if (isKey(e, KEY_DOWN)) {
+                        e.preventDefault();
+                        modalFocusArea = 'BODY';
+                        updateModalUIFocus();
+                    } else if (isKey(e, KEY_ENTER)) {
+                        e.preventDefault();
+                        if (modalTabIndex === 8) {
+                            closeModal();
+                        } else {
+                            switchTab(modalTabIndex);
+                        }
+                    }
+                } else if (modalFocusArea === 'BODY') {
+                    if (isKey(e, KEY_DOWN)) {
+                        e.preventDefault();
+                        body.scrollTop += 70;
+                    } else if (isKey(e, KEY_UP)) {
+                        e.preventDefault();
+                        if (body.scrollTop <= 10) {
+                            modalFocusArea = 'TABS';
+                            updateModalUIFocus();
+                        } else {
+                            body.scrollTop -= 70;
+                        }
                     } else if (isKey(e, KEY_LEFT) || isKey(e, KEY_RIGHT)) {
                         e.preventDefault();
                         modalFocusArea = 'TABS';
