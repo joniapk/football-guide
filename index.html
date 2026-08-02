@@ -364,37 +364,46 @@
             animation: pulse 1.5s infinite;
         }
 
-        .play-odds-mini {
+        .broadcaster-mini {
             display: flex;
             justify-content: center;
-            gap: 6px;
             margin-top: 4px;
             padding-top: 3px;
             border-top: 1px solid rgba(255,255,255,0.05);
         }
 
-        .play-odd-mini {
+        .broadcaster-badge {
             background: #111215;
-            border: 1px solid #282a30;
+            border: 1.5px solid #ffffff;
             border-radius: 4px;
-            padding: 1px 8px;
-            display: flex;
+            padding: 2px 12px;
+            display: inline-flex;
             align-items: center;
-            gap: 3px;
+            gap: 5px;
             font-size: 10px;
-            font-weight: 600;
+            font-weight: 700;
+            color: #ffffff;
         }
 
-        .play-odd-mini .odd-label {
-            color: var(--text-sub);
-            font-weight: 400;
-            font-size: 9px;
+        .broadcaster-badge .b-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
         }
 
-        .play-odd-mini .odd-val {
-            color: var(--play-yellow);
-            font-weight: 800;
-            font-size: 12px;
+        .broadcaster-badge.tring {
+            border-color: #ffffff;
+            color: #ffffff;
+        }
+        .broadcaster-badge.supersport {
+            border-color: #ffffff;
+            color: #ffffff;
+        }
+        .broadcaster-badge.rtsh {
+            border-color: #ffffff;
+            color: #ffffff;
         }
 
         .card-scorers {
@@ -595,33 +604,39 @@
             border: 1px solid var(--play-yellow);
             letter-spacing: 1px;
         }
-        .play-odds-grid {
+        .broadcaster-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 8px;
             margin-top: 4px;
         }
-        .play-odd-card {
+        .broadcaster-card {
             background: #111215;
             border: 1px solid #282a30;
             border-radius: 8px;
             padding: 8px;
             text-align: center;
         }
-        .play-odd-card .odd-title {
+        .broadcaster-card .b-title {
             font-size: 11px;
             color: var(--text-sub);
             margin-bottom: 2px;
             font-weight: bold;
         }
-        .play-odd-card .odd-val {
-            font-size: 18px;
+        .broadcaster-card .b-name {
+            font-size: 16px;
             font-weight: 900;
-            color: var(--play-yellow);
-            background: #000;
             padding: 3px;
             border-radius: 4px;
-            border: 1px solid rgba(255, 204, 0, 0.2);
+            color: #ffffff;
+        }
+        .broadcaster-card .b-name .b-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            object-fit: cover;
+            vertical-align: middle;
+            margin-right: 4px;
         }
 
         .pitch-container {
@@ -997,12 +1012,13 @@
                 font-size: 14px !important;
                 padding: 3px 10px !important;
             }
-            .play-odd-mini {
+            .broadcaster-badge {
                 font-size: 9px;
-                padding: 1px 6px;
+                padding: 1px 10px;
             }
-            .play-odd-mini .odd-val {
-                font-size: 11px;
+            .broadcaster-badge .b-icon {
+                width: 14px;
+                height: 14px;
             }
             .match-of-day .team {
                 font-size: 13px !important;
@@ -1072,12 +1088,13 @@
                 font-size: 13px !important;
                 padding: 3px 8px !important;
             }
-            .play-odd-mini {
+            .broadcaster-badge {
                 font-size: 8px;
-                padding: 1px 5px;
+                padding: 1px 8px;
             }
-            .play-odd-mini .odd-val {
-                font-size: 10px;
+            .broadcaster-badge .b-icon {
+                width: 12px;
+                height: 12px;
             }
             .match-of-day .team {
                 font-size: 11px !important;
@@ -1200,7 +1217,11 @@
         let activeMatch = null;
         let activeSummary = null;
 
+        // ============================================
+        // PRIORITETI - KATEGORIA SUPERIORE E PARA
+        // ============================================
         const LEAGUE_PRIORITY = {
+            "alb.1": 20,              // ← KATEGORIA SUPERIORE E PARA
             "uefa.champions": 10,
             "uefa.europa": 9,
             "uefa.europa.conf": 8,
@@ -1209,7 +1230,6 @@
             "ita.1": 7,
             "ger.1": 7,
             "fra.1": 7,
-            "alb.1": 5,
             "por.1": 4,
             "ned.1": 4,
             "tur.1": 4,
@@ -1217,6 +1237,41 @@
             "club.friendly": 1,
             "fifa.friendly": 1
         };
+
+        // --- FUNKSIONI PËR TRANSMETUESIN ---
+        function getBroadcaster(m) {
+            const code = (m.leagueCode || '').toLowerCase();
+            const name = (m.league || '').toLowerCase();
+            const fullText = name + ' ' + code;
+            
+            // Tring Sport
+            if (fullText.includes('champions') || fullText.includes('uefa.champions')) return { label: 'TRING SPORT AL', css: 'tring' };
+            if (fullText.includes('bundesliga') || fullText.includes('ger.1')) return { label: 'TRING SPORT AL', css: 'tring' };
+            if (fullText.includes('serie a') || fullText.includes('ita.1') || fullText.includes('ita.cup') || fullText.includes('coppa italia')) {
+                return { label: 'TRING SPORT AL', css: 'tring' };
+            }
+            if (fullText.includes('europa league') || fullText.includes('uefa.europa')) return { label: 'TRING SPORT AL', css: 'tring' };
+            if (fullText.includes('conference league') || fullText.includes('uefa.europa.conf')) return { label: 'TRING SPORT AL', css: 'tring' };
+            
+            // SuperSport (DigitAlb)
+            if (fullText.includes('premier league') || fullText.includes('eng.1')) return { label: 'SUPER SPORT AL', css: 'supersport' };
+            if (fullText.includes('la liga') || fullText.includes('esp.1') || fullText.includes('laliga')) return { label: 'SUPER SPORT AL', css: 'supersport' };
+            if (fullText.includes('ligue 1') || fullText.includes('fra.1')) return { label: 'SUPER SPORT AL', css: 'supersport' };
+            if (fullText.includes('eredivisie') || fullText.includes('ned.1')) return { label: 'SUPER SPORT AL', css: 'supersport' };
+            if (fullText.includes('fa cup')) return { label: 'SUPER SPORT AL', css: 'supersport' };
+            if (fullText.includes('copa del rey')) return { label: 'SUPER SPORT AL', css: 'supersport' };
+            
+            // RTSH Sport
+            if (fullText.includes('superiore') || 
+                fullText.includes('kategoria') || 
+                fullText.includes('abissnet') || 
+                fullText.includes('superliga') ||
+                fullText.includes('alb.1')) {
+                return { label: 'RTSH SPORT AL', css: 'rtsh' };
+            }
+            
+            return { label: 'SUPER SPORT AL', css: 'supersport' };
+        }
 
         function formatDateTime(utcDateStr) {
             if (!utcDateStr) return "--:--";
@@ -1229,26 +1284,6 @@
             const dayNum = String(date.getDate()).padStart(2, '0');
             const monthNum = String(date.getMonth() + 1).padStart(2, '0');
             return `${dayName} ${dayNum}/${monthNum} ${timeStr}`;
-        }
-
-        function generateOdds(m) {
-            const hStr = m.homeTeam.length;
-            const aStr = m.awayTeam.length;
-            let hOdd = (1.40 + (aStr % 3) * 0.45).toFixed(2);
-            let dOdd = (3.25 + (hStr % 2) * 0.30).toFixed(2);
-            let aOdd = (2.10 + (hStr % 4) * 0.60).toFixed(2);
-            return { homeWin: hOdd, draw: dOdd, awayWin: aOdd };
-        }
-
-        function renderOddsMini(m) {
-            const odds = generateOdds(m);
-            return `
-                <div class="play-odds-mini">
-                    <div class="play-odd-mini"><span class="odd-label">1</span> <span class="odd-val">${odds.homeWin}</span></div>
-                    <div class="play-odd-mini"><span class="odd-label">X</span> <span class="odd-val">${odds.draw}</span></div>
-                    <div class="play-odd-mini"><span class="odd-label">2</span> <span class="odd-val">${odds.awayWin}</span></div>
-                </div>
-            `;
         }
 
         function isWithinNext7Days(dateStr) {
@@ -1273,7 +1308,8 @@
                 "champions league", "europa league", "conference league", "superiore",
                 "albi mall", "kosovo", "shqiperi", "albania", "nations league", "world cup",
                 "euro", "fa cup", "copa del rey", "coppa italia", "dfb pokal", "eredivisie",
-                "primeira liga", "super lig", "saudi pro", "friendly", "amika"
+                "primeira liga", "super lig", "saudi pro", "friendly", "amika", "superliga",
+                "abissnet", "kategoria"
             ];
             return allowedKeywords.some(kw => str.includes(kw));
         }
@@ -1735,7 +1771,15 @@
                         </div>
                     `;
                 }
-                const oddsMini = renderOddsMini(m);
+                const broadcaster = getBroadcaster(m);
+                const broadcasterHTML = `
+                    <div class="broadcaster-mini">
+                        <div class="broadcaster-badge ${broadcaster.css}">
+                            <img class="b-icon" src="https://cdn.countryflags.com/thumbs/albania/flag-round-250.png" alt="AL">
+                            ${broadcaster.label}
+                        </div>
+                    </div>
+                `;
                 html += `
                     <div class="match match-of-day ${liveCardClass}" data-id="${m.id}" data-index="0" tabindex="0" onclick="openMatchDetailsByIndex(0)">
                         <div class="league-header">
@@ -1757,7 +1801,7 @@
                             </div>
                         </div>
                         ${scorersHTML}
-                        ${oddsMini}
+                        ${broadcasterHTML}
                     </div>
                 `;
             }
@@ -1781,7 +1825,15 @@
                         </div>
                     `;
                 }
-                const oddsMini = renderOddsMini(m);
+                const broadcaster = getBroadcaster(m);
+                const broadcasterHTML = `
+                    <div class="broadcaster-mini">
+                        <div class="broadcaster-badge ${broadcaster.css}">
+                            <img class="b-icon" src="https://cdn.countryflags.com/thumbs/albania/flag-round-250.png" alt="AL">
+                            ${broadcaster.label}
+                        </div>
+                    </div>
+                `;
                 html += `
                     <div class="match ${liveCardClass}" data-id="${m.id}" data-index="${realIndex}" tabindex="0" onclick="openMatchDetailsByIndex(${realIndex})">
                         <div class="league-header">
@@ -1803,7 +1855,7 @@
                             </div>
                         </div>
                         ${scorersHTML}
-                        ${oddsMini}
+                        ${broadcasterHTML}
                     </div>
                 `;
             });
@@ -1839,7 +1891,6 @@
         // ============================================
 
         function pushModalHistory() {
-            // Shton një hyrje në historik për të kapur butonin BACK
             history.pushState({ modalOpen: true }, '', '#modal');
         }
 
@@ -1859,7 +1910,6 @@
             const modal = document.getElementById("matchModal");
             modal.classList.add("active");
             
-            // SHTON HYRJE NË HISTORIK - KAP BUTONIN BACK
             pushModalHistory();
             
             document.getElementById("modalLeague").innerText = activeMatch.league;
@@ -1896,7 +1946,6 @@
             activeSummary = null;
             isModalOpen = false;
             
-            // ZËVENDËSON HYRJEN NË HISTORIK, QË TË MOS DALE JASHTË APLIKACIONIT
             if (window.history.state?.modalOpen) {
                 history.replaceState({}, '', window.location.pathname);
             }
@@ -1909,12 +1958,9 @@
             }
         }
 
-        // EVENT LISTENER PËR BUTONIN BACK - KAP KUR SHTYPET DHE MBYLL MODAL-IN
         window.addEventListener('popstate', function(e) {
             if (isModalOpen) {
-                // Nëse modal-i është i hapur dhe shtypet BACK, mbylle modal-in
                 closeModal();
-                // MOS LEJO TË DALËSH JASHTË - historia menaxhohet nga ne
                 e.preventDefault();
             }
         });
@@ -1956,7 +2002,7 @@
 
         function renderTabContent(tabIdx) {
             const el = document.getElementById("modalTabContent");
-            if (tabIdx === 0) renderOddsAndFormat(el);
+            if (tabIdx === 0) renderBroadcasterAndFormat(el);
             else if (tabIdx === 1) renderLineups(el);
             else if (tabIdx === 2) renderStandingsTab(el);
             else if (tabIdx === 3) renderStats(el);
@@ -1964,6 +2010,63 @@
             else if (tabIdx === 5) renderTopPlayers(el);
             else if (tabIdx === 6) renderRosterTab(el);
             else if (tabIdx === 7) renderTopScorersTab(el);
+        }
+
+        function renderBroadcasterAndFormat(container) {
+            const broadcaster = getBroadcaster(activeMatch);
+            const rosters = activeSummary?.rosters || [];
+            const homeRoster = rosters.find(r => r.team?.id === activeMatch.homeId) || rosters[0];
+            const awayRoster = rosters.find(r => r.team?.id === activeMatch.awayId) || rosters[1];
+            const homeFormation = homeRoster?.formation || "4-3-3";
+            const awayFormation = awayRoster?.formation || "4-2-3-1";
+
+            container.innerHTML = `
+                <div class="play-container">
+                    <div class="play-badge-header">
+                        <div class="play-logo-badge">PLAY SHQIP</div>
+                        <div style="font-weight: bold; color: #fff; font-size: 13px;">📺 TRANSMETUES ZYRTAR</div>
+                    </div>
+                    <div class="broadcaster-grid">
+                        <div class="broadcaster-card" style="grid-column: 1 / -1;">
+                            <div class="b-title">📡 Kjo ndeshje transmetohet nga:</div>
+                            <div class="b-name ${broadcaster.css}">
+                                <img class="b-icon" src="https://cdn.countryflags.com/thumbs/albania/flag-round-250.png" alt="AL">
+                                ${broadcaster.label}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pitch-container">
+                        <div class="pitch-header">
+                            <span class="formation-title">📋 SKEMA: ${activeMatch.homeTeam} (${homeFormation}) vs ${activeMatch.awayTeam} (${awayFormation})</span>
+                            <span style="color:#000; font-weight:900; font-size:10px; background:var(--play-yellow); padding:2px 8px; border-radius:4px;">PLAY SHQIP</span>
+                        </div>
+                        ${rosters.length > 0 ? `
+                            <div class="lineups-grid">
+                                <div class="lineup-column">
+                                    <h4>🏠 ${activeMatch.homeTeam} (${homeFormation})</h4>
+                                    ${(homeRoster?.roster || []).slice(0, 11).map(p => `
+                                        <div class="player-row">
+                                            <span class="player-num">${p.jersey || '-'}</span>
+                                            <span>${p.athlete?.displayName || p.athlete?.name}</span>
+                                            <small style="color:var(--play-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || '11-sh'}</small>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <div class="lineup-column">
+                                    <h4>✈️ ${activeMatch.awayTeam} (${awayFormation})</h4>
+                                    ${(awayRoster?.roster || []).slice(0, 11).map(p => `
+                                        <div class="player-row">
+                                            <span class="player-num">${p.jersey || '-'}</span>
+                                            <span>${p.athlete?.displayName || p.athlete?.name}</span>
+                                            <small style="color:var(--play-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || '11-sh'}</small>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : `<div class="empty-state" style="padding:12px 0;">Formacionet do të konfirmohen 45 minuta para ndeshjes.</div>`}
+                    </div>
+                </div>
+            `;
         }
 
         async function renderTopScorersTab(container) {
@@ -2128,72 +2231,6 @@
             `;
         }
 
-        function generateOddsFull(m) {
-            const hStr = m.homeTeam.length;
-            const aStr = m.awayTeam.length;
-            let hOdd = (1.40 + (aStr % 3) * 0.45).toFixed(2);
-            let dOdd = (3.25 + (hStr % 2) * 0.30).toFixed(2);
-            let aOdd = (2.10 + (hStr % 4) * 0.60).toFixed(2);
-            return { homeWin: hOdd, draw: dOdd, awayWin: aOdd, over25: "1.85", under25: "1.95", bttsYes: "1.75",
-                bttsNo: "2.05" };
-        }
-
-        function renderOddsAndFormat(container) {
-            const odds = generateOddsFull(activeMatch);
-            const rosters = activeSummary?.rosters || [];
-            const homeRoster = rosters.find(r => r.team?.id === activeMatch.homeId) || rosters[0];
-            const awayRoster = rosters.find(r => r.team?.id === activeMatch.awayId) || rosters[1];
-            const homeFormation = homeRoster?.formation || "4-3-3";
-            const awayFormation = awayRoster?.formation || "4-2-3-1";
-
-            container.innerHTML = `
-                <div class="play-container">
-                    <div class="play-badge-header">
-                        <div class="play-logo-badge">PLAY SHQIP</div>
-                        <div style="font-weight: bold; color: #fff; font-size: 13px;">KOEFICIENTËT & FORMATI</div>
-                    </div>
-                    <div class="play-odds-grid">
-                        <div class="play-odd-card"><div class="odd-title">1 (Fiton ${activeMatch.homeTeam})</div><div class="odd-val">${odds.homeWin}</div></div>
-                        <div class="play-odd-card"><div class="odd-title">X (Barazim)</div><div class="odd-val">${odds.draw}</div></div>
-                        <div class="play-odd-card"><div class="odd-title">2 (Fiton ${activeMatch.awayTeam})</div><div class="odd-val">${odds.awayWin}</div></div>
-                        <div class="play-odd-card"><div class="odd-title">Mbi 2.5 Golash</div><div class="odd-val">${odds.over25}</div></div>
-                        <div class="play-odd-card"><div class="odd-title">Nën 2.5 Golash</div><div class="odd-val">${odds.under25}</div></div>
-                        <div class="play-odd-card"><div class="odd-title">Dy Ekipet Shënojnë (GG)</div><div class="odd-val">${odds.bttsYes}</div></div>
-                    </div>
-                    <div class="pitch-container">
-                        <div class="pitch-header">
-                            <span class="formation-title">📋 SKEMA: ${activeMatch.homeTeam} (${homeFormation}) vs ${activeMatch.awayTeam} (${awayFormation})</span>
-                            <span style="color:#000; font-weight:900; font-size:10px; background:var(--play-yellow); padding:2px 8px; border-radius:4px;">PLAY SHQIP</span>
-                        </div>
-                        ${rosters.length > 0 ? `
-                            <div class="lineups-grid">
-                                <div class="lineup-column">
-                                    <h4>🏠 ${activeMatch.homeTeam} (${homeFormation})</h4>
-                                    ${(homeRoster?.roster || []).slice(0, 11).map(p => `
-                                        <div class="player-row">
-                                            <span class="player-num">${p.jersey || '-'}</span>
-                                            <span>${p.athlete?.displayName || p.athlete?.name}</span>
-                                            <small style="color:var(--play-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || '11-sh'}</small>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                                <div class="lineup-column">
-                                    <h4>✈️ ${activeMatch.awayTeam} (${awayFormation})</h4>
-                                    ${(awayRoster?.roster || []).slice(0, 11).map(p => `
-                                        <div class="player-row">
-                                            <span class="player-num">${p.jersey || '-'}</span>
-                                            <span>${p.athlete?.displayName || p.athlete?.name}</span>
-                                            <small style="color:var(--play-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || '11-sh'}</small>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        ` : `<div class="empty-state" style="padding:12px 0;">Formacionet do të konfirmohen 45 minuta para ndeshjes.</div>`}
-                    </div>
-                </div>
-            `;
-        }
-
         function renderLineups(container) {
             const rosters = activeSummary?.rosters || [];
             if (rosters.length === 0) {
@@ -2299,9 +2336,7 @@
 
         // --- KONTROLLI I TELEKOMANDES ---
         document.addEventListener("keydown", function(e) {
-            // NESE MODALI ESHTE I HAPUR
             if (isModalOpen) {
-                // BACK BUTTON - KAPET NGA EVENTI 'popstate' POR E MBYLLIM KETU PER SIGURI
                 if (e.key === "Back" || e.key === "Escape" || e.keyCode === 27 || e.keyCode === 8 || e.key ===
                     "Backspace") {
                     e.preventDefault();
@@ -2356,7 +2391,6 @@
                 return;
             }
 
-            // NESE MODALI NUK ESHTE I HAPUR - KONTROLLO LISTEN E NDESHJEVE
             if (!cards.length) return;
 
             cards.forEach(c => c.classList.remove("tv-focus"));
@@ -2381,7 +2415,6 @@
             }
         });
 
-        // KEYUP - PER FIRE STICK DHE TELEKOMANDA TE TJERA
         document.addEventListener("keyup", function(e) {
             if (isModalOpen) {
                 if (e.key === "Back" || e.key === "Escape" || e.keyCode === 27 || e.keyCode === 8 || e.key ===
