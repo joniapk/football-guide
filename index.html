@@ -140,12 +140,12 @@
             gap: 8px;
         }
 
-        /* ===== NDESHJA E DITËS ===== */
+        /* ===== NDESHJA E DITËS - RRETHIM I VERDHË ===== */
         .match-of-day {
             grid-column: 1 / -1;
-            border: 2.5px solid var(--accent-red) !important;
+            border: 3px solid var(--gold-accent) !important;
             background: linear-gradient(135deg, #1a1208 0%, #0c0e14 100%) !important;
-            box-shadow: 0 0 30px rgba(255, 17, 0, 0.25) !important;
+            box-shadow: 0 0 30px rgba(255, 183, 0, 0.25) !important;
             position: relative;
             padding: 10px 12px !important;
             border-radius: 14px !important;
@@ -156,14 +156,14 @@
             position: absolute;
             top: -10px;
             right: 14px;
-            background: var(--accent-red);
-            color: #fff;
+            background: var(--gold-accent);
+            color: #000;
             font-weight: 800;
             font-size: 10px;
             padding: 2px 12px;
             border-radius: 14px;
             letter-spacing: 0.5px;
-            box-shadow: 0 0 15px rgba(255, 17, 0, 0.4);
+            box-shadow: 0 0 15px rgba(255, 183, 0, 0.4);
             z-index: 2;
         }
 
@@ -180,9 +180,9 @@
         }
 
         .match-of-day .league-header .league-brand {
-            background: rgba(255, 17, 0, 0.25);
-            border-color: var(--accent-red);
-            color: var(--accent-red);
+            background: rgba(255, 183, 0, 0.25);
+            border-color: var(--gold-accent);
+            color: var(--gold-accent);
             font-size: 9px;
             padding: 1px 8px;
         }
@@ -208,6 +208,12 @@
 
         .match-of-day.tv-focus {
             transform: scale(1.02);
+            box-shadow: 0 0 40px rgba(255, 183, 0, 0.4) !important;
+            border-color: var(--gold-accent) !important;
+        }
+
+        .match-of-day.is-live-card.tv-focus {
+            border-color: var(--accent-red) !important;
             box-shadow: 0 0 40px var(--accent-glow) !important;
         }
 
@@ -242,8 +248,8 @@
 
         .match-of-day.tv-focus {
             transform: scale(1.02);
-            box-shadow: 0 0 40px var(--accent-glow) !important;
-            border-color: var(--accent-red) !important;
+            box-shadow: 0 0 40px rgba(255, 183, 0, 0.4) !important;
+            border-color: var(--gold-accent) !important;
         }
 
         .match-of-day.is-live-card.tv-focus {
@@ -998,13 +1004,12 @@
         let focusIndex = 0;
         let focusedMatchId = null;
         
-        // --- AUTO-SCROLL I QETË (PA DRIDHJE) ---
+        // --- AUTO-SCROLL I QETË PËR ANDROID TV ---
         let autoScroll = true;
         let isPaused = false;
         let userInteracted = false;
         let interactionTimeout = null;
         const AUTO_SCROLL_DELAY = 8000;
-        const SCROLL_STEP = 0.4; // Pixel për frame - shumë i ulët për lëvizje të qetë
         
         let isModalOpen = false;
         let modalFocusArea = 'TABS';
@@ -2152,45 +2157,54 @@
             }
         });
 
-        // --- AUTO-SCROLL I QETË (PA DRIDHJE) ---
+        // --- AUTO-SCROLL I QETË PËR ANDROID TV (PA DRIDHJE) ---
         const wrapEl = document.querySelector(".wrap");
-        let currentScroll = 0;
-        let targetScroll = 0;
+        let autoScrollInterval = null;
+        let scrollSpeed = 0.3; // Pixel për frame - shumë i ulët për lëvizje të qetë
         
-        function smoothScroll(timestamp) {
-            if (!wrapEl) return;
+        function startAutoScroll() {
+            if (autoScrollInterval) return;
             
-            // Përditëso pozicionin aktual
-            currentScroll = wrapEl.scrollTop;
-            
-            // Nëse auto-scroll është aktiv dhe nuk ka ndërprerje
-            if (autoScroll && !isPaused && !isModalOpen && !userInteracted && wrapEl) {
-                const maxScroll = wrapEl.scrollHeight - wrapEl.clientHeight;
-                
-                if (maxScroll > 0 && currentScroll < maxScroll - 5) {
-                    // Lëvizje shumë e qetë dhe e ngadaltë
-                    targetScroll = currentScroll + SCROLL_STEP;
-                    
-                    // Kufizo në maxScroll
-                    if (targetScroll > maxScroll) {
-                        targetScroll = maxScroll;
-                    }
-                    
-                    // Apliko lëvizjen
-                    wrapEl.scrollTop = targetScroll;
-                } else {
-                    // Nëse jemi në fund, qëndro
-                    if (currentScroll >= maxScroll - 2) {
-                        // Në fund, mos lëviz më
-                    }
+            autoScrollInterval = setInterval(() => {
+                // Kontrollo nëse duhet të lëvizë
+                if (!autoScroll || isPaused || isModalOpen || userInteracted) {
+                    return;
                 }
-            }
-            
-            requestAnimationFrame(smoothScroll);
+                
+                if (!wrapEl) return;
+                
+                const maxScroll = wrapEl.scrollHeight - wrapEl.clientHeight;
+                const currentScroll = wrapEl.scrollTop;
+                
+                // Nëse kemi arritur fundin, ndalojmë
+                if (currentScroll >= maxScroll - 2) {
+                    return;
+                }
+                
+                // Lëvizje e qetë dhe e ngadaltë
+                const newScroll = Math.min(currentScroll + scrollSpeed, maxScroll);
+                wrapEl.scrollTop = newScroll;
+                
+            }, 16); // ~60 FPS për lëvizje të qetë
         }
-
-        // Nis auto-scroll-in e qetë
-        requestAnimationFrame(smoothScroll);
+        
+        function stopAutoScroll() {
+            if (autoScrollInterval) {
+                clearInterval(autoScrollInterval);
+                autoScrollInterval = null;
+            }
+        }
+        
+        // Nis auto-scroll-in kur faqja ngarkohet
+        setTimeout(startAutoScroll, 1000);
+        
+        // Ndal auto-scroll kur përdoruesi ndërvepron
+        document.addEventListener('keydown', () => {
+            if (!isModalOpen) {
+                stopAutoScroll();
+                setTimeout(startAutoScroll, AUTO_SCROLL_DELAY);
+            }
+        });
 
         window.focus();
         document.body.setAttribute('tabindex', '0');
