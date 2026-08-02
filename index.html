@@ -116,12 +116,9 @@
             height: calc(100vh - 56px);
             overflow-y: auto;
             padding: 10px 14px;
-            scroll-behavior: auto;
             scrollbar-width: none;
             flex: 1;
             position: relative;
-            /* Auto-scroll smooth - pa dridhje */
-            scroll-behavior: smooth !important;
         }
         .wrap::-webkit-scrollbar { display: none; }
 
@@ -170,7 +167,6 @@
             z-index: 2;
         }
 
-        /* Nëse është live, mbajmë live-indicator por rrethimi mbetet i verdhë */
         .match-of-day.is-live-card {
             border-color: var(--gold-accent) !important;
             box-shadow: 0 0 30px var(--gold-glow) !important;
@@ -221,7 +217,6 @@
             box-shadow: 0 0 40px var(--gold-glow) !important;
         }
 
-        /* Kartelat normale */
         .match {
             background: var(--card-bg);
             border: 2px solid var(--card-border);
@@ -250,7 +245,6 @@
             z-index: 5;
         }
 
-        /* Ndeshja e ditës me fokus - gjithmonë rrethim i verdhë */
         .match-of-day.tv-focus {
             transform: scale(1.02);
             box-shadow: 0 0 40px var(--gold-glow) !important;
@@ -1009,14 +1003,16 @@
         let focusIndex = 0;
         let focusedMatchId = null;
         
-        // --- AUTO-SCROLL I QETË PËR ANDROID TV (PA DRIDHJE) ---
-        let autoScroll = true;
+        // --- AUTO-SCROLL I QETË PËR ANDROID TV ---
+        let autoScrollEnabled = true;
         let isPaused = false;
         let userInteracted = false;
         let interactionTimeout = null;
-        const AUTO_SCROLL_DELAY = 8000;
-        let scrollInterval = null;
-        let isScrolling = false;
+        const AUTO_SCROLL_DELAY = 6000;
+        let scrollAnimationId = null;
+        let isScrollingPaused = false;
+        let lastScrollTime = 0;
+        const SCROLL_SPEED = 0.35;
         
         let isModalOpen = false;
         let modalFocusArea = 'TABS';
@@ -1691,9 +1687,10 @@
         async function openMatchDetails(index) {
             activeMatch = matchesData[index];
             if (!activeMatch) return;
-            autoScroll = false;
+            autoScrollEnabled = false;
             isPaused = true;
             isModalOpen = true;
+            pauseAutoScroll();
             const modal = document.getElementById("matchModal");
             modal.classList.add("active");
             document.getElementById("modalLeague").innerText = activeMatch.league;
@@ -1730,9 +1727,10 @@
                 cards[focusIndex].scrollIntoView({ behavior: "smooth", block: "center" });
             }
             setTimeout(() => { 
-                autoScroll = true; 
+                autoScrollEnabled = true; 
                 isPaused = false; 
                 userInteracted = false; 
+                resumeAutoScroll();
             }, 3000);
         }
 
@@ -2109,7 +2107,11 @@
                 clearTimeout(interactionTimeout);
                 interactionTimeout = setTimeout(() => {
                     userInteracted = false;
+                    if (!isModalOpen && autoScrollEnabled) {
+                        resumeAutoScroll();
+                    }
                 }, AUTO_SCROLL_DELAY);
+                pauseAutoScroll();
             }
 
             if (isModalOpen) {
@@ -2138,10 +2140,11 @@
             }
 
             if (!cards.length) return;
-            autoScroll = false;
+            autoScrollEnabled = false;
             isPaused = true;
+            pauseAutoScroll();
             clearTimeout(scrollRestartTimer);
-            scrollRestartTimer = setTimeout(() => { if (!isModalOpen) { autoScroll = true; isPaused = false; } }, 6000);
+            scrollRestartTimer = setTimeout(() => { if (!isModalOpen) { autoScrollEnabled = true; isPaused = false; resumeAutoScroll(); } }, 6000);
 
             cards.forEach(c => c.classList.remove("tv-focus"));
             if (isKey(e, KEY_DOWN) || isKey(e, KEY_RIGHT)) {
@@ -2168,73 +2171,86 @@
         // AUTO-SCROLL I QETË PËR ANDROID TV - PA DRIDHJE
         // ============================================================
         const wrapEl = document.querySelector(".wrap");
-        let animationId = null;
-        let scrollPosition = 0;
-        const SCROLL_SPEED = 0.4; // Pixel për frame - shumë i ulët për smooth scroll
+        let scrollRAF = null;
+        let scrollDirection = 1;
         
-        function startSmoothScroll() {
-            if (animationId) {
-                cancelAnimationFrame(animationId);
-                animationId = null;
+        function startAutoScrollSmooth() {
+            if (scrollRAF) {
+                cancelAnimationFrame(scrollRAF);
+                scrollRAF = null;
             }
             
             if (!wrapEl) return;
             
-            function animateScroll() {
-                // Kontrollo nëse duhet të vazhdojë scroll-i
-                if (!autoScroll || isPaused || isModalOpen || userInteracted) {
-                    animationId = requestAnimationFrame(animateScroll);
+            function doScroll() {
+                // Kontrollo nëse duhet të vazhdojë
+                if (!autoScrollEnabled || isPaused || isModalOpen || userInteracted) {
+                    scrollRAF = requestAnimationFrame(doScroll);
                     return;
                 }
                 
                 const maxScroll = wrapEl.scrollHeight - wrapEl.clientHeight;
                 const currentScroll = wrapEl.scrollTop;
                 
-                // Nëse kemi arritur fundin, ndalojmë këtë cikël
-                if (currentScroll >= maxScroll - 2) {
-                    // Në vend që të kërcejmë në fillim, bëjmë një kalim të butë
-                    // Duke qenë se janë vetëm disa kartela, ndalojmë kur arrijmë fundin
-                    animationId = requestAnimationFrame(animateScroll);
+                // Nëse kemi arritur fundin, ndalojmë (pa kthim në fillim për të shmangur dridhjen)
+                if (currentScroll >= maxScroll - 1) {
+                    scrollRAF = requestAnimationFrame(doScroll);
                     return;
                 }
                 
-                // Lëvizje e qetë dhe e ngadaltë - pa kërcime
+                // Lëvizje e qetë dhe e ngadaltë
                 const newScroll = Math.min(currentScroll + SCROLL_SPEED, maxScroll);
                 wrapEl.scrollTop = newScroll;
                 
-                animationId = requestAnimationFrame(animateScroll);
+                scrollRAF = requestAnimationFrame(doScroll);
             }
             
-            animationId = requestAnimationFrame(animateScroll);
+            scrollRAF = requestAnimationFrame(doScroll);
         }
         
-        function stopSmoothScroll() {
-            if (animationId) {
-                cancelAnimationFrame(animationId);
-                animationId = null;
+        function pauseAutoScroll() {
+            // Nuk e ndalojmë fare, thjesht lejojmë që kontrolli në doScroll të ndalojë lëvizjen
+            // por vazhdojmë me requestAnimationFrame
+        }
+        
+        function resumeAutoScroll() {
+            // Thjesht sigurohemi që loop-i vazhdon
+            if (!scrollRAF) {
+                startAutoScrollSmooth();
             }
         }
         
-        // Nis auto-scroll-in kur faqja ngarkohet
-        setTimeout(startSmoothScroll, 1500);
+        function stopAutoScroll() {
+            if (scrollRAF) {
+                cancelAnimationFrame(scrollRAF);
+                scrollRAF = null;
+            }
+        }
         
-        // Rinis scroll-in pas ndërveprimit të përdoruesit
+        // Nis auto-scroll-in
+        setTimeout(startAutoScrollSmooth, 1500);
+        
+        // Rinis scroll-in pas ndërprerjes
         document.addEventListener('keydown', () => {
             if (!isModalOpen) {
-                stopSmoothScroll();
-                setTimeout(startSmoothScroll, AUTO_SCROLL_DELAY);
+                // autoScrollEnabled do të vendoset nga logjika e keydown
             }
         });
         
         // Ndal scroll-in kur hapet modali
-        const modalObserver = new MutationObserver(() => {
+        const modalObserver2 = new MutationObserver(() => {
             if (document.getElementById("matchModal").classList.contains("active")) {
-                stopSmoothScroll();
+                isModalOpen = true;
             } else {
-                setTimeout(startSmoothScroll, 1000);
+                isModalOpen = false;
+                setTimeout(() => {
+                    if (autoScrollEnabled && !isPaused) {
+                        resumeAutoScroll();
+                    }
+                }, 1000);
             }
         });
-        modalObserver.observe(document.getElementById("matchModal"), { attributes: true, attributeFilter: ['class'] });
+        modalObserver2.observe(document.getElementById("matchModal"), { attributes: true, attributeFilter: ['class'] });
 
         window.focus();
         document.body.setAttribute('tabindex', '0');
