@@ -373,7 +373,7 @@
             opacity: 0.6;
         }
 
-        /* ===== AUTO-SCROLL INDICATOR - STIL I PËRMIRËSUAR ===== */
+        /* ===== AUTO-SCROLL INDICATOR I PËRMIRËSUAR ===== */
         .scroll-indicator {
             position: fixed;
             bottom: 30px;
@@ -1126,7 +1126,7 @@
         </div>
     </div>
 
-    <!-- AUTO-SCROLL INDICATOR I PËRMIRËSUAR -->
+    <!-- AUTO-SCROLL INDICATOR -->
     <div class="scroll-indicator" id="scrollIndicator">
         <span class="indicator-icon">▶</span>
         <span id="indicatorText">Auto-scroll aktiv</span>
@@ -1185,15 +1185,15 @@
         let activeSummary = null;
 
         // ============================================
-        // AUTO-SCROLL KONFIGURIM I PËRMIRËSUAR PËR TV
+        // AUTO-SCROLL KONTINUOUS - SI NË TV PROFESIONAL
         // ============================================
-        const AUTO_SCROLL_INTERVAL = 3500; // 3.5 sekonda - ritëm më i rehatshëm për TV
-        const SCROLL_DURATION = 600; // ms - kohëzgjatja e animacionit të scroll-it
-        let autoScrollTimer = null;
+        const SCROLL_SPEED = 0.8; // pixel per frame - sa më i lartë aq më i shpejtë
+        const SCROLL_INTERVAL = 16; // ~60fps për lëvizje të butë
+        let autoScrollAnimationId = null;
         let isAutoScrolling = true;
         let userInteracted = false;
         let interactionTimeout = null;
-        let isScrollingInProgress = false;
+        let autoScrollPaused = false;
 
         // ============================================
         // PRIORITETI - KATEGORIA SUPERIORE E PARA
@@ -1654,7 +1654,7 @@
         }
 
         // ============================================
-        // FUNKSIONET E AUTO-SCROLL - TË PËRMIRËSUARA
+        // AUTO-SCROLL KONTINUOUS - SI SCROLL I BUTË
         // ============================================
         function getIndicator() {
             return document.getElementById('scrollIndicator');
@@ -1675,7 +1675,6 @@
             }
             indicator.classList.add('visible');
             clearTimeout(indicator._hideTimeout);
-            // Fshihet automatikisht pas 2.5 sekondash
             indicator._hideTimeout = setTimeout(() => {
                 indicator.classList.remove('visible');
             }, 2500);
@@ -1687,69 +1686,120 @@
             clearTimeout(indicator._hideTimeout);
         }
 
+        // START AUTO-SCROLL KONTINUOUS
         function startAutoScroll() {
             stopAutoScroll();
-            if (!isAutoScrolling || cards.length < 2) return;
+
+            if (!isAutoScrolling || cards.length < 2 || isModalOpen) return;
+
+            const wrap = document.getElementById('games');
+            if (!wrap) return;
 
             // Trego që auto-scroll ka filluar
-            showIndicator('▶ Auto-scroll aktiv');
+            showIndicator('▶ Auto-scroll i vazhdueshëm');
 
-            autoScrollTimer = setInterval(() => {
-                if (isModalOpen || isScrollingInProgress || cards.length < 2) return;
+            let lastScrollTime = performance.now();
 
-                // Kalo te karta tjetër
+            function scrollStep(timestamp) {
+                if (autoScrollPaused || isModalOpen || cards.length < 2) {
+                    autoScrollAnimationId = null;
+                    return;
+                }
+
+                const delta = timestamp - lastScrollTime;
+                if (delta >= SCROLL_INTERVAL) {
+                    lastScrollTime = timestamp;
+
+                    // Lëviz kontenierin poshtë
+                    wrap.scrollTop += SCROLL_SPEED;
+
+                    // Kontrollo nëse kemi arritur në fund
+                    const maxScroll = wrap.scrollHeight - wrap.clientHeight;
+
+                    // Nëse jemi në fund, kthehemi në fillim (loop)
+                    if (wrap.scrollTop >= maxScroll - 10) {
+                        wrap.scrollTop = 0;
+                        showIndicator('🔄 Duke rifilluar nga fillimi');
+                    }
+
+                    // Përditëso fokusin vizual - gjej kartën më të dukshme
+                    updateFocusFromScroll();
+
+                    autoScrollAnimationId = requestAnimationFrame(scrollStep);
+                } else {
+                    autoScrollAnimationId = requestAnimationFrame(scrollStep);
+                }
+            }
+
+            autoScrollAnimationId = requestAnimationFrame(scrollStep);
+        }
+
+        function updateFocusFromScroll() {
+            if (!cards || cards.length === 0) return;
+
+            const wrap = document.getElementById('games');
+            if (!wrap) return;
+
+            const scrollTop = wrap.scrollTop;
+            const containerHeight = wrap.clientHeight;
+            const centerY = scrollTop + (containerHeight / 2);
+
+            let bestIndex = 0;
+            let bestDistance = Infinity;
+
+            cards.forEach((card, i) => {
+                const rect = card.getBoundingClientRect();
+                const wrapRect = wrap.getBoundingClientRect();
+                const cardCenter = rect.top - wrapRect.top + (rect.height / 2);
+
+                // Distance from center of viewport
+                const distance = Math.abs(cardCenter - (containerHeight / 2));
+
+                if (distance < bestDistance) {
+                    bestDistance = distance;
+                    bestIndex = i;
+                }
+            });
+
+            // Nëse ka ndryshuar fokusi
+            if (bestIndex !== focusIndex) {
                 cards.forEach(c => c.classList.remove('tv-focus'));
-                focusIndex = (focusIndex + 1) % cards.length;
-
-                // Apliko fokusin
+                focusIndex = bestIndex;
                 cards[focusIndex].classList.add('tv-focus');
-
-                // Scroll i butë me animacion
-                isScrollingInProgress = true;
-                cards[focusIndex].scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-
-                // Pas përfundimit të animacionit
-                setTimeout(() => {
-                    isScrollingInProgress = false;
-                }, SCROLL_DURATION);
-
-                // Trego indikatorin shkurt
-                showIndicator(`▶ Ndeshja ${focusIndex + 1} nga ${cards.length}`);
-
-            }, AUTO_SCROLL_INTERVAL);
+            }
         }
 
         function stopAutoScroll() {
-            if (autoScrollTimer) {
-                clearInterval(autoScrollTimer);
-                autoScrollTimer = null;
+            if (autoScrollAnimationId) {
+                cancelAnimationFrame(autoScrollAnimationId);
+                autoScrollAnimationId = null;
             }
             hideIndicator();
+            autoScrollPaused = false;
         }
 
         function pauseAutoScroll(message = '⏸ Auto-scroll i ndaluar') {
             if (!isAutoScrolling) return;
             isAutoScrolling = false;
+            autoScrollPaused = true;
             stopAutoScroll();
             showIndicator(message, true);
 
-            // Rifillo pas 12 sekondash pasiviteti (më i shpejtë se më parë)
             clearTimeout(interactionTimeout);
             interactionTimeout = setTimeout(() => {
                 if (!isModalOpen && cards.length > 0) {
                     isAutoScrolling = true;
+                    autoScrollPaused = false;
                     startAutoScroll();
                     showIndicator('▶ Auto-scroll rifillon', false);
                 }
-            }, 12000);
+            }, 10000);
         }
 
         function resumeAutoScroll() {
             if (isAutoScrolling) return;
             isAutoScrolling = true;
+            autoScrollPaused = false;
             startAutoScroll();
             showIndicator('▶ Auto-scroll rifillon', false);
         }
@@ -1905,15 +1955,14 @@
             cards.forEach((c, i) => {
                 if (i === focusIndex) {
                     c.classList.add("tv-focus");
-                    c.scrollIntoView({ behavior: "smooth", block: "center" });
                 } else {
                     c.classList.remove("tv-focus");
                 }
             });
 
-            // Nis auto-scroll nëse ka më shumë se 1 kartë
+            // Nis auto-scroll të vazhdueshëm nëse ka më shumë se 1 kartë
             if (isAutoScrolling && cards.length > 1) {
-                setTimeout(startAutoScroll, 1500);
+                setTimeout(startAutoScroll, 1000);
             }
         }
 
@@ -1985,10 +2034,9 @@
                 focusedMatchId = cards[focusIndex].dataset.id;
                 cards.forEach(c => c.classList.remove("tv-focus"));
                 cards[focusIndex].classList.add("tv-focus");
-                cards[focusIndex].scrollIntoView({ behavior: "smooth", block: "center" });
             }
 
-            // Rifillo auto-scroll nëse është aktiv dhe ka më shumë se 1 kartë
+            // Rifillo auto-scroll të vazhdueshëm nëse është aktiv dhe ka më shumë se 1 kartë
             if (isAutoScrolling && cards.length > 1) {
                 setTimeout(startAutoScroll, 1200);
             }
@@ -2440,11 +2488,13 @@
                 if (e.key === "ArrowDown" || e.keyCode === 40 || e.key === "ArrowRight" || e.keyCode === 39) {
                     e.preventDefault();
                     focusIndex = (focusIndex + 1) % cards.length;
-                    scrollToCard(focusIndex);
+                    cards[focusIndex].classList.add("tv-focus");
+                    cards[focusIndex].scrollIntoView({ behavior: "smooth", block: "center" });
                 } else if (e.key === "ArrowUp" || e.keyCode === 38 || e.key === "ArrowLeft" || e.keyCode === 37) {
                     e.preventDefault();
                     focusIndex = (focusIndex - 1 + cards.length) % cards.length;
-                    scrollToCard(focusIndex);
+                    cards[focusIndex].classList.add("tv-focus");
+                    cards[focusIndex].scrollIntoView({ behavior: "smooth", block: "center" });
                 } else if (e.key === "Enter" || e.keyCode === 13) {
                     e.preventDefault();
                     if (cards[focusIndex]) {
@@ -2458,7 +2508,7 @@
             }
         });
 
-        // Kap eventet e klikimit për të ndaluar auto-scroll
+        // Kap eventet e klikimit
         document.addEventListener('click', function(e) {
             if (!isModalOpen && !e.target.closest('.match') && !e.target.closest('.scroll-indicator')) {
                 if (isAutoScrolling) {
@@ -2467,7 +2517,6 @@
             }
         });
 
-        // Kap eventet e prekjes për pajisjet mobile
         document.addEventListener('touchstart', function(e) {
             if (!isModalOpen && !e.target.closest('.match') && !e.target.closest('.scroll-indicator')) {
                 if (isAutoScrolling) {
@@ -2476,18 +2525,6 @@
             }
         });
 
-        function scrollToCard(index) {
-            if (!cards[index]) return;
-
-            cards[index].classList.add("tv-focus");
-
-            cards[index].scrollIntoView({
-                behavior: "smooth",
-                block: "center",
-                inline: "center"
-            });
-        }
-
         // Nis aplikacionin
         window.focus();
         document.body.setAttribute('tabindex', '0');
@@ -2495,7 +2532,6 @@
 
         loadMatches(true);
 
-        // Rinis auto-scroll nëse faqja bëhet aktive përsëri
         document.addEventListener('visibilitychange', function() {
             if (!document.hidden && !isModalOpen && isAutoScrolling && cards.length > 1) {
                 startAutoScroll();
