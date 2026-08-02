@@ -16,6 +16,7 @@
             --text-main: #ffffff;
             --text-sub: #a0a8bc;
             --gold-accent: #ffb700;
+            --gold-glow: rgba(255, 183, 0, 0.3);
             --play-yellow: #ffcc00;
             --play-header: #1e1e1e;
         }
@@ -119,6 +120,8 @@
             scrollbar-width: none;
             flex: 1;
             position: relative;
+            /* Auto-scroll smooth - pa dridhje */
+            scroll-behavior: smooth !important;
         }
         .wrap::-webkit-scrollbar { display: none; }
 
@@ -145,7 +148,7 @@
             grid-column: 1 / -1;
             border: 3px solid var(--gold-accent) !important;
             background: linear-gradient(135deg, #1a1208 0%, #0c0e14 100%) !important;
-            box-shadow: 0 0 30px rgba(255, 183, 0, 0.25) !important;
+            box-shadow: 0 0 30px var(--gold-glow) !important;
             position: relative;
             padding: 10px 12px !important;
             border-radius: 14px !important;
@@ -163,13 +166,14 @@
             padding: 2px 12px;
             border-radius: 14px;
             letter-spacing: 0.5px;
-            box-shadow: 0 0 15px rgba(255, 183, 0, 0.4);
+            box-shadow: 0 0 15px var(--gold-glow);
             z-index: 2;
         }
 
+        /* Nëse është live, mbajmë live-indicator por rrethimi mbetet i verdhë */
         .match-of-day.is-live-card {
-            border-color: var(--accent-red) !important;
-            box-shadow: 0 0 30px rgba(255, 17, 0, 0.35) !important;
+            border-color: var(--gold-accent) !important;
+            box-shadow: 0 0 30px var(--gold-glow) !important;
         }
 
         .match-of-day.is-live-card::before {
@@ -208,13 +212,13 @@
 
         .match-of-day.tv-focus {
             transform: scale(1.02);
-            box-shadow: 0 0 40px rgba(255, 183, 0, 0.4) !important;
+            box-shadow: 0 0 40px var(--gold-glow) !important;
             border-color: var(--gold-accent) !important;
         }
 
         .match-of-day.is-live-card.tv-focus {
-            border-color: var(--accent-red) !important;
-            box-shadow: 0 0 40px var(--accent-glow) !important;
+            border-color: var(--gold-accent) !important;
+            box-shadow: 0 0 40px var(--gold-glow) !important;
         }
 
         /* Kartelat normale */
@@ -246,15 +250,16 @@
             z-index: 5;
         }
 
+        /* Ndeshja e ditës me fokus - gjithmonë rrethim i verdhë */
         .match-of-day.tv-focus {
             transform: scale(1.02);
-            box-shadow: 0 0 40px rgba(255, 183, 0, 0.4) !important;
+            box-shadow: 0 0 40px var(--gold-glow) !important;
             border-color: var(--gold-accent) !important;
         }
 
         .match-of-day.is-live-card.tv-focus {
-            border-color: var(--accent-red) !important;
-            box-shadow: 0 0 40px var(--accent-glow) !important;
+            border-color: var(--gold-accent) !important;
+            box-shadow: 0 0 40px var(--gold-glow) !important;
         }
 
         .league-header {
@@ -1004,12 +1009,14 @@
         let focusIndex = 0;
         let focusedMatchId = null;
         
-        // --- AUTO-SCROLL I QETË PËR ANDROID TV ---
+        // --- AUTO-SCROLL I QETË PËR ANDROID TV (PA DRIDHJE) ---
         let autoScroll = true;
         let isPaused = false;
         let userInteracted = false;
         let interactionTimeout = null;
         const AUTO_SCROLL_DELAY = 8000;
+        let scrollInterval = null;
+        let isScrolling = false;
         
         let isModalOpen = false;
         let modalFocusArea = 'TABS';
@@ -2157,54 +2164,77 @@
             }
         });
 
-        // --- AUTO-SCROLL I QETË PËR ANDROID TV (PA DRIDHJE) ---
+        // ============================================================
+        // AUTO-SCROLL I QETË PËR ANDROID TV - PA DRIDHJE
+        // ============================================================
         const wrapEl = document.querySelector(".wrap");
-        let autoScrollInterval = null;
-        let scrollSpeed = 0.3; // Pixel për frame - shumë i ulët për lëvizje të qetë
+        let animationId = null;
+        let scrollPosition = 0;
+        const SCROLL_SPEED = 0.4; // Pixel për frame - shumë i ulët për smooth scroll
         
-        function startAutoScroll() {
-            if (autoScrollInterval) return;
+        function startSmoothScroll() {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
             
-            autoScrollInterval = setInterval(() => {
-                // Kontrollo nëse duhet të lëvizë
+            if (!wrapEl) return;
+            
+            function animateScroll() {
+                // Kontrollo nëse duhet të vazhdojë scroll-i
                 if (!autoScroll || isPaused || isModalOpen || userInteracted) {
+                    animationId = requestAnimationFrame(animateScroll);
                     return;
                 }
-                
-                if (!wrapEl) return;
                 
                 const maxScroll = wrapEl.scrollHeight - wrapEl.clientHeight;
                 const currentScroll = wrapEl.scrollTop;
                 
-                // Nëse kemi arritur fundin, ndalojmë
+                // Nëse kemi arritur fundin, ndalojmë këtë cikël
                 if (currentScroll >= maxScroll - 2) {
+                    // Në vend që të kërcejmë në fillim, bëjmë një kalim të butë
+                    // Duke qenë se janë vetëm disa kartela, ndalojmë kur arrijmë fundin
+                    animationId = requestAnimationFrame(animateScroll);
                     return;
                 }
                 
-                // Lëvizje e qetë dhe e ngadaltë
-                const newScroll = Math.min(currentScroll + scrollSpeed, maxScroll);
+                // Lëvizje e qetë dhe e ngadaltë - pa kërcime
+                const newScroll = Math.min(currentScroll + SCROLL_SPEED, maxScroll);
                 wrapEl.scrollTop = newScroll;
                 
-            }, 16); // ~60 FPS për lëvizje të qetë
+                animationId = requestAnimationFrame(animateScroll);
+            }
+            
+            animationId = requestAnimationFrame(animateScroll);
         }
         
-        function stopAutoScroll() {
-            if (autoScrollInterval) {
-                clearInterval(autoScrollInterval);
-                autoScrollInterval = null;
+        function stopSmoothScroll() {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
             }
         }
         
         // Nis auto-scroll-in kur faqja ngarkohet
-        setTimeout(startAutoScroll, 1000);
+        setTimeout(startSmoothScroll, 1500);
         
-        // Ndal auto-scroll kur përdoruesi ndërvepron
+        // Rinis scroll-in pas ndërveprimit të përdoruesit
         document.addEventListener('keydown', () => {
             if (!isModalOpen) {
-                stopAutoScroll();
-                setTimeout(startAutoScroll, AUTO_SCROLL_DELAY);
+                stopSmoothScroll();
+                setTimeout(startSmoothScroll, AUTO_SCROLL_DELAY);
             }
         });
+        
+        // Ndal scroll-in kur hapet modali
+        const modalObserver = new MutationObserver(() => {
+            if (document.getElementById("matchModal").classList.contains("active")) {
+                stopSmoothScroll();
+            } else {
+                setTimeout(startSmoothScroll, 1000);
+            }
+        });
+        modalObserver.observe(document.getElementById("matchModal"), { attributes: true, attributeFilter: ['class'] });
 
         window.focus();
         document.body.setAttribute('tabindex', '0');
