@@ -1120,13 +1120,6 @@
         let activeMatch = null;
         let activeSummary = null;
 
-        // --- AUTO-SCROLL KONFIGURIMI ---
-        const AUTO_SCROLL_INTERVAL = 3000;
-        let autoScrollTimer = null;
-        let isAutoScrolling = true;
-        let userInteracted = false;
-        let interactionTimeout = null;
-
         // ============================================
         // PRIORITETI - KATEGORIA SUPERIORE E PARA
         // ============================================
@@ -1585,56 +1578,6 @@
             return html;
         }
 
-        // --- FUNKSIONET E AUTO-SCROLL ---
-        function startAutoScroll() {
-            stopAutoScroll();
-            if (!isAutoScrolling) return;
-
-            autoScrollTimer = setInterval(() => {
-                if (isModalOpen || cards.length === 0) return;
-
-                cards.forEach(c => c.classList.remove('tv-focus'));
-                focusIndex = (focusIndex + 1) % cards.length;
-                cards[focusIndex].classList.add('tv-focus');
-
-                cards[focusIndex].scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-
-            }, AUTO_SCROLL_INTERVAL);
-        }
-
-        function stopAutoScroll() {
-            if (autoScrollTimer) {
-                clearInterval(autoScrollTimer);
-                autoScrollTimer = null;
-            }
-        }
-
-        function resetAutoScrollTimer() {
-            if (!isAutoScrolling) return;
-            stopAutoScroll();
-            startAutoScroll();
-        }
-
-        function handleUserInteraction() {
-            if (!isAutoScrolling) return;
-
-            userInteracted = true;
-            isAutoScrolling = false;
-            stopAutoScroll();
-
-            clearTimeout(interactionTimeout);
-            interactionTimeout = setTimeout(() => {
-                if (!isModalOpen) {
-                    isAutoScrolling = true;
-                    userInteracted = false;
-                    startAutoScroll();
-                }
-            }, 15000);
-        }
-
         // --- FUNKSIONET PËR LOADIM DHE RENDER ---
         async function loadMatches(force = false) {
             const now = Date.now();
@@ -1694,7 +1637,6 @@
                 container.innerHTML =
                     `<div class="empty-state">Nuk ka ndeshje elitare të programuara për 7 ditët e ardhshme.</div>`;
                 cards = [];
-                stopAutoScroll();
                 return;
             }
 
@@ -1783,11 +1725,6 @@
                     c.classList.remove("tv-focus");
                 }
             });
-
-            // Nis auto-scroll nëse nuk është ndalur nga përdoruesi
-            if (isAutoScrolling && !userInteracted) {
-                startAutoScroll();
-            }
         }
 
         // --- FUNKSIONET E MODALIT ---
@@ -1805,9 +1742,6 @@
         }
 
         async function openMatchDetails(index) {
-            // Ndal auto-scroll kur hapet modal
-            stopAutoScroll();
-
             activeMatch = matchesData[index];
             if (!activeMatch) return;
             isModalOpen = true;
@@ -1859,11 +1793,6 @@
                 cards.forEach(c => c.classList.remove("tv-focus"));
                 cards[focusIndex].classList.add("tv-focus");
                 cards[focusIndex].scrollIntoView({ behavior: "smooth", block: "center" });
-            }
-
-            // Rifillo auto-scroll nëse është aktiv
-            if (isAutoScrolling && !userInteracted) {
-                setTimeout(startAutoScroll, 1000);
             }
         }
 
@@ -2298,14 +2227,6 @@
 
             if (!cards.length) return;
 
-            // Nëse përdoruesi përdor tastierën, ndal auto-scroll dhe trajto manualisht
-            if (e.key === "ArrowDown" || e.keyCode === 40 || e.key === "ArrowRight" || e.keyCode === 39 ||
-                e.key === "ArrowUp" || e.keyCode === 38 || e.key === "ArrowLeft" || e.keyCode === 37 ||
-                e.key === "Enter" || e.keyCode === 13) {
-
-                handleUserInteraction();
-            }
-
             cards.forEach(c => c.classList.remove("tv-focus"));
 
             if (e.key === "ArrowDown" || e.keyCode === 40 || e.key === "ArrowRight" || e.keyCode === 39) {
@@ -2337,20 +2258,6 @@
                     closeModal();
                     return;
                 }
-            }
-        });
-
-        // Kap eventet e klikimit për të ndaluar auto-scroll
-        document.addEventListener('click', function(e) {
-            if (!isModalOpen && !e.target.closest('.match')) {
-                handleUserInteraction();
-            }
-        });
-
-        // Kap eventet e prekjes për pajisjet mobile
-        document.addEventListener('touchstart', function(e) {
-            if (!isModalOpen && !e.target.closest('.match')) {
-                handleUserInteraction();
             }
         });
 
