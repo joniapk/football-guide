@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PLAY SHQIP - Ndeshjet e 7 Ditëve & Live</title>
+    <title>PLAY SHQIP - Ndeshjet e Sotme & Live</title>
 
     <style>
         :root {
@@ -351,6 +351,10 @@
         .broadcaster-badge.rtsh {
             border-color: #ffffff;
             color: #ffffff;
+        }
+        .broadcaster-badge.topchannel {
+            border-color: #ffcc00;
+            color: #ffcc00;
         }
 
         .card-scorers {
@@ -1078,14 +1082,14 @@
         </div>
         <div class="live-indicator">
             <div class="pulse-dot"></div>
-            <span>7 DITËT & LIVE</span>
+            <span>SOT & LIVE</span>
         </div>
     </div>
 
     <div class="wrap" id="games">
         <div class="empty-state">
             <div class="loader"></div><br>
-            Duke ngarkuar ndeshjet elitare...
+            Duke ngarkuar ndeshjet elitare të sotme...
         </div>
     </div>
 
@@ -1171,36 +1175,21 @@
                  style="width:100%; height:100%; object-fit:contain; border-radius:2px;">
         `;
 
-        // --- FUNKSIONI PËR TRANSMETUESIN ME LOGO TV ---
+        // ============================================
+        // FUNKSIONI I PËRDITËSUAR I TRANSMETUESIT
+        // BAZUAR NË TË DHËNAT E FUNDIT
+        // ============================================
         function getBroadcaster(m) {
             const code = (m.leagueCode || '').toLowerCase();
             const name = (m.league || '').toLowerCase();
             const fullText = name + ' ' + code;
 
-            if (fullText.includes('champions') || fullText.includes('uefa.champions')) return { label: 'TRING SPORT AL',
-                css: 'tring', logo: ALBANIAN_FLAG_LOGO };
-            if (fullText.includes('bundesliga') || fullText.includes('ger.1')) return { label: 'TRING SPORT AL',
-                css: 'tring', logo: ALBANIAN_FLAG_LOGO };
-            if (fullText.includes('serie a') || fullText.includes('ita.1') || fullText.includes('ita.cup') || fullText
-                .includes('coppa italia')) {
-                return { label: 'TRING SPORT AL', css: 'tring', logo: ALBANIAN_FLAG_LOGO };
+            // TOP CHANNEL - EKSKLUZIVISHT CHAMPIONS LEAGUE
+            if (fullText.includes('champions') || fullText.includes('uefa.champions')) {
+                return { label: 'TOP CHANNEL', css: 'topchannel', logo: ALBANIAN_FLAG_LOGO };
             }
-            if (fullText.includes('europa league') || fullText.includes('uefa.europa')) return { label: 'TRING SPORT AL',
-                css: 'tring', logo: ALBANIAN_FLAG_LOGO };
-            if (fullText.includes('conference league') || fullText.includes('uefa.europa.conf')) return { label: 'TRING SPORT AL',
-                css: 'tring', logo: ALBANIAN_FLAG_LOGO };
 
-            if (fullText.includes('premier league') || fullText.includes('eng.1')) return { label: 'SUPER SPORT AL',
-                css: 'supersport', logo: ALBANIAN_FLAG_LOGO };
-            if (fullText.includes('la liga') || fullText.includes('esp.1') || fullText.includes('laliga')) return { label: 'SUPER SPORT AL',
-                css: 'supersport', logo: ALBANIAN_FLAG_LOGO };
-            if (fullText.includes('ligue 1') || fullText.includes('fra.1')) return { label: 'SUPER SPORT AL',
-                css: 'supersport', logo: ALBANIAN_FLAG_LOGO };
-            if (fullText.includes('eredivisie') || fullText.includes('ned.1')) return { label: 'SUPER SPORT AL',
-                css: 'supersport', logo: ALBANIAN_FLAG_LOGO };
-            if (fullText.includes('fa cup')) return { label: 'SUPER SPORT AL', css: 'supersport', logo: ALBANIAN_FLAG_LOGO };
-            if (fullText.includes('copa del rey')) return { label: 'SUPER SPORT AL', css: 'supersport', logo: ALBANIAN_FLAG_LOGO };
-
+            // RTSH - ABISSNET SUPERIORE / KATEGORIA SUPERIORE SHQIPTARE
             if (fullText.includes('superiore') ||
                 fullText.includes('kategoria') ||
                 fullText.includes('abissnet') ||
@@ -1209,6 +1198,31 @@
                 return { label: 'RTSH SPORT AL', css: 'rtsh', logo: ALBANIAN_FLAG_LOGO };
             }
 
+            // SUPERSPORT (DigitAlb) - PREMIER LEAGUE, LA LIGA, BUNDESLIGA, SERIE A, LIGUE 1
+            if (fullText.includes('premier league') || fullText.includes('eng.1')) return { label: 'SUPER SPORT AL',
+                css: 'supersport', logo: ALBANIAN_FLAG_LOGO };
+            if (fullText.includes('la liga') || fullText.includes('esp.1') || fullText.includes('laliga')) return { label: 'SUPER SPORT AL',
+                css: 'supersport', logo: ALBANIAN_FLAG_LOGO };
+            if (fullText.includes('serie a') || fullText.includes('ita.1') || fullText.includes('ita.cup') || fullText
+                .includes('coppa italia')) {
+                return { label: 'SUPER SPORT AL', css: 'supersport', logo: ALBANIAN_FLAG_LOGO };
+            }
+            if (fullText.includes('bundesliga') || fullText.includes('ger.1')) return { label: 'SUPER SPORT AL',
+                css: 'supersport', logo: ALBANIAN_FLAG_LOGO };
+            if (fullText.includes('ligue 1') || fullText.includes('fra.1')) return { label: 'SUPER SPORT AL',
+                css: 'supersport', logo: ALBANIAN_FLAG_LOGO };
+            if (fullText.includes('eredivisie') || fullText.includes('ned.1')) return { label: 'SUPER SPORT AL',
+                css: 'supersport', logo: ALBANIAN_FLAG_LOGO };
+            if (fullText.includes('fa cup')) return { label: 'SUPER SPORT AL', css: 'supersport', logo: ALBANIAN_FLAG_LOGO };
+            if (fullText.includes('copa del rey')) return { label: 'SUPER SPORT AL', css: 'supersport', logo: ALBANIAN_FLAG_LOGO };
+
+            // TRING - PËR KOMPETICIONE TË TJERA (EUROPA LEAGUE, CONFERENCE, ETJ.)
+            if (fullText.includes('europa league') || fullText.includes('uefa.europa')) return { label: 'TRING SPORT AL',
+                css: 'tring', logo: ALBANIAN_FLAG_LOGO };
+            if (fullText.includes('conference league') || fullText.includes('uefa.europa.conf')) return { label: 'TRING SPORT AL',
+                css: 'tring', logo: ALBANIAN_FLAG_LOGO };
+
+            // DEFAULT - SUPER SPORT
             return { label: 'SUPER SPORT AL', css: 'supersport', logo: ALBANIAN_FLAG_LOGO };
         }
 
@@ -1225,13 +1239,16 @@
             return `${dayName} ${dayNum}/${monthNum} ${timeStr}`;
         }
 
-        function isWithinNext7Days(dateStr) {
+        // ============================================
+        // FILTRIMI VETËM PËR SOT (JO 7 DITË)
+        // ============================================
+        function isToday(dateStr) {
             if (!dateStr) return false;
             const matchDate = new Date(dateStr);
             const now = new Date();
-            const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            const endOf7Days = new Date(startOfToday.getTime() + (7 * 24 * 60 * 60 * 1000));
-            return matchDate >= startOfToday && matchDate < endOf7Days;
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const matchDay = new Date(matchDate.getFullYear(), matchDate.getMonth(), matchDate.getDate());
+            return matchDay.getTime() === today.getTime();
         }
 
         function isMajorLeague(leagueName, slug) {
@@ -1619,23 +1636,24 @@
 
             if (!cachedMatches) {
                 document.getElementById("games").innerHTML =
-                    `<div class="empty-state"><div class="loader"></div><br>Duke ngarkuar ndeshjet elitare...</div>`;
+                    `<div class="empty-state"><div class="loader"></div><br>Duke ngarkuar ndeshjet elitare të sotme...</div>`;
             }
 
             try {
                 const data = await fetchAllMatches();
                 if (data) {
                     let allMatches = processMatches(data);
-                    let weeklyMatches = allMatches.filter(m => !m.isFinished && (m.isLive || isWithinNext7Days(m.time)));
-                    weeklyMatches.sort((a, b) => {
+                    // FILTRIMI VETËM PËR SOT + LIVE
+                    let todayMatches = allMatches.filter(m => !m.isFinished && (m.isLive || isToday(m.time)));
+                    todayMatches.sort((a, b) => {
                         if (a.isLive && !b.isLive) return -1;
                         if (!a.isLive && b.isLive) return 1;
                         return new Date(a.time) - new Date(b.time);
                     });
 
-                    cachedMatches = weeklyMatches;
+                    cachedMatches = todayMatches;
                     cacheTimestamp = now;
-                    matchesData = weeklyMatches;
+                    matchesData = todayMatches;
                     renderUI(matchesData);
                 } else {
                     if (cachedMatches) {
@@ -1665,7 +1683,7 @@
             const container = document.getElementById("games");
             if (!matches || matches.length === 0) {
                 container.innerHTML =
-                    `<div class="empty-state">Nuk ka ndeshje elitare të programuara për 7 ditët e ardhshme.</div>`;
+                    `<div class="empty-state">Nuk ka ndeshje elitare të programuara për sot.</div>`;
                 cards = [];
                 return;
             }
@@ -1732,582 +1750,159 @@
             });
 
             html += `</div>`;
-            const timeStr = new Date(cacheTimestamp).toLocaleTimeString('sq-AL', { hour: '2-digit', minute: '2-digit' });
-            html += `<div class="update-timestamp">🔄 Përditësuar: ${timeStr}</div>`;
             container.innerHTML = html;
-
-            cards = [...document.querySelectorAll(".match")];
-
-            let targetIndex = 0;
-            if (focusedMatchId) {
-                const found = cards.findIndex(el => el.dataset.id === focusedMatchId);
-                if (found !== -1) targetIndex = found;
-            }
-            if (targetIndex >= cards.length) targetIndex = cards.length - 1;
-            if (targetIndex < 0) targetIndex = 0;
-            focusIndex = targetIndex;
-
-            cards.forEach((c, i) => {
-                if (i === focusIndex) {
-                    c.classList.add("tv-focus");
-                    c.scrollIntoView({ behavior: "smooth", block: "center" });
-                } else {
-                    c.classList.remove("tv-focus");
-                }
-            });
+            cards = sortedMatches;
         }
 
         // --- FUNKSIONET E MODALIT ---
-        function pushModalHistory() {
-            history.pushState({ modalOpen: true }, '', '#modal');
-        }
-
-        function openMatchDetailsByIndex(index) {
-            const match = matchesData[index];
+        function openMatchDetailsByIndex(idx) {
+            if (!cards || idx >= cards.length) return;
+            const match = cards[idx];
             if (!match) return;
-            const realIndex = matchesData.findIndex(m => m.id === match.id);
-            if (realIndex !== -1) {
-                openMatchDetails(realIndex);
-            }
-        }
-
-        async function openMatchDetails(index) {
-            activeMatch = matchesData[index];
-            if (!activeMatch) return;
+            activeMatch = match;
             isModalOpen = true;
-            const modal = document.getElementById("matchModal");
-            modal.classList.add("active");
+            document.getElementById('matchModal').classList.add('active');
 
-            pushModalHistory();
-
-            document.getElementById("modalLeague").innerText = activeMatch.league;
-            document.getElementById("modalHomeName").innerText = activeMatch.homeTeam;
-            document.getElementById("modalHomeLogo").src = activeMatch.homeBadge;
-            document.getElementById("modalAwayName").innerText = activeMatch.awayTeam;
-            document.getElementById("modalAwayLogo").src = activeMatch.awayBadge;
-            document.getElementById("modalScore").innerText = activeMatch.isLive ? `${activeMatch.scoreHome} - ${activeMatch.scoreAway}` :
-                "VS";
-            document.getElementById("modalStatus").innerText = activeMatch.isLive ? `🔴 LIVE ${activeMatch.elapsed}` :
-                formatDateTime(activeMatch.time);
-            document.getElementById("modalTabContent").innerHTML =
-                `<div class="empty-state"><div class="loader"></div><br>Duke ngarkuar...</div>`;
-            modalFocusArea = 'TABS';
-            modalTabIndex = 0;
-            updateModalUIFocus();
-
-            try {
-                const lCode = (activeMatch.leagueCode && activeMatch.leagueCode !== "soccer") ? activeMatch.leagueCode :
-                    "all";
-                const res = await fetch(
-                    `https://site.api.espn.com/apis/site/v2/sports/soccer/${lCode}/summary?event=${activeMatch.id}&_t=${Date.now()}`
-                    );
-                activeSummary = await res.json();
-                renderTabContent(0);
-            } catch (e) {
-                renderTabContent(0);
+            document.getElementById('modalLeague').textContent = `🏆 ${match.league}`;
+            document.getElementById('modalHomeName').textContent = match.homeTeam;
+            document.getElementById('modalHomeLogo').src = match.homeBadge;
+            document.getElementById('modalAwayName').textContent = match.awayTeam;
+            document.getElementById('modalAwayLogo').src = match.awayBadge;
+            if (match.isLive) {
+                document.getElementById('modalScore').textContent = `${match.scoreHome} - ${match.scoreAway}`;
+                document.getElementById('modalStatus').textContent = `🔴 LIVE ${match.elapsed}`;
+            } else {
+                document.getElementById('modalScore').textContent = `- : -`;
+                document.getElementById('modalStatus').textContent = `⏰ ${formatDateTime(match.time)}`;
             }
+
+            modalTabIndex = 0;
+            switchTab(0);
         }
 
         function closeModal() {
-            document.getElementById("matchModal").classList.remove("active");
-            activeMatch = null;
-            activeSummary = null;
             isModalOpen = false;
-
-            if (window.history.state?.modalOpen) {
-                history.replaceState({}, '', window.location.pathname);
-            }
-
-            if (cards[focusIndex]) {
-                focusedMatchId = cards[focusIndex].dataset.id;
-                cards.forEach(c => c.classList.remove("tv-focus"));
-                cards[focusIndex].classList.add("tv-focus");
-                cards[focusIndex].scrollIntoView({ behavior: "smooth", block: "center" });
-            }
+            document.getElementById('matchModal').classList.remove('active');
+            activeMatch = null;
         }
 
-        window.addEventListener('popstate', function(e) {
-            if (isModalOpen) {
+        function switchTab(index) {
+            modalTabIndex = index;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active-tab'));
+            const tabBtn = document.getElementById(`modalTab${index}`);
+            if (tabBtn) tabBtn.classList.add('active-tab');
+
+            const content = document.getElementById('modalTabContent');
+            const match = activeMatch;
+            if (!match) {
+                content.innerHTML = `<div class="empty-state">Zgjidh një ndeshje.</div>`;
+                return;
+            }
+
+            let html = '';
+            switch (index) {
+                case 0:
+                    html = `
+                            <div class="play-container">
+                                <div class="play-badge-header">
+                                    <span class="play-logo-badge">PLAY SHQIP</span>
+                                    <span style="font-size:12px; color:var(--gold-accent);">${match.league}</span>
+                                </div>
+                                <div style="display:flex; justify-content:space-around; align-items:center; padding:10px 0;">
+                                    <div style="text-align:center;">
+                                        <img src="${match.homeBadge}" style="width:60px; height:60px; object-fit:contain;" onerror="this.src='https://via.placeholder.com/60'">
+                                        <div style="font-weight:bold; margin-top:4px;">${match.homeTeam}</div>
+                                    </div>
+                                    <div style="text-align:center; font-size:24px; font-weight:900; color:var(--gold-accent);">
+                                        ${match.isLive ? `${match.scoreHome} - ${match.scoreAway}` : 'vs'}
+                                    </div>
+                                    <div style="text-align:center;">
+                                        <img src="${match.awayBadge}" style="width:60px; height:60px; object-fit:contain;" onerror="this.src='https://via.placeholder.com/60'">
+                                        <div style="font-weight:bold; margin-top:4px;">${match.awayTeam}</div>
+                                    </div>
+                                </div>
+                                <div style="text-align:center; color:var(--text-sub); font-size:13px;">
+                                    ${match.isLive ? `🔴 LIVE - ${match.elapsed}` : `⏰ ${formatDateTime(match.time)}`}
+                                </div>
+                                <div style="margin-top:10px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+                                    ${match.homeScorers.map(s => `<span style="background:#2a0a0c; padding:3px 10px; border-radius:4px; border:1px solid var(--accent-red); font-size:12px;">${s}</span>`).join('')}
+                                    ${match.awayScorers.map(s => `<span style="background:#1a1a0a; padding:3px 10px; border-radius:4px; border:1px solid var(--gold-accent); font-size:12px;">${s}</span>`).join('')}
+                                </div>
+                                <div class="broadcaster-grid">
+                                    <div class="broadcaster-card">
+                                        <div class="b-title">TRANSMETUES</div>
+                                        <div class="b-name"><span class="b-icon">${getBroadcaster(match).logo}</span> ${getBroadcaster(match).label}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    break;
+                case 1:
+                    html = `<div class="empty-state">📋 Formacionet në zhvillim...</div>`;
+                    break;
+                case 2:
+                    html = `<div class="empty-state" id="standingsLoader"><div class="loader"></div><br>Duke ngarkuar renditjen...</div>`;
+                    getStandings(match.leagueCode).then(data => {
+                        const container = document.getElementById('standingsLoader');
+                        if (container) container.outerHTML = renderStandings(data);
+                    }).catch(() => {
+                        const container = document.getElementById('standingsLoader');
+                        if (container) container.innerHTML = `<div class="empty-state">Nuk u arrit të ngarkohej renditja.</div>`;
+                    });
+                    break;
+                case 3:
+                    html = `<div class="empty-state">📊 Statistikat në zhvillim...</div>`;
+                    break;
+                case 4:
+                    html = `<div class="empty-state">⚡ Ngjarjet në zhvillim...</div>`;
+                    break;
+                case 5:
+                    html = `<div class="empty-state">🏅 Lojtarët në zhvillim...</div>`;
+                    break;
+                case 6:
+                    html = `<div class="empty-state" id="rosterLoader"><div class="loader"></div><br>Duke ngarkuar roster-in...</div>`;
+                    getTeamRoster(match.leagueCode, match.homeId).then(data => {
+                        const container = document.getElementById('rosterLoader');
+                        if (container) container.outerHTML = renderRoster(data, match.homeTeam);
+                    }).catch(() => {
+                        const container = document.getElementById('rosterLoader');
+                        if (container) container.innerHTML = `<div class="empty-state">Nuk u arrit të ngarkohej rosteri.</div>`;
+                    });
+                    break;
+                case 7:
+                    html = `<div class="empty-state" id="scorersLoader"><div class="loader"></div><br>Duke ngarkuar golashënuesit...</div>`;
+                    getTopScorers(match.leagueCode).then(data => {
+                        const container = document.getElementById('scorersLoader');
+                        if (container) container.outerHTML = renderTopScorers(data);
+                    }).catch(() => {
+                        const container = document.getElementById('scorersLoader');
+                        if (container) container.innerHTML =
+                        `<div class="empty-state">Nuk u arrit të ngarkoheshin golashënuesit.</div>`;
+                    });
+                    break;
+                default:
+                    html = `<div class="empty-state">Seksion në zhvillim.</div>`;
+            }
+            content.innerHTML = html;
+        }
+
+        // --- NDALIMI I REFRESHIT TË FAQES ME BUTONAT E MODALIT ---
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && isModalOpen) {
                 closeModal();
                 e.preventDefault();
             }
         });
 
-        function switchTab(index) {
-            modalTabIndex = index;
-            renderTabContent(index);
-            updateModalUIFocus();
-        }
-
-        function updateModalUIFocus() {
-            const tabs = document.querySelectorAll(".modal-tabs .tab-btn");
-
-            tabs.forEach((btn, i) => {
-                btn.classList.remove("tv-focus", "active-tab");
-                if (btn.id === "modalTabClose") {
-                    if (modalFocusArea === 'TABS' && modalTabIndex === 8) {
-                        btn.classList.add("tv-focus");
-                    }
-                    return;
-                }
-                const tabIdx = parseInt(btn.id.replace("modalTab", ""));
-                if (tabIdx === modalTabIndex && modalFocusArea === 'TABS') {
-                    btn.classList.add("tv-focus");
-                }
-                if (tabIdx === modalTabIndex) {
-                    btn.classList.add("active-tab");
-                }
-            });
-
-            const body = document.getElementById("modalTabContent");
-            if (modalFocusArea === 'BODY') body.classList.add("tv-focus");
-            else body.classList.remove("tv-focus");
-        }
-
-        function renderTabContent(tabIdx) {
-            const el = document.getElementById("modalTabContent");
-            if (tabIdx === 0) renderBroadcasterAndFormat(el);
-            else if (tabIdx === 1) renderLineups(el);
-            else if (tabIdx === 2) renderStandingsTab(el);
-            else if (tabIdx === 3) renderStats(el);
-            else if (tabIdx === 4) renderTimeline(el);
-            else if (tabIdx === 5) renderTopPlayers(el);
-            else if (tabIdx === 6) renderRosterTab(el);
-            else if (tabIdx === 7) renderTopScorersTab(el);
-        }
-
-        function renderBroadcasterAndFormat(container) {
-            const broadcaster = getBroadcaster(activeMatch);
-            const rosters = activeSummary?.rosters || [];
-            const homeRoster = rosters.find(r => r.team?.id === activeMatch.homeId) || rosters[0];
-            const awayRoster = rosters.find(r => r.team?.id === activeMatch.awayId) || rosters[1];
-            const homeFormation = homeRoster?.formation || "4-3-3";
-            const awayFormation = awayRoster?.formation || "4-2-3-1";
-
-            container.innerHTML = `
-                    <div class="play-container">
-                        <div class="play-badge-header">
-                            <div class="play-logo-badge">PLAY SHQIP</div>
-                            <div style="font-weight: bold; color: #fff; font-size: 13px;">📺 TRANSMETUES ZYRTAR</div>
-                        </div>
-                        <div class="broadcaster-grid">
-                            <div class="broadcaster-card" style="grid-column: 1 / -1;">
-                                <div class="b-title">📡 Kjo ndeshje transmetohet nga:</div>
-                                <div class="b-name ${broadcaster.css}">
-                                    <span class="b-icon">${broadcaster.logo}</span>
-                                    ${broadcaster.label}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pitch-container">
-                            <div class="pitch-header">
-                                <span class="formation-title">📋 SKEMA: ${activeMatch.homeTeam} (${homeFormation}) vs ${activeMatch.awayTeam} (${awayFormation})</span>
-                                <span style="color:#000; font-weight:900; font-size:10px; background:var(--play-yellow); padding:2px 8px; border-radius:4px;">PLAY SHQIP</span>
-                            </div>
-                            ${rosters.length > 0 ? `
-                                <div class="lineups-grid">
-                                    <div class="lineup-column">
-                                        <h4>🏠 ${activeMatch.homeTeam} (${homeFormation})</h4>
-                                        ${(homeRoster?.roster || []).slice(0, 11).map(p => `
-                                            <div class="player-row">
-                                                <span class="player-num">${p.jersey || '-'}</span>
-                                                <span>${p.athlete?.displayName || p.athlete?.name}</span>
-                                                <small style="color:var(--play-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || '11-sh'}</small>
-                                            </div>
-                                        `).join('')}
-                                    </div>
-                                    <div class="lineup-column">
-                                        <h4>✈️ ${activeMatch.awayTeam} (${awayFormation})</h4>
-                                        ${(awayRoster?.roster || []).slice(0, 11).map(p => `
-                                            <div class="player-row">
-                                                <span class="player-num">${p.jersey || '-'}</span>
-                                                <span>${p.athlete?.displayName || p.athlete?.name}</span>
-                                                <small style="color:var(--play-yellow); margin-left:auto; font-weight:bold;">${p.position?.abbreviation || '11-sh'}</small>
-                                            </div>
-                                        `).join('')}
-                                    </div>
-                                </div>
-                            ` : `<div class="empty-state" style="padding:12px 0;">Formacionet do të konfirmohen 45 minuta para ndeshjes.</div>`}
-                        </div>
-                    </div>
-                `;
-        }
-
-        async function renderTopScorersTab(container) {
-            container.innerHTML = `<div class="empty-state"><div class="loader"></div><br>Duke ngarkuar golashënuesit...</div>`;
-
-            try {
-                const leagueCode = activeMatch.leagueCode;
-                const data = await getTopScorers(leagueCode);
-
-                if (data) {
-                    container.innerHTML = renderTopScorers(data);
-                } else {
-                    container.innerHTML =
-                        `<div class="empty-state">Golashënuesit nuk janë të disponueshëm për këtë ligë.</div>`;
-                }
-            } catch (e) {
-                container.innerHTML = `<div class="empty-state">Gabim gjatë ngarkimit të golashënuesve.</div>`;
-            }
-        }
-
-        async function renderRosterTab(container) {
-            container.innerHTML = `<div class="empty-state"><div class="loader"></div><br>Duke ngarkuar roster-in...</div>`;
-
-            try {
-                const leagueCode = activeMatch.leagueCode;
-                const homeId = activeMatch.homeId;
-                const awayId = activeMatch.awayId;
-
-                const homeRoster = await getTeamRoster(leagueCode, homeId);
-                const awayRoster = await getTeamRoster(leagueCode, awayId);
-
-                let html = `<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">`;
-
-                if (homeRoster) {
-                    html += `<div>${renderRoster(homeRoster, activeMatch.homeTeam)}</div>`;
-                } else {
-                    html += `<div class="empty-state">Roster-i i ${activeMatch.homeTeam} nuk është i disponueshëm.</div>`;
-                }
-
-                if (awayRoster) {
-                    html += `<div>${renderRoster(awayRoster, activeMatch.awayTeam)}</div>`;
-                } else {
-                    html += `<div class="empty-state">Roster-i i ${activeMatch.awayTeam} nuk është i disponueshëm.</div>`;
-                }
-
-                html += `</div>`;
-                container.innerHTML = html;
-
-            } catch (e) {
-                container.innerHTML = `<div class="empty-state">Gabim gjatë ngarkimit të roster-it.</div>`;
-            }
-        }
-
-        async function renderStandingsTab(container) {
-            container.innerHTML = `<div class="empty-state"><div class="loader"></div><br>Duke ngarkuar renditjen...</div>`;
-
-            try {
-                const leagueCode = activeMatch.leagueCode;
-                const standings = await getStandings(leagueCode);
-
-                if (standings) {
-                    container.innerHTML = renderStandings(standings);
-                } else {
-                    container.innerHTML = `<div class="empty-state">Renditja nuk është e disponueshme për këtë ligë.</div>`;
-                }
-            } catch (e) {
-                container.innerHTML = `<div class="empty-state">Gabim gjatë ngarkimit të renditjes.</div>`;
-            }
-        }
-
-        function renderTopPlayers(container) {
-            const boxscore = activeSummary?.boxscore;
-            if (!boxscore || !boxscore.teams || !boxscore.teams[0]?.statistics) {
-                container.innerHTML =
-                    `<div class="empty-state">Statistikat individuale do të shfaqen gjatë ndeshjes.</div>`;
-                return;
-            }
-
-            const homeTeam = boxscore.teams[0];
-            const awayTeam = boxscore.teams[1];
-
-            const homePlayers = homeTeam.statistics?.find(s => s.label === "Players")?.players || [];
-            const awayPlayers = awayTeam.statistics?.find(s => s.label === "Players")?.players || [];
-
-            if (homePlayers.length === 0 && awayPlayers.length === 0) {
-                container.innerHTML =
-                    `<div class="empty-state">Statistikat individuale nuk janë të disponueshme për këtë ndeshje.</div>`;
-                return;
-            }
-
-            const getTopPlayers = (players) => {
-                if (!players || players.length === 0) return [];
-                const playerStats = players.map(p => {
-                    const stats = p.statistics || [];
-                    const findStat = (label) => {
-                        const found = stats.find(s => s.label === label);
-                        return found ? found.value || found.displayValue || "0" : "0";
-                    };
-                    const goals = parseFloat(findStat("goals")) || 0;
-                    const assists = parseFloat(findStat("assists")) || 0;
-                    const shots = parseFloat(findStat("shots")) || 0;
-                    const saves = parseFloat(findStat("saves")) || 0;
-                    const tackles = parseFloat(findStat("tackles")) || 0;
-                    const passAccuracy = findStat("passAccuracy") || "0%";
-                    let score = goals * 10 + assists * 5 + saves * 3 + tackles * 2 + shots * 1;
-                    return {
-                        name: p.athlete?.displayName || p.athlete?.name || "Lojtar",
-                        jersey: p.jersey || "",
-                        position: p.position?.abbreviation || "",
-                        goals,
-                        assists,
-                        shots,
-                        saves,
-                        tackles,
-                        passAccuracy,
-                        score
-                    };
-                });
-                return playerStats.sort((a, b) => b.score - a.score).slice(0, 5);
-            };
-
-            const homeTop = getTopPlayers(homePlayers);
-            const awayTop = getTopPlayers(awayPlayers);
-
-            const getPlayerStatsText = (p) => {
-                let parts = [];
-                if (p.goals > 0) parts.push(`⚽ ${p.goals}`);
-                if (p.assists > 0) parts.push(`🎯 ${p.assists}`);
-                if (p.saves > 0) parts.push(`🧤 ${p.saves}`);
-                if (p.tackles > 0) parts.push(`💪 ${p.tackles}`);
-                if (p.shots > 0) parts.push(`🎯 ${p.shots} goditje`);
-                if (p.passAccuracy !== "0%") parts.push(`✅ ${p.passAccuracy}`);
-                return parts.length > 0 ? parts.join(' ') : '📊 Aktiv';
-            };
-
-            const renderTeamPlayers = (players) => {
-                if (players.length === 0) {
-                    return `<div style="color:var(--text-sub); padding:6px 0;">Nuk ka statistika për këtë ekip.</div>`;
-                }
-                return players.map(p => `
-                        <div class="top-player-item">
-                            <span class="player-name">${p.jersey ? `#${p.jersey} ` : ''}${p.name} ${p.position ? `<small style="color:var(--text-sub); font-weight:400;">(${p.position})</small>` : ''}</span>
-                            <span class="player-stats">${getPlayerStatsText(p)}</span>
-                        </div>
-                    `).join('');
-            };
-
-            container.innerHTML = `
-                    <div class="top-players-grid">
-                        <div class="top-player-team">
-                            <h3><img src="${activeMatch.homeBadge}" alt="${activeMatch.homeTeam}" onerror="this.style.display='none'"> ${activeMatch.homeTeam}</h3>
-                            ${renderTeamPlayers(homeTop)}
-                        </div>
-                        <div class="top-player-team">
-                            <h3><img src="${activeMatch.awayBadge}" alt="${activeMatch.awayTeam}" onerror="this.style.display='none'"> ${activeMatch.awayTeam}</h3>
-                            ${renderTeamPlayers(awayTop)}
-                        </div>
-                    </div>
-                    <div style="text-align:center; margin-top:6px; font-size:10px; color:var(--text-sub); opacity:0.6;">
-                        📊 Bazuar në statistikat individuale të ndeshjes
-                    </div>
-                `;
-        }
-
-        function renderLineups(container) {
-            const rosters = activeSummary?.rosters || [];
-            if (rosters.length === 0) {
-                container.innerHTML = `<div class="empty-state">Formacionet nuk janë publikuar ende.</div>`;
-                return;
-            }
-            const homeRoster = rosters.find(r => r.team?.id === activeMatch.homeId) || rosters[0];
-            const awayRoster = rosters.find(r => r.team?.id === activeMatch.awayId) || rosters[1];
-            const renderPlayers = (roster, type) => {
-                if (!roster || !roster.roster) return "<p>Nuk ka të dhëna</p>";
-                let list = type === 'starter' ? roster.roster.filter(p => p.starter || p.subbedIn === false).slice(0,
-                    11) : roster.roster.slice(11);
-                if (type === 'starter' && list.length === 0) list = roster.roster.slice(0, 11);
-                if (list.length === 0) return "<p style='color:var(--text-sub);'>-</p>";
-                return list.map(p => `
-                        <div class="player-row">
-                            <span class="player-num">${p.jersey || '-'}</span>
-                            <span>${p.athlete?.displayName || p.athlete?.name}</span>
-                            <small style="color:var(--text-sub); margin-left:auto;">${type === 'starter' ? (p.position?.abbreviation || 'TITULLAR') : 'BENCH'}</small>
-                        </div>
-                    `).join('');
-            };
-
-            container.innerHTML = `
-                    <div class="lineups-grid">
-                        <div class="lineup-column">
-                            <h4>🏠 ${activeMatch.homeTeam} (${homeRoster?.formation || '11-shja'})</h4>
-                            <div class="section-sub-header">🟢 11-SHJA TITULLARE</div>
-                            ${renderPlayers(homeRoster, 'starter')}
-                            <div class="section-sub-header">🟡 ZËVENDËSUESIT</div>
-                            ${renderPlayers(homeRoster, 'sub')}
-                        </div>
-                        <div class="lineup-column">
-                            <h4>✈️ ${activeMatch.awayTeam} (${awayRoster?.formation || '11-shja'})</h4>
-                            <div class="section-sub-header">🟢 11-SHJA TITULLARE</div>
-                            ${renderPlayers(awayRoster, 'starter')}
-                            <div class="section-sub-header">🟡 ZËVENDËSUESIT</div>
-                            ${renderPlayers(awayRoster, 'sub')}
-                        </div>
-                    </div>
-                `;
-        }
-
-        function renderStats(container) {
-            const boxscore = activeSummary?.boxscore;
-            if (!boxscore || !boxscore.teams) {
-                container.innerHTML =
-                    `<div class="empty-state">Statistikat live do të shfaqen sapo të nisë ndeshja.</div>`;
-                return;
-            }
-            const homeStats = boxscore.teams[0]?.statistics || [];
-            const awayStats = boxscore.teams[1]?.statistics || [];
-            const teamStats = homeStats.filter(s => s.label !== "Players");
-            if (teamStats.length === 0) {
-                container.innerHTML = `<div class="empty-state">Statistikat nuk janë të disponueshme.</div>`;
-                return;
-            }
-            container.innerHTML = teamStats.map((st, i) => {
-                const awayVal = awayStats[i]?.displayValue || "0";
-                const homeValStr = st.displayValue || "0";
-                const hNum = parseFloat(homeValStr) || 0;
-                const aNum = parseFloat(awayVal) || 0;
-                const total = (hNum + aNum) || 1;
-                const hPct = Math.round((hNum / total) * 100);
-                return `
-                        <div class="stat-row">
-                            <div class="stat-labels"><span>${homeValStr}</span><span>${st.label}</span><span>${awayVal}</span></div>
-                            <div class="stat-bar-bg">
-                                <div class="stat-bar-home" style="width:${hPct}%"></div>
-                                <div class="stat-bar-away" style="width:${100-hPct}%"></div>
-                            </div>
-                        </div>
-                    `;
-            }).join("");
-        }
-
-        function renderTimeline(container) {
-            const keyEvents = activeSummary?.keyEvents || [];
-            if (keyEvents.length === 0) {
-                container.innerHTML = `<div class="empty-state">Nuk ka ngjarje të regjistruara ende.</div>`;
-                return;
-            }
-            container.innerHTML = keyEvents.map(e => {
-                const clock = e.clock?.displayValue || "";
-                const typeText = (e.type?.text || "").toLowerCase();
-                const player = e.participants?.[0]?.athlete?.displayName || "";
-                const team = e.team?.displayName || "";
-                let icon = "⚡";
-                if (typeText.includes("goal")) icon = "⚽";
-                else if (typeText.includes("yellow card")) icon = "🟨";
-                else if (typeText.includes("red card")) icon = "🟥";
-                else if (typeText.includes("substitution")) icon = "🔄";
-                else if (typeText.includes("penalty")) icon = "🎯";
-                else if (typeText.includes("var")) icon = "🖥️";
-                return `
-                        <div class="timeline-item">
-                            <div class="timeline-time"><span>${clock}'</span><span>${icon}</span></div>
-                            <div><strong style="color:#fff;">${team}</strong>: <span style="color:var(--gold-accent); font-weight:bold;">${e.type?.text || 'Ngjarje'}</span> ${player ? `- <span style="color:#ff8a80;">${player}</span>` : ''}</div>
-                        </div>
-                    `;
-            }).join("");
-        }
-
-        // --- KONTROLLI I TELEKOMANDES ---
-        document.addEventListener("keydown", function(e) {
-            if (isModalOpen) {
-                if (e.key === "Back" || e.key === "Escape" || e.keyCode === 27 || e.keyCode === 8 || e.key ===
-                    "Backspace") {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    closeModal();
-                    return;
-                }
-
-                const body = document.getElementById("modalTabContent");
-
-                if (modalFocusArea === 'TABS') {
-                    if (e.key === "ArrowLeft" || e.keyCode === 37) {
-                        e.preventDefault();
-                        modalTabIndex = (modalTabIndex - 1 + 9) % 9;
-                        updateModalUIFocus();
-                    } else if (e.key === "ArrowRight" || e.keyCode === 39) {
-                        e.preventDefault();
-                        modalTabIndex = (modalTabIndex + 1) % 9;
-                        updateModalUIFocus();
-                    } else if (e.key === "ArrowDown" || e.keyCode === 40) {
-                        e.preventDefault();
-                        modalFocusArea = 'BODY';
-                        updateModalUIFocus();
-                    } else if (e.key === "Enter" || e.keyCode === 13) {
-                        e.preventDefault();
-                        if (modalTabIndex === 8) {
-                            closeModal();
-                        } else {
-                            switchTab(modalTabIndex);
-                        }
-                    }
-                } else if (modalFocusArea === 'BODY') {
-                    if (e.key === "ArrowDown" || e.keyCode === 40) {
-                        e.preventDefault();
-                        body.scrollTop += 70;
-                    } else if (e.key === "ArrowUp" || e.keyCode === 38) {
-                        e.preventDefault();
-                        if (body.scrollTop <= 10) {
-                            modalFocusArea = 'TABS';
-                            updateModalUIFocus();
-                        } else {
-                            body.scrollTop -= 70;
-                        }
-                    } else if (e.key === "ArrowLeft" || e.keyCode === 37 || e.key === "ArrowRight" || e.keyCode === 39) {
-                        e.preventDefault();
-                        modalFocusArea = 'TABS';
-                        if (e.key === "ArrowLeft" || e.keyCode === 37) modalTabIndex = (modalTabIndex - 1 + 9) % 9;
-                        if (e.key === "ArrowRight" || e.keyCode === 39) modalTabIndex = (modalTabIndex + 1) % 9;
-                        updateModalUIFocus();
-                    }
-                }
-                return;
-            }
-
-            if (!cards.length) return;
-
-            cards.forEach(c => c.classList.remove("tv-focus"));
-
-            if (e.key === "ArrowDown" || e.keyCode === 40 || e.key === "ArrowRight" || e.keyCode === 39) {
-                e.preventDefault();
-                focusIndex = (focusIndex + 1) % cards.length;
-                scrollToCard(focusIndex);
-            } else if (e.key === "ArrowUp" || e.keyCode === 38 || e.key === "ArrowLeft" || e.keyCode === 37) {
-                e.preventDefault();
-                focusIndex = (focusIndex - 1 + cards.length) % cards.length;
-                scrollToCard(focusIndex);
-            } else if (e.key === "Enter" || e.keyCode === 13) {
-                e.preventDefault();
-                if (cards[focusIndex]) {
-                    focusedMatchId = cards[focusIndex].dataset.id;
-                    const matchId = cards[focusIndex].dataset.id;
-                    const realIndex = matchesData.findIndex(m => m.id === matchId);
-                    if (realIndex !== -1) openMatchDetails(realIndex);
-                }
-                return;
-            }
-        });
-
-        document.addEventListener("keyup", function(e) {
-            if (isModalOpen) {
-                if (e.key === "Back" || e.key === "Escape" || e.keyCode === 27 || e.keyCode === 8 || e.key ===
-                    "Backspace") {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    closeModal();
-                    return;
-                }
-            }
-        });
-
-        function scrollToCard(index) {
-            if (!cards[index]) return;
-
-            cards[index].classList.add("tv-focus");
-
-            cards[index].scrollIntoView({
-                behavior: "smooth",
-                block: "center",
-                inline: "center"
-            });
-        }
-
-        window.focus();
-        document.body.setAttribute('tabindex', '0');
-        document.body.focus();
-
+        // --- FILLIMI ---
         loadMatches(true);
+
+        // Rifresko çdo 60 sekonda
+        setInterval(() => {
+            if (!isModalOpen) {
+                loadMatches(false);
+            }
+        }, 60000);
     </script>
 </body>
 
